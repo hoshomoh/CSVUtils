@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<data>
+  <item0>
+    <name>Well Health Hotels</name>
+    <address>Inga N.'P.O. Box 567</address>
+    <stars>8</stars>
+    <contact>Kasper Zen</contact>
+    <uri>http://example.com</uri>
+  </item0>
+  <item1>
+    <name>Well Health Hotels</name>
+    <address>Inga N.'P.O. Box 567</address>
+    <stars>3</stars>
+    <contact>Kasper Zen</contact>
+    <uri>http//:well.org</uri>
+  </item1>
+</data>
