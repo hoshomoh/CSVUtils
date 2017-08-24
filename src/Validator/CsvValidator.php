@@ -7,7 +7,7 @@ use InvalidArgumentException;
 
 class CsvValidator extends Rules
 {
-    use MessageTrait;
+    use ValidatorMessageTrait;
 
     /**
      * Csv File Path;
@@ -120,7 +120,7 @@ class CsvValidator extends Rules
                         }
                     }
 
-                    if (isset($result["errors"])) {
+                    if (!empty($result["errors"])) {
                         $this->invalidData[] = $result;
                     }else {
                         $this->validData[] = $result;

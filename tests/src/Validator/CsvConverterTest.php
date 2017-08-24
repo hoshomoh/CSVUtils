@@ -58,7 +58,7 @@ class CsvConverterTest extends \PHPUnit_Framework_TestCase
     public function testToXml()
     {
         $this->converter->setData($this->object);
-        $this->converter->toXml("test.jso");
+        $this->converter->toXml("test.xml");
         $this->assertFileExists('tests/files/test.xml');
         $this->assertFileEquals('tests/files/test-expected.xml', 'tests/files/test.xml');
     }

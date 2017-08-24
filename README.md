@@ -112,7 +112,7 @@ $converter->toXml("filename.xml");
 
 ### Todo's
 
- - Make the CsvConverter data be an instance of CsvValidator data
+ - Make the CsvConverter data paramter be an instance of CsvValidator data
  - Make converter extensible, so that user can pass there own validation rule
  - For rules that expect value, put in check that values are passed else throw error
  - Add	options	to	sort/group/filter the data before writing the data.

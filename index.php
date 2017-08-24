@@ -11,14 +11,16 @@ $file = $file_path . "/sample.csv";
 $validator = new CsvValidator($file, [
     "name" => ["ascii" => ""],
     "uri"   => ["url" => ""],
-    "stars" => ["min" => 0, "max" => 5]
+    "stars" => ["min" => 7, "max" => 10]
 ]);
 
 try {
     $data = $validator->validate()->getValidData();
-    $converter = new CsvConverter($file_path, $data);
-    echo $converter->toJson("sample.json");
-    echo $converter->toXml("sample.xml");
+    if($data) {
+	    $converter = new CsvConverter($file_path, $data);
+	    echo $converter->toJson("sample.json") . "\n";
+	    echo $converter->toXml("sample.xml");
+	}
 }catch (Exception $exception) {
     echo $exception->getMessage();
 }
