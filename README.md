@@ -1,3 +1,5 @@
+<a href="https://travis-ci.org/hoshomoh/CSVUtils"><img src="https://travis-ci.org/hoshomoh/CSVUtils.svg" alt="Build Status"></a>
+
 # CSVUtils by Oforomeh Oshomo
 
 ### How to run
