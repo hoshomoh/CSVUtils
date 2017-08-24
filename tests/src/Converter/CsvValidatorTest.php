@@ -8,6 +8,11 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Test Assets Folder Path
+     */
+    protected $test_assets;
+
+    /**
      * @var CsvValidator
      */
     protected $validator;
@@ -17,23 +22,26 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->test_assets = realpath(dirname(__FILE__) . "/../../files");
         $this->validator = new CsvValidator();
-        $this->validator->setFilePath("tests/files/test.csv");
+        $this->validator->setFilePath($this->test_assets . "/test.csv");
     }
 
     public function testConstructorParams()
-    {
-        $file = "tests/files/test.csv";
-        $rule = ["name" => ["ascii" => ""]];
+    {   
+        $file = $this->test_assets . "/test.csv";
+        $rule = [
+            "name" => ["ascii" => ""]
+        ];
         $validator = new CsvValidator($file, $rule);
-        $this->assertEquals("tests/files/test.csv", $validator->getFilePath());
+        $this->assertEquals($file, $validator->getFilePath());
         $this->assertNotEmpty($validator->getRules());
     }
 
     public function testWrongFilePathException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->validator->setFilePath("tests/files/tet.csv")->validate();
+        $this->validator->setFilePath($this->test_assets . "/tet.csv")->validate();
     }
 
     public function testMessageTraitMessages()
@@ -60,10 +68,12 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testValidate()
     {
-        $this->validator->setRules([
-            "stars" => ["min" => 4],
-            "uri" => ["url" => ""]
-        ])->validate();
+        $this->validator->setRules(
+            [
+                "stars" => ["min" => 4],
+                "uri" => ["url" => ""]
+            ]
+        )->validate();
 
         $this->assertEquals(2, count($this->validator->getAllData()));
         $this->assertEquals(1, count($this->validator->getInvalidData()));

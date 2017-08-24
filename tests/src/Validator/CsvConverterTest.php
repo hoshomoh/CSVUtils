@@ -10,6 +10,11 @@ class CsvConverterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Test Assets Folder Path
+     */
+    protected $test_assets;
+
+    /**
      * @var CsvConverter
      */
     protected $converter;
@@ -24,21 +29,22 @@ class CsvConverterTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $validator = new CsvValidator("tests/files/test.csv");
-        $this->converter = new CsvConverter("tests/files");
+        $this->test_assets = realpath(dirname(__FILE__) . "/../../files");
+        $validator = new CsvValidator($this->test_assets . "/test.csv");
+        $this->converter = new CsvConverter($this->test_assets);
         $this->object = $validator->validate()->getAllData();
     }
 
     public function testConstructorParams()
     {
-        $this->assertEquals("tests/files", $this->converter->getPath());
+        $this->assertEquals($this->test_assets, $this->converter->getPath());
         $this->assertEmpty($this->converter->getData());
     }
 
     public function testInvalidDirectoryPathException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->converter->setPath("tests/files/test.csv");
+        $this->converter->setPath($this->test_assets . "/test.csv");
     }
 
     public function testSetData()
@@ -51,16 +57,16 @@ class CsvConverterTest extends \PHPUnit_Framework_TestCase
     {
         $this->converter->setData($this->object);
         $this->converter->toJson("test.json");
-        $this->assertFileExists('tests/files/test.json');
-        $this->assertFileEquals('tests/files/test-expected.json', 'tests/files/test.json');
+        $this->assertFileExists($this->test_assets . "/test.json");
+        $this->assertFileEquals($this->test_assets . "/test-expected.json", $this->test_assets . "/test.json");
     }
 
     public function testToXml()
     {
         $this->converter->setData($this->object);
         $this->converter->toXml("test.xml");
-        $this->assertFileExists('tests/files/test.xml');
-        $this->assertFileEquals('tests/files/test-expected.xml', 'tests/files/test.xml');
+        $this->assertFileExists($this->test_assets . "/test.xml");
+        $this->assertFileEquals($this->test_assets . "/test-expected.xml", $this->test_assets . "/test.xml");
     }
 
 }
