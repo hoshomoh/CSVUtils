@@ -72,7 +72,7 @@ $validator->setRules([
 Validating the CSV
 
 ```
-$validator->vaildate();
+$validator->validate();
 ```
 
 Other available methods (To be callde after `validate()` else you would get an empty array `[]`)

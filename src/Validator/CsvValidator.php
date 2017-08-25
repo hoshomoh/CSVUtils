@@ -87,7 +87,7 @@ class CsvValidator extends Rules
 
     /**
      * Read and validate CSV
-     *
+     * @return $this
      */
     public function validate()
     {
