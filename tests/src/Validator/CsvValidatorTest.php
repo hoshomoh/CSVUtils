@@ -3,6 +3,7 @@
 namespace Oshomo\CsvUtils\Validator;
 
 use InvalidArgumentException;
+use Oshomo\CsvUtils\Exceptions\InvalidRuleDeclarationException;
 
 class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,13 +39,31 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($validator->getRules());
     }
 
+    public function testWhenInvalidRuleIsPresent()
+    {
+        $invalidRule = [
+            "name" => ["notset" => ""]
+        ];
+        $this->expectException(InvalidRuleDeclarationException::class);
+        $this->validator->setRules($invalidRule)->validate();
+    }
+
+    public function testWhenNoParameterIsSuppliedForRule()
+    {
+        $invalidRule = [
+            "name" => ["min" => ""]
+        ];
+        $this->expectException(InvalidRuleDeclarationException::class);
+        $this->validator->setRules($invalidRule)->validate();
+    }
+
     public function testWrongFilePathException()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->validator->setFilePath($this->test_assets . "/tet.csv")->validate();
     }
 
-    public function testMessageTraitMessages()
+    public function testValidatorMessageTraitMessages()
     {
         $this->assertEquals("ratings attribute value 3 is less than the specified minimum.", $this->validator->getMessage("min", 3, "ratings"));
         $this->assertEquals("stars attribute value 5 is greater than the specified maximum.", $this->validator->getMessage("max", 5, "stars"));
