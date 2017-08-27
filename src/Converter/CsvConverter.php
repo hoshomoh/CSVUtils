@@ -26,7 +26,7 @@ class CsvConverter
      * @param  string $path
      * @param array $data
      */
-    public function __construct($path = null, $data = [])
+    public function __construct($data = [], $path = null)
     {
         if(isset($path)) {
             $this->setPath($path);

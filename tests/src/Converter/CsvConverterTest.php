@@ -31,7 +31,7 @@ class CsvConverterTest extends \PHPUnit_Framework_TestCase
     {
         $this->test_assets = realpath(dirname(__FILE__) . "/../../files");
         $validator = new CsvValidator($this->test_assets . "/test.csv");
-        $this->converter = new CsvConverter($this->test_assets);
+        $this->converter = new CsvConverter([], $this->test_assets);
         $this->object = $validator->validate()->getAllData();
     }
 

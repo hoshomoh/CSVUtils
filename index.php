@@ -17,7 +17,7 @@ $validator = new CsvValidator($file, [
 try {
     $data = $validator->validate()->getValidData();
     if($data) {
-	    $converter = new CsvConverter($file_path, $data);
+	    $converter = new CsvConverter($data, $file_path);
 	    echo $converter->toJson("sample.json") . "\n";
 	    echo $converter->toXml("sample.xml");
 	}

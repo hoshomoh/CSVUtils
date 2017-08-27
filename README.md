@@ -18,7 +18,7 @@ To run test make sure you have `PHPUNIT` installed on the test machine. Then run
 
 The `CsvConverter` and `CsvValidator` were written in isolation of each other so, that they can be used seperately if need arise. The `CsvConverter` expects a valid file path and an array of validation rule(s) and in turn an array of all, valid and invalid data can be accessed. 
 
-The `CsvValidator` on the other hand expects a valid folder path, data to be written into either `JSON` or `XML` as an array, and in turn write the file in the folder specified.
+The `CsvValidator` on the other hand expects a valid folder path, array of data to be written into either `JSON` or `XML`, and in turn write the file in the folder specified.
 
 ### Documentation
 
@@ -75,7 +75,7 @@ Validating the CSV
 $validator->validate();
 ```
 
-Other available methods (To be callde after `validate()` else you would get an empty array `[]`)
+Other available methods (To be called after `validate()` else you would get an empty array `[]`)
 
 `getHeaders()` e.g. `$validator->vaildate()->getHeaders();`
 Returns CSV header as an array
@@ -96,7 +96,7 @@ Currently supported converters:
 
 Initializing a `CsvConverter`. Set a valid folder path to save generated files and also pass data to be converted as an array. You would mostly pass data from `$validator->vaildate()->getValidData();` or `$validator->vaildate()->getAllData();` as the case maybe.
 ```
-$converter = new CsvConverter("some/valid/folder", []);
+$converter = new CsvConverter([], "some/valid/folder");
 ```
 
 OR
