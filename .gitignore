@@ -2,3 +2,5 @@
 build
 test.xml
 test.json
+/sample.xml
+/sample.json

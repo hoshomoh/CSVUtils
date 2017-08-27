@@ -4,6 +4,8 @@ namespace Oshomo\CsvUtils\Validator;
 
 
 use InvalidArgumentException;
+use Oshomo\CsvUtils\Exceptions\InvalidRuleDeclarationException;
+use ReflectionMethod;
 
 class CsvValidator extends Rules
 {
@@ -86,12 +88,58 @@ class CsvValidator extends Rules
     }
 
     /**
+     * Returns method name for supplied rule
+     * @param $rule
+     * @return string
+     */
+    private function getRuleValidator($rule)
+    {
+        return "validate".ucfirst($rule);
+    }
+
+    /**
+     * Validates that rules supplied are supported
+     * Also validates that parameters are sent for rules that require parameters
+     */
+    private function validateInitialRules()
+    {
+        $invalidRulesError = [];
+        if(!empty($this->initialRules)) {
+            foreach ($this->initialRules as $key => $rules) {
+                foreach ($rules as $rule => $parameter) {
+                    $validationFunction = $this->getRuleValidator($rule);
+                    // Checks if the rule supplied has a function for validating it
+                    if (!method_exists($this, $validationFunction) &&
+                        !is_callable(array($this, $validationFunction))
+                    ) {
+                        $invalidRulesError[$key][] = "Invalid rule {$rule} supplied.";
+                    } else {
+                        $func = new ReflectionMethod($this, $validationFunction);
+                        $numberOfParameters = $func->getNumberOfParameters();
+
+                        if ($numberOfParameters > 1 &&
+                            $parameter === "") {
+                            $invalidRulesError[$key][] = "Parameter for rule {$rule} cannot be empty.";
+                        }
+                    }
+
+                }
+            }
+
+            if (!empty($invalidRulesError)) {
+                throw new InvalidRuleDeclarationException($invalidRulesError);
+            }
+        }
+    }
+
+    /**
      * Read and validate CSV
      * @return $this
      */
     public function validate()
     {
         if ($this->validateFileExistAndReadable($this->file_path)) {
+            $this->validateInitialRules();
             if (($handle = fopen($this->file_path, 'r')) !== FALSE) {
                 while (($row = fgetcsv($handle, 0, ",")) !== FALSE) {
                     $this->columnCount ++;
@@ -246,7 +294,7 @@ class CsvValidator extends Rules
         $messages = [];
 
         foreach ($rules as $rule => $parameters) {
-            $method = "validate".ucfirst($rule);
+            $method = $this->getRuleValidator($rule);
             if(!$this->$method($value, $parameters)) {
                 $messages[] = $this->getMessage($rule, $value, $attribute);
             }
