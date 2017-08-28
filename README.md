@@ -50,7 +50,7 @@ Validates that a cell is a valid URL. By valid URL we mean
 ```
 
 Initializing a `CsvValidator`. Set a valid csv file path and pass in your validation rules.
-```
+```php
 $validator = new CsvValidator("some/valid/file_path", [
     "name" => ["ascii" => ""],
     "uri"   => ["url" => ""],
@@ -60,7 +60,7 @@ $validator = new CsvValidator("some/valid/file_path", [
 
 OR
 
-```
+```php
 $validator = new CsvValidator();
 $validator->setFilePath("some/valid/file_path");
 $validator->setRules([
@@ -71,7 +71,7 @@ $validator->setRules([
 
 Validating the CSV
 
-```
+```php
 $validator->validate();
 ```
 
@@ -95,31 +95,30 @@ Currently supported converters:
 `JSON` and `XML`
 
 Initializing a `CsvConverter`. Set a valid folder path to save generated files and also pass data to be converted as an array. You would mostly pass data from `$validator->vaildate()->getValidData();` or `$validator->vaildate()->getAllData();` as the case maybe.
-```
+```php
 $converter = new CsvConverter([], "some/valid/folder");
 ```
 
 OR
 
-```
+```php
 $converter = new CsvConverter();
 $converter->setPath("some/valid/folder");
 $converter->setData([]);
 ```
 
 Converting to `JSON`
-```
+```php
 $converter->toJSon("filename.json");
 ```
 
 Converting to `XML`
-```
+```php
 $converter->toXml("filename.xml");
 ```
 
 ### Todo's
 
  - Support for more validation rules `string`, `number`, `date`, `required`, `boolean`, `email`, `phone_number`, `ip_address`
- - Make the CsvConverter data parameter be an instance of CsvValidator data
  - Make CsvConverter extensible, so that user can pass there own validation rule
  - Add	options	to	sort/group/filter the data before writing the data.
