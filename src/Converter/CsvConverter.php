@@ -28,7 +28,7 @@ class CsvConverter
      */
     public function __construct($data = [], $path = null)
     {
-        if(isset($path)) {
+        if(!empty($path)) {
             $this->setPath($path);
         }
 
@@ -43,7 +43,13 @@ class CsvConverter
      */
     private function fullFilePath($filename)
     {
-        return $this->path . DIRECTORY_SEPARATOR . $filename;
+        $fullFilePath = "";
+
+        if (!empty($this->path) && !empty($filename)) {
+            $fullFilePath = $this->path . DIRECTORY_SEPARATOR . $filename;
+        }
+
+        return $fullFilePath;
     }
 
     /**
@@ -114,7 +120,7 @@ class CsvConverter
      * @param $filename
      * @return mixed
      */
-    public function toJson($filename)
+    public function toJson($filename = "")
     {
         return $this->convert(new JsonConverter(), $filename);
 
@@ -125,7 +131,7 @@ class CsvConverter
      * @param $filename
      * @return mixed
      */
-    public function toXml($filename)
+    public function toXml($filename = "")
     {
         return $this->convert(new XmlConverter(), $filename);
 

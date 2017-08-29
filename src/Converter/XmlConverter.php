@@ -48,18 +48,23 @@ class XmlConverter extends BaseConverter
 
     public function write($filename)
     {
-        // Use DOMDocument to beautify the SimpleXML output
-        $dom = new DOMDocument('1.0');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom_xml = dom_import_simplexml($this->data);
-        $dom_xml = $dom->importNode($dom_xml, true);
-        $dom_xml = $dom->appendChild($dom_xml);
+        if (empty($filename)) {
+            return $this->data->asXML();
+        } else {
+            // Use DOMDocument to beautify the SimpleXML output
+            $dom = new DOMDocument('1.0');
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+            $dom_xml = dom_import_simplexml($this->data);
+            $dom_xml = $dom->importNode($dom_xml, true);
+            $dom_xml = $dom->appendChild($dom_xml);
 
-        if (!$dom->save($filename)){
-            return "Data to XML conversion not successful.";
+            if (!$dom->save($filename)) {
+                return "Data to XML conversion not successful.";
+            } else {
+                return "Data to XML conversion successful. Check {$filename} for your file.";
+            }
         }
 
-        return "Data to XML conversion successful. Check {$filename} for your file.";
     }
 }

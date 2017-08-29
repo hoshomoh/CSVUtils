@@ -26,10 +26,14 @@ class JsonConverter extends BaseConverter
 
     public function write($filename)
     {
-        if (!file_put_contents($filename, $this->data)){
-            return "Data to JSON conversion not successful.";
+        if (empty($filename)) {
+            return $this->data;
+        } else {
+            if (!file_put_contents($filename, $this->data)){
+                return "Data to JSON conversion not successful.";
+            } else {
+                return "Data to JSON conversion successful. Check {$filename} for your file.";
+            }
         }
-
-        return "Data to JSON conversion successful. Check {$filename} for your file.";
     }
 }
