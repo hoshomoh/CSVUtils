@@ -94,9 +94,37 @@ Currently supported converters:
 
 `JSON` and `XML`
 
-Initializing a `CsvConverter`. Set a valid folder path to save generated files and also pass data to be converted as an array. You would mostly pass data from `$validator->vaildate()->getValidData();` or `$validator->vaildate()->getAllData();` as the case maybe.
+Initializing a `CsvConverter`. The `CsvConverter` take two parameters, an array of data and an optional valid folder path if you want the data to be written to a file. The methods below from `CsvValidator` returns array of data, so they can be passed as parameter to `CsvConverter`. `$validator->validate()->getValidData();`, `$validator->validate()->getInvalidData();` or `$validator->validate()->getAllData();` as the case maybe.
 ```php
-$converter = new CsvConverter([], "some/valid/folder");
+$data = [
+    [
+        'name' => 'Beni Gold Hotel and Apartments'
+        'stars' => '5'
+        'uri' => 'https://hotels.ng/hotel/86784-benigold-hotel-lagos'
+    ],
+    [
+        'name' => 'Hotel Ibis Lagos Ikeja'
+        'stars' => '3'
+        'uri' => 'https://hotels.ng/hotel/52497-hotel-ibis-lagos-ikeja-lagos'
+    ],
+    [
+        'name' => 'Silver Grandeur Hotel'
+        'stars' => '7'
+        'uri' => 'https://hotels.ng/hotel/88244-silver-grandeur-hotel-lagos'
+    ],
+    [
+        'name' => 'Limeridge Hotel, Lekki'
+        'stars' => '7'
+        'uri' => 'https://hotels.ng/hotel/65735-limeridge-hotel-lagos'
+    ]
+]
+$converter = new CsvConverter($data);
+```
+
+OR
+
+```php
+$converter = new CsvConverter($data, "some/valid/folder");
 ```
 
 OR
@@ -107,14 +135,33 @@ $converter->setPath("some/valid/folder");
 $converter->setData([]);
 ```
 
-Converting to `JSON`
+If you specify a filename for `toJSon`, `toXml` or any other supported methods, then you must initialize `CsvConverter` with a valid folder path else an exception would be thrown. 
+
+Omitting the filename would return the data as either JSON, XML or any other supported file extensions irrespective of whether `CsvConverter` was initialized with a valid folder path or not
+
+Converting to `JSON`. 
+
 ```php
 $converter->toJSon("filename.json");
+```
+
+OR
+
+```php
+header('Content-Type: application/json');
+print($converter->toJSon());
 ```
 
 Converting to `XML`
 ```php
 $converter->toXml("filename.xml");
+```
+
+OR
+
+```php
+header('Content-Type: application/xml');
+print($converter->toXml());
 ```
 
 ### Todo's
