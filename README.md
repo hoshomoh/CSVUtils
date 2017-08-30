@@ -22,7 +22,8 @@ The `CsvValidator` on the other hand expects a valid folder path, array of data 
 
 ### Documentation
 
-##### CsvValidator
+#### CsvValidator
+
 Currently supported validation rules:
 
 `min (expects a value)`:
@@ -89,12 +90,18 @@ Returns All CSV data that passed validation as an array
 `getInvalidData()` e.g. `$validator->vaildate()->getInvalidData();`
 Returns All CSV data that failed validation as an array with `error` bag containing which and why each column failed.
 
-##### CsvConverter
+#### CsvConverter
+
 Currently supported converters:
 
 `JSON` and `XML`
 
-Initializing a `CsvConverter`. The `CsvConverter` take two parameters, an array of data and an optional valid folder path if you want the data to be written to a file. The methods below from `CsvValidator` returns array of data, so they can be passed as parameter to `CsvConverter`. `$validator->validate()->getValidData();`, `$validator->validate()->getInvalidData();` or `$validator->validate()->getAllData();` as the case maybe.
+Initializing a `CsvConverter`. The `CsvConverter` take two parameters, an array of data and an optional valid folder path if you want the data to be written to a file. The methods below from `CsvValidator` returns array of data, so they can be passed as parameter to `CsvConverter`. 
+
+`$validator->validate()->getValidData();`, <br>
+`$validator->validate()->getInvalidData();` <br>
+`$validator->validate()->getAllData();`
+
 ```php
 $data = [
     [
