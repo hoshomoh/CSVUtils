@@ -59,6 +59,10 @@ class CsvConverter
      */
     private function convert(BaseConverter $converter, $filename)
     {
+        if (!empty($filename) && empty($this->getPath())) {
+            throw new InvalidArgumentException("You must initialize the converter with a valid path");
+        }
+
         return $converter->convert($this->data)->write($this->fullFilePath($filename));
     }
 
