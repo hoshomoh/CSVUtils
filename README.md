@@ -9,10 +9,8 @@
 
 ### How to run
 
-From the package root, run assignment using php built in server `php -S localhost:8000`, this would start the server at `localhost:8000`. Visit the URL from your browser and you should see the generated files at the root of the package.
+From the package root, run `composer install` then using php built in server run `php -S localhost:8000`, this would start the server at `localhost:8000`. Visit the URL from your browser and you should see the generated files at the root of the package.
 The `sample.csv` is at the root of the package. Generated files would also be saved there.
-
-To run test make sure you have `PHPUNIT` installed on the test machine. Then run `phpunit` also from the root of the Package.
 
 ### Implementation
 
@@ -170,6 +168,10 @@ OR
 header('Content-Type: application/xml');
 print($converter->toXml());
 ```
+
+### Running Test's
+
+Run `phpunit` from the root of the Package. This assumes you have ran `composer install`.
 
 ### Todo's
 
