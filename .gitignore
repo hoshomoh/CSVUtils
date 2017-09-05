@@ -1,4 +1,5 @@
 .idea/*
+vendor
 build
 test.xml
 test.json
