@@ -207,6 +207,8 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
             "uri" => ["url"]
         ]);
 
+        print_r($validator->errors());
+
         $this->assertFalse($validator->fails());
 
         $this->assertTrue($validator->write(new JsonConverter()));
@@ -226,6 +228,8 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
             "stars" => ["between:3,10"],
             "uri" => ["url"]
         ]);
+
+        print_r($validator->errors());
 
         $this->assertFalse($validator->fails());
 
