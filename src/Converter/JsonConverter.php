@@ -1,39 +1,51 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: oshomo.oforomeh
- * Date: 29/01/2017
- * Time: 11:37 PM
- */
 
 namespace Oshomo\CsvUtils\Converter;
 
 
-class JsonConverter extends BaseConverter
+use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
+
+class JsonConverter implements ConverterHandlerInterface
 {
+    const FILE_EXTENSION = "json";
+
     /**
      * The converted data
      *
      * @var string
      */
-    private $data;
+    protected $data;
 
+    /**
+     * @return string
+     */
+    public function getExtension()
+    {
+        return self::FILE_EXTENSION;
+    }
+
+    /**
+     * @param array $data
+     * @return $this|mixed
+     */
     public function convert($data)
     {
-        $this->data = json_encode($data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $this->data = json_encode($data,
+            JSON_PRETTY_PRINT |
+            JSON_NUMERIC_CHECK |
+            JSON_UNESCAPED_SLASHES |
+            JSON_UNESCAPED_UNICODE
+        );
+
         return $this;
     }
 
+    /**
+     * @param string $filename
+     * @return bool
+     */
     public function write($filename)
     {
-        if (empty($filename)) {
-            return $this->data;
-        } else {
-            if (!file_put_contents($filename, $this->data)){
-                return "Data to JSON conversion not successful.";
-            } else {
-                return "Data to JSON conversion successful. Check {$filename} for your file.";
-            }
-        }
+        return (file_put_contents($filename, $this->data)) ? true : false;
     }
 }

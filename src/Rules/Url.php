@@ -1,40 +1,47 @@
 <?php
 
-namespace Oshomo\CsvUtils\Validator;
+namespace Oshomo\CsvUtils\Rules;
 
-class Rules
+
+use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
+
+class Url implements ValidationRuleInterface
 {
+
     /**
-     * @param $number
-     * @param $min
-     * @return bool
+     * Determine if the validation rule accepts parameters or not.
+     *
+     * @return boolean
      */
-    public function validateMin($number, $min)
+    public function isImplicit()
     {
-        return ($number >= $min);
+        return true;
     }
 
     /**
-     * @param $number
-     * @param $max
-     * @return bool
+     * Get the number of parameters that should be supplied
+     *
+     * @return integer
      */
-    public function validateMax($number, $max)
+    public function parameterCount()
     {
-        return ($number <= $max);
+        return 0;
     }
 
     /**
-     * @param $url
+     * Determine if the validation rule passes.
+     *
+     * @param mixed $value
+     * @param $parameters
      * @return bool
      */
-    public function validateUrl($url)
+    public function passes($value, $parameters)
     {
         /*
-         * This pattern is derived from Symfony\Component\Validator\Constraints\UrlValidator (2.7.4).
-         *
-         * (c) Fabien Potencier <fabien@symfony.com> http://symfony.com
-         */
+        * This pattern is derived from Symfony\Component\Validator\Constraints\UrlValidator (2.7.4).
+        *
+        * (c) Fabien Potencier <fabien@symfony.com> http://symfony.com
+        */
         $pattern = '~^
             ((aaa|aaas|about|acap|acct|acr|adiumxtra|afp|afs|aim|apt|attachment|aw|barion|beshare|bitcoin|blob|bolo|callto|cap|chrome|chrome-extension|cid|coap|coaps|com-eventbrite-attendee|content|crid|cvs|data|dav|dict|dlna-playcontainer|dlna-playsingle|dns|dntp|dtn|dvb|ed2k|example|facetime|fax|feed|feedready|file|filesystem|finger|fish|ftp|geo|gg|git|gizmoproject|go|gopher|gtalk|h323|ham|hcp|http|https|iax|icap|icon|im|imap|info|iotdisco|ipn|ipp|ipps|irc|irc6|ircs|iris|iris.beep|iris.lwz|iris.xpc|iris.xpcs|itms|jabber|jar|jms|keyparc|lastfm|ldap|ldaps|magnet|mailserver|mailto|maps|market|message|mid|mms|modem|ms-help|ms-settings|ms-settings-airplanemode|ms-settings-bluetooth|ms-settings-camera|ms-settings-cellular|ms-settings-cloudstorage|ms-settings-emailandaccounts|ms-settings-language|ms-settings-location|ms-settings-lock|ms-settings-nfctransactions|ms-settings-notifications|ms-settings-power|ms-settings-privacy|ms-settings-proximity|ms-settings-screenrotation|ms-settings-wifi|ms-settings-workplace|msnim|msrp|msrps|mtqp|mumble|mupdate|mvn|news|nfs|ni|nih|nntp|notes|oid|opaquelocktoken|pack|palm|paparazzi|pkcs11|platform|pop|pres|prospero|proxy|psyc|query|redis|rediss|reload|res|resource|rmi|rsync|rtmfp|rtmp|rtsp|rtsps|rtspu|secondlife|service|session|sftp|sgn|shttp|sieve|sip|sips|skype|smb|sms|smtp|snews|snmp|soap.beep|soap.beeps|soldat|spotify|ssh|steam|stun|stuns|submit|svn|tag|teamspeak|tel|teliaeid|telnet|tftp|things|thismessage|tip|tn3270|turn|turns|tv|udp|unreal|urn|ut2004|vemmi|ventrilo|videotex|view-source|wais|webcal|ws|wss|wtai|wyciwyg|xcon|xcon-userid|xfire|xmlrpc\.beep|xmlrpc.beeps|xmpp|xri|ymsgr|z39\.50|z39\.50r|z39\.50s))://                                 # protocol
             (([\pL\pN-]+:)?([\pL\pN-]+)@)?          # basic auth
@@ -51,16 +58,28 @@ class Rules
             (/?|/\S+|\?\S*|\#\S*)                   # a /, nothing, a / with something, a query or a fragment
         $~ixu';
 
-        return preg_match($pattern, $url) > 0;
+        return preg_match($pattern, $value) > 0;
     }
 
     /**
-     * @param $string
-     * @return bool
+     * Get the validation error message.
+     *
+     * @return string
      */
-    public function validateAscii($string)
+    public function message()
     {
-        return (mb_detect_encoding($string, 'ASCII', true)) ? true : false;
+        return "The :attribute value :value is not a valid url";
     }
 
+    /**
+     * Replace error messages parameter with right values
+     *
+     * @param string $message
+     * @param array $parameters
+     * @return string
+     */
+    public function parameterReplacer($message, $parameters)
+    {
+        return $message;
+    }
 }

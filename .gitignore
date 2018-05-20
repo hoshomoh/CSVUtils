@@ -1,7 +1,7 @@
 .idea/*
 vendor
-build
-test.xml
-test.json
-/sample.xml
-/sample.json
+sample.json
+sample.xml
+valid_test.csv
+valid_test.json
+valid_test.xml
