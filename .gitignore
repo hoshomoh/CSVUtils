@@ -1,6 +1,7 @@
 .idea/*
 vendor
 build
+composer.lock
 sample.json
 sample.xml
 valid_test.csv
