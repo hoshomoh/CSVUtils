@@ -172,7 +172,6 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
     public function testValidatorWithCustomErrorMessageWithPlaceholder()
     {
         $file = $this->testAssets . "/between_test.csv";
-        var_dump($file);
 
         $validator = new Validator($file, ',', [
             "stars" => ["between:4,10"]
@@ -210,6 +209,8 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         //$this->assertFalse($validator->fails());
         var_dump($file);
+        var_dump(file_exists($file));
+        var_dump(is_readable($file));
         var_dump($validator->fails());
         var_dump($validator->errors());
 
