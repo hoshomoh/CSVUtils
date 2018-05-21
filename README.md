@@ -1,4 +1,6 @@
-# CSVUtils by Oforomeh Oshomo
+# CSVUtils
+
+*Make sure you use a tagged version when requiring this package.*
 
 ### How to run
 
@@ -6,11 +8,14 @@ I have added a sample `index.php` file for a quick test of how to use the packag
 
 ### Implementation
 
-The `Validator` expects a valid file path, the CSV delimiter, an array of validation rule(s) and an optional message(s) array to overrite the default messages of the validator.
+The `Validator` expects a valid file path, the CSV delimiter, an array of validation rule(s) and an optional message(s) array to over-write the default messages of the validator.
 
 ### Documentation
 
-Initializing a `Validator`. Set a valid csv file path, pass the CSV delimiter and pass in your validation rules.
+##### Initializing a `Validator`. 
+
+Set a valid csv file path, pass the CSV delimiter and pass in your validation rules.
+
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
 
@@ -58,7 +63,7 @@ $validator = new Validator("some/valid/file_path", ",", [
 ]);
 ```
 
-In this above example, the :attribute place-holder will be replaced by the actual name of the field under validation. The :value place-holder will also be replaced with value being validated. You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
+In this above example, the `:attribute` place-holder will be replaced by the actual name of the field under validation. The `:value` place-holder will also be replaced with value being validated. You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
 
 ##### Available rules
 
