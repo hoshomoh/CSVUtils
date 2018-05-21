@@ -207,7 +207,9 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
             "uri" => ["url"]
         ]);
 
-        $this->assertFalse($validator->fails());
+        //$this->assertFalse($validator->fails());
+        var_dump($validator->fails());
+        var_dump($validator->errors());
 
         $this->assertTrue($validator->write(new JsonConverter()));
 
