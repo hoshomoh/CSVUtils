@@ -1,3 +1,10 @@
+<a href="https://travis-ci.org/hoshomoh/CSVUtils">
+    <img src="https://travis-ci.org/hoshomoh/CSVUtils.svg" alt="Build Status">
+</a>
+<a href="https://codecov.io/gh/hoshomoh/CSVUtils">
+    <img src="https://codecov.io/gh/hoshomoh/CSVUtils/branch/master/graph/badge.svg" alt="Codecov" />
+</a>
+
 # CSVUtils
 
 *Make sure you use a tagged version when requiring this package.*
