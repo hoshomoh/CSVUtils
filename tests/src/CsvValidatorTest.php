@@ -209,6 +209,11 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->fails());
 
+        $this->assertSame(
+            $validator::NO_ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
         $this->assertTrue($validator->write(new JsonConverter()));
 
         $this->assertFileEquals(
@@ -229,6 +234,11 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->fails());
 
+        $this->assertSame(
+            $validator::NO_ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
         $this->assertTrue($validator->write(new XmlConverter()));
 
         $this->assertFileEquals(
@@ -248,6 +258,11 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertFalse($validator->fails());
+
+        $this->assertSame(
+            $validator::NO_ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
 
         $this->assertTrue($validator->write(new XmlConverter('sample')));
 

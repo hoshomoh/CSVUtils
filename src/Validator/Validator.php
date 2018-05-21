@@ -14,6 +14,7 @@ class Validator
 
     const FILE_EXTENSION = ".csv";
     const ERROR_MESSAGE = "Validation fails.";
+    const NO_ERROR_MESSAGE = "File is valid.";
     const INVALID_FILE_PATH_ERROR = "Supplied file is not accessible.";
     const SUCCESS_MESSAGE = "CSV is valid.";
 
@@ -140,8 +141,16 @@ class Validator
      */
     public function errors()
     {
+        if (empty($this->message) && empty($this->invalidRows)) {
+            $message = self::NO_ERROR_MESSAGE;
+        } elseif (empty($this->message)) {
+            $message = self::ERROR_MESSAGE;
+        } else {
+            $message = $this->message;
+        }
+
         return [
-            "message" => empty($this->message) ? self::ERROR_MESSAGE : $this->message,
+            "message" => $message,
             "data" => $this->invalidRows
         ];
     }
