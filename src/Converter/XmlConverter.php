@@ -1,70 +1,101 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: oshomo.oforomeh
- * Date: 30/01/2017
- * Time: 5:33 PM
- */
 
 namespace Oshomo\CsvUtils\Converter;
 
+
 use DOMDocument;
+use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 use SimpleXMLElement;
 
-class XmlConverter extends BaseConverter
+class XmlConverter implements ConverterHandlerInterface
 {
+
+    const FILE_EXTENSION = "xml";
+    const DEFAULT_ROOT_ELEMENT = "data";
+    const DEFAULT_RECORD_ELEMENT = "item";
+
+    /**
+     * XML node root element
+     */
+    protected $recordElement;
 
     /**
      * The converted data
      *
      * @var string
      */
-    private $data;
+    protected $data;
 
-    public function __construct()
+
+    /**
+     * XmlConverter constructor.
+     *
+     * @param string $recordElement
+     */
+    public function __construct($recordElement = self::DEFAULT_RECORD_ELEMENT)
     {
+        if (!empty($recordElement)) {
+            $this->recordElement = $recordElement;
+        }
+
         $this->data = new SimpleXMLElement('<?xml version="1.0"?><data></data>');
     }
 
-    private function toXml($data, $xml_data) {
+    /**
+     * @return string
+     */
+    public function getExtension()
+    {
+        return self::FILE_EXTENSION;
+    }
+
+    /**
+     * @param $data
+     * @param $xmlData
+     */
+    protected function toXml($data, $xmlData) {
         foreach( $data as $key => $value ) {
             if( is_numeric($key) ){
-                $key = 'item'.$key; //dealing with <0/>..<n/> issues
+                $key = $this->recordElement;
             }
             if( is_array($value) ) {
-                $sub_node = $xml_data->addChild($key);
-                $this->toXml($value, $sub_node);
+                $subNode = $xmlData->addChild($key);
+                $this->toXml($value, $subNode);
             } else {
-                $xml_data->addChild("$key",htmlspecialchars("$value"));
+                $xmlData->addChild("$key",htmlspecialchars("$value"));
             }
         }
     }
 
+    /**
+     * @param $data
+     * @return $this|mixed
+     */
     public function convert($data)
     {
         $this->toXml($data, $this->data);
+
         return $this;
     }
 
+    /**
+     * @param $filename
+     * @return bool
+     */
     public function write($filename)
     {
-        if (empty($filename)) {
-            return $this->data->asXML();
-        } else {
-            // Use DOMDocument to beautify the SimpleXML output
-            $dom = new DOMDocument('1.0');
-            $dom->preserveWhiteSpace = false;
-            $dom->formatOutput = true;
-            $dom_xml = dom_import_simplexml($this->data);
-            $dom_xml = $dom->importNode($dom_xml, true);
-            $dom_xml = $dom->appendChild($dom_xml);
+        $dom = new DOMDocument('1.0');
 
-            if (!$dom->save($filename)) {
-                return "Data to XML conversion not successful.";
-            } else {
-                return "Data to XML conversion successful. Check {$filename} for your file.";
-            }
-        }
+        $dom->preserveWhiteSpace = false;
 
+        $dom->formatOutput = true;
+
+        $domXml = dom_import_simplexml($this->data);
+
+        $domXml = $dom->importNode($domXml, true);
+
+        $dom->appendChild($domXml);
+
+        return ($dom->save($filename)) ? true : false;
     }
 }
