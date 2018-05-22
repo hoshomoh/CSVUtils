@@ -137,9 +137,9 @@ The `JsonConverter` simply writes the output data as JSON. The `XmlConverter` co
 
 **NOTE**: *Either validation passes or fails, you can always write the CSV output data to the available formats. In cases where validation fails there would be an extra error property in the written data.*
 
-##### Passing custom rule to validator
+##### Passing custom rule to validator (Using Rule Object)
 
-Passing a custom rule to the validartor is easy. Create a CustomRule class the implements `Oshomo\CsvUtils\Contracts\ValidationRuleInterface` interface. And pass that class to the rule array, easy. E.g:
+Passing a custom rule to the validator is easy. Create a CustomRule class the implements `Oshomo\CsvUtils\Contracts\ValidationRuleInterface` interface. And pass that class to the rule array, easy. E.g:
 
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
@@ -225,6 +225,22 @@ class UppercaseRule implements ValidationRuleInterface
     }
 }
 
+```
+
+##### Passing custom rule to validator (Using Closure)
+
+If you only need the functionality of a custom rule once throughout your application, you may use a Closure instead of a rule object. The Closure receives the attribute's value, and a `$fail` callback that should be called if validation fails:
+
+```php
+use Oshomo\CsvUtils\Validator\Validator;
+
+$validator = new Validator("some/valid/file_path", ",", [
+    "uri"   => ["url", function($value, $fail) {
+        if (strpos($value, "https://") !== 0) {
+            return $fail('The URL passed must be https i.e it must start with https://');
+        }
+    }]
+]);
 ```
 
 ##### Writing CSV output data to other formats
