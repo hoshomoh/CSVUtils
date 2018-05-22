@@ -114,7 +114,7 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testValidatorWithCustomRule()
+    public function testValidatorWithCustomRuleObject()
     {
         $file = $this->testAssets . "/ascii_test.csv";
 
@@ -136,6 +136,31 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertContains(
             "The name value Well Health Hotels¡ must be uppercase.",
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
+    public function testValidatorWithCustomRuleClosure()
+    {
+        $file = $this->testAssets . "/url_test.csv";
+
+        $validator = new Validator($file, ',', [
+            "uri" => [function($value, $fail) {
+                if (strpos($value, "https://") !== 0) {
+                    return $fail('The URL passed must be https i.e it must start with https://');
+                }
+            }]
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertArrayHasKey(
+            "errors",
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            "The URL passed must be https i.e it must start with https://",
             $validator->errors()['data'][0]['errors']
         );
     }
