@@ -10,7 +10,11 @@ $file = $file_path . "/sample/sample.csv";
 $validator = new Validator($file, ',', [
     "stars" => ["between:0,5"],
     "name" => ["ascii_only"],
-    "uri"   => ["url"],
+    "uri"   => ["url", function($value, $fail) {
+        if (strpos($value, "https://") !== 0) {
+            return $fail('The URL passed must be https i.e it must start with https://');
+        }
+    }],
 ]);
 
 if(!$validator->fails()) {
