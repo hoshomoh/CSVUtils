@@ -383,7 +383,7 @@ class Validator
         } else {
             $ruleParameterCount = $rule->parameterCount();
             $parameterCount = count($parameters);
-            return ($ruleParameterCount === -1) ? ($parameterCount > 0) : ($parameterCount === $ruleParameterCount);
+            return ($ruleParameterCount === 0) ? true : ($parameterCount === $ruleParameterCount);
         }
 
     }
