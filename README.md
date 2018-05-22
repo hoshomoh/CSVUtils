@@ -7,7 +7,7 @@
 
 # CSVUtils
 
-*Make sure you use a tagged version when requiring this package.*
+*Make sure you use a tagged version when requiring this package. The current version is [v2.0.0](https://packagist.org/packages/oshomo/csv-utils#v2.0.0)*
 
 ### How to run
 
@@ -19,7 +19,7 @@ The `Validator` expects a valid file path, the CSV delimiter, an array of valida
 
 ### Documentation
 
-##### Initializing a `Validator`. 
+##### Initializing a Validator. 
 
 Set a valid csv file path, pass the CSV delimiter and pass in your validation rules.
 
