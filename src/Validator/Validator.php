@@ -378,13 +378,9 @@ class Validator
             $rule = $this->getRuleClass($rule);
         }
 
-        if ($rule->isImplicit()) {
-            return true;
-        } else {
-            $ruleParameterCount = $rule->parameterCount();
-            $parameterCount = count($parameters);
-            return ($ruleParameterCount === 0) ? true : ($parameterCount === $ruleParameterCount);
-        }
+        $ruleParameterCount = $rule->parameterCount();
+        $parameterCount = count($parameters);
+        return ($ruleParameterCount === 0) ? true : ($parameterCount === $ruleParameterCount);
 
     }
 
