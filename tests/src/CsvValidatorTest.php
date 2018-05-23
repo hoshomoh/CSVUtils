@@ -6,8 +6,9 @@ namespace Oshomo\CsvUtils\Validator;
 use Oshomo\CsvUtils\Converter\JsonConverter;
 use Oshomo\CsvUtils\Converter\XmlConverter;
 use Oshomo\CsvUtils\Tests\src\UppercaseRule;
+use PHPUnit\Framework\TestCase;
 
-class CsvValidatorTest extends \PHPUnit_Framework_TestCase
+class CsvValidatorTest extends TestCase
 {
     /**
      * Test Assets Folder Path
@@ -270,6 +271,54 @@ class CsvValidatorTest extends \PHPUnit_Framework_TestCase
             $this->testAssets . "/valid_test_expected.xml",
             $this->testAssets . "/valid_test.xml"
         );
+    }
+
+    public function testValidatorCsvOnEmptyRule()
+    {
+        $file = $this->testAssets . "/valid_test.csv";
+
+        $expectedArray = [
+            'message' => 'CSV is valid.',
+            'data' => [
+                [
+                    'name' => 'Well Health Hotels',
+                    'address' => 'Inga N. P.O. Box 567',
+                    'stars' => '3',
+                    'contact' => 'Kasper Zen',
+                    'uri' => 'http://well.org'
+                ]
+            ]
+        ];
+
+        $validator = new Validator($file, ',', [
+            "stars" => ['']
+        ]);
+
+        $this->assertSame($expectedArray, $validator->validate());
+    }
+
+    public function testValidatorCsvIsValid()
+    {
+        $file = $this->testAssets . "/valid_test.csv";
+
+        $validator = new Validator($file, ',', [
+            "stars" => ["between:3,10"]
+        ]);
+
+        $expectedArray = [
+            'message' => 'CSV is valid.',
+            'data' => [
+                [
+                    'name' => 'Well Health Hotels',
+                    'address' => 'Inga N. P.O. Box 567',
+                    'stars' => '3',
+                    'contact' => 'Kasper Zen',
+                    'uri' => 'http://well.org'
+                ]
+            ]
+        ];
+
+        $this->assertSame($expectedArray, $validator->validate());
     }
 
     public function testValidatorXmlWriterWithRecordElementParameter()

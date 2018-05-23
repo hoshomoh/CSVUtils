@@ -4,8 +4,9 @@ namespace Oshomo\CsvUtils\Validator;
 
 
 use Oshomo\CsvUtils\Tests\src\UppercaseRule;
+use PHPUnit\Framework\TestCase;
 
-class CsvValidatorParserTest extends \PHPUnit_Framework_TestCase
+class CsvValidatorParserTest extends TestCase
 {
     public function testWhenCustomRuleIsPassed()
     {
