@@ -10,16 +10,6 @@ class Between implements ValidationRuleInterface
     const PARAMETER_COUNT = 2;
 
     /**
-     * Determine if the validation rule accepts parameters or not.
-     *
-     * @return boolean
-     */
-    public function isImplicit()
-    {
-        return false;
-    }
-
-    /**
      * Get the number of parameters that should be supplied
      *
      * @return integer
