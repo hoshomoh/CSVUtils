@@ -6,14 +6,6 @@ namespace Oshomo\CsvUtils\Contracts;
 interface ValidationRuleInterface
 {
     /**
-     * Determine if the validation rule accepts parameters or not.
-     * If it does not accept any parameter return true else return false
-     *
-     * @return boolean
-     */
-    public function isImplicit();
-
-    /**
      * Get the number of parameters that should be supplied.
      * If no parameter should be supplied return 0 else
      * return the number of parameters that should be returned

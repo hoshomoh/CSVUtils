@@ -156,16 +156,6 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class UppercaseRule implements ValidationRuleInterface
 {
-    /**
-     * Determine if the validation rule accepts parameters or not.
-     * If it does not accept any parameter return true else return false
-     *
-     * @return boolean
-     */
-    public function isImplicit()
-    {
-        return true;
-    }
 
     /**
      * Get the number of parameters that should be supplied. 

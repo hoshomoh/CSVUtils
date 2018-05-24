@@ -9,16 +9,6 @@ class AsciiOnly implements ValidationRuleInterface
 {
 
     /**
-     * Determine if the validation rule accepts parameters or not.
-     *
-     * @return boolean
-     */
-    public function isImplicit()
-    {
-        return true;
-    }
-
-    /**
      * Get the number of parameters that should be supplied
      *
      * @return integer

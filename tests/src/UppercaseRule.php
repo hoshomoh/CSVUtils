@@ -7,13 +7,6 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class UppercaseRule implements ValidationRuleInterface
 {
-    /**
-     * @return boolean
-     */
-    public function isImplicit()
-    {
-        return true;
-    }
 
     /**
      * @return integer
