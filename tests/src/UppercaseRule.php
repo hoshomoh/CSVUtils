@@ -2,14 +2,13 @@
 
 namespace Oshomo\CsvUtils\Tests\src;
 
-
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class UppercaseRule implements ValidationRuleInterface
 {
 
     /**
-     * @return integer
+     * @return int
      */
     public function parameterCount()
     {

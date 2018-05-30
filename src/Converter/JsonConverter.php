@@ -2,7 +2,6 @@
 
 namespace Oshomo\CsvUtils\Converter;
 
-
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 
 class JsonConverter implements ConverterHandlerInterface
@@ -26,11 +25,13 @@ class JsonConverter implements ConverterHandlerInterface
 
     /**
      * @param array $data
+     *
      * @return $this|mixed
      */
     public function convert($data)
     {
-        $this->data = json_encode($data,
+        $this->data = json_encode(
+            $data,
             JSON_PRETTY_PRINT |
             JSON_NUMERIC_CHECK |
             JSON_UNESCAPED_SLASHES |
@@ -42,6 +43,7 @@ class JsonConverter implements ConverterHandlerInterface
 
     /**
      * @param string $filename
+     *
      * @return bool
      */
     public function write($filename)

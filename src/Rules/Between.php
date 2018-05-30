@@ -2,7 +2,6 @@
 
 namespace Oshomo\CsvUtils\Rules;
 
-
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class Between implements ValidationRuleInterface
@@ -10,9 +9,9 @@ class Between implements ValidationRuleInterface
     const PARAMETER_COUNT = 2;
 
     /**
-     * Get the number of parameters that should be supplied
+     * Get the number of parameters that should be supplied.
      *
-     * @return integer
+     * @return int
      */
     public function parameterCount()
     {
@@ -24,6 +23,7 @@ class Between implements ValidationRuleInterface
      *
      * @param mixed $value
      * @param $parameters
+     *
      * @return bool
      */
     public function passes($value, $parameters)
@@ -48,6 +48,7 @@ class Between implements ValidationRuleInterface
      *
      * @param string $message
      * @param array $parameters
+     *
      * @return string
      */
     public function parameterReplacer($message, $parameters)

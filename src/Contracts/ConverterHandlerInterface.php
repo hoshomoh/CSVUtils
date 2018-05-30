@@ -2,9 +2,8 @@
 
 namespace Oshomo\CsvUtils\Contracts;
 
-
-interface ConverterHandlerInterface {
-
+interface ConverterHandlerInterface
+{
     /**
      * Get the converter file extension. If the file extension
      * for this converter is csv just return "csv"
@@ -18,6 +17,7 @@ interface ConverterHandlerInterface {
      * is carried out.
      *
      * @param array $data
+     *
      * @return $this
      */
     public function convert($data);
@@ -26,6 +26,7 @@ interface ConverterHandlerInterface {
      * Writes the converted data to the path specified
      *
      * @param string $filename
+     *
      * @return bool
      */
     public function write($filename);

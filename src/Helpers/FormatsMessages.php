@@ -2,6 +2,7 @@
 
 namespace Oshomo\CsvUtils\Helpers;
 
+use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 trait FormatsMessages
 {
@@ -9,8 +10,9 @@ trait FormatsMessages
      * Get the validation message for an attribute and rule.
      *
      * @param string $attribute
-     * @param \Oshomo\CsvUtils\Contracts\ValidationRuleInterface $rule
+     * @param ValidationRuleInterface $rule
      * @param string $actualRule
+     *
      * @return string
      */
     protected function getMessage($attribute, $rule, $actualRule)
@@ -25,10 +27,11 @@ trait FormatsMessages
     }
 
     /**
-     * Get the proper inline error message passed to the validator
+     * Get the proper inline error message passed to the validator.
      *
      * @param string $attribute
      * @param string $rule
+     *
      * @return string|null
      */
     protected function getInlineMessage($attribute, $rule)
@@ -41,6 +44,7 @@ trait FormatsMessages
      *
      * @param string $attribute
      * @param string $lowerRule
+     *
      * @return string|null
      */
     protected function getFromLocalArray($attribute, $lowerRule)
@@ -60,6 +64,7 @@ trait FormatsMessages
 
     /**
      * @param $rule
+     *
      * @return null|string|string[]
      */
     protected function ruleToLower($rule)
@@ -79,8 +84,9 @@ trait FormatsMessages
      * @param string $message
      * @param string $attribute
      * @param mixed $value
-     * @param \Oshomo\CsvUtils\Contracts\ValidationRuleInterface $rule
+     * @param ValidationRuleInterface $rule
      * @param array $parameters
+     *
      * @return string
      */
     protected function makeReplacements($message, $attribute, $value, $rule, $parameters)
@@ -99,6 +105,7 @@ trait FormatsMessages
      *
      * @param string $message
      * @param string $attribute
+     *
      * @return string
      */
     protected function replaceAttributePlaceholder($message, $attribute)
@@ -111,6 +118,7 @@ trait FormatsMessages
      *
      * @param string $message
      * @param string $value
+     *
      * @return string
      */
     protected function replaceValuePlaceholder($message, $value)
