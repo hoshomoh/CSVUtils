@@ -4,7 +4,8 @@ namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
-class Url implements ValidationRuleInterface {
+class Url implements ValidationRuleInterface
+{
     /**
      * Get the number of parameters that should be supplied.
      *
