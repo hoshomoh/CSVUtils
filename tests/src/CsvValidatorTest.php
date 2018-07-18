@@ -2,7 +2,6 @@
 
 namespace Oshomo\CsvUtils\Validator;
 
-
 use Oshomo\CsvUtils\Converter\JsonConverter;
 use Oshomo\CsvUtils\Converter\XmlConverter;
 use Oshomo\CsvUtils\Tests\src\UppercaseRule;
@@ -28,7 +27,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/tests.csv";
 
         $validator = new Validator($file, ',', [
-            "stars" => ["between:0,5"]
+            "stars" => ["between:0,5"],
         ]);
 
         $this->assertSame(
@@ -42,7 +41,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/ascii_test.csv";
 
         $validator = new Validator($file, ',', [
-            "name" => ["ascii_only"]
+            "name" => ["ascii_only"],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -68,7 +67,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/between_test.csv";
 
         $validator = new Validator($file, ',', [
-            "stars" => ["between:4,10"]
+            "stars" => ["between:4,10"],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -94,7 +93,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/url_test.csv";
 
         $validator = new Validator($file, ',', [
-            "uri" => ["url"]
+            "uri" => ["url"],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -120,7 +119,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/ascii_test.csv";
 
         $validator = new Validator($file, ',', [
-            "name" => [new UppercaseRule]
+            "name" => [new UppercaseRule],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -146,11 +145,11 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/url_test.csv";
 
         $validator = new Validator($file, ',', [
-            "uri" => [function($value, $fail) {
+            "uri" => [function ($value, $fail) {
                 if (strpos($value, "https://") !== 0) {
                     return $fail('The URL passed must be https i.e it must start with https://');
                 }
-            }]
+            }],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -172,9 +171,9 @@ class CsvValidatorTest extends TestCase
         $customErrorMessage = "The value supplied for the name attribute must only contain ascii characters";
 
         $validator = new Validator($file, ',', [
-            "name" => ["ascii_only"]
+            "name" => ["ascii_only"],
         ], [
-            "ascii_only" => $customErrorMessage
+            "ascii_only" => $customErrorMessage,
         ]);
 
         $this->assertTrue($validator->fails());
@@ -200,9 +199,9 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/between_test.csv";
 
         $validator = new Validator($file, ',', [
-            "stars" => ["between:4,10"]
+            "stars" => ["between:4,10"],
         ], [
-            "between" => "The value supplied for :attribute must be between :min and :max"
+            "between" => "The value supplied for :attribute must be between :min and :max",
         ]);
 
         $this->assertTrue($validator->fails());
@@ -230,7 +229,7 @@ class CsvValidatorTest extends TestCase
         $validator = new Validator($file, ',', [
             "name" => ["ascii_only"],
             "stars" => ["between:3,10"],
-            "uri" => ["url"]
+            "uri" => ["url"],
         ]);
 
         $this->assertFalse($validator->fails());
@@ -255,7 +254,7 @@ class CsvValidatorTest extends TestCase
         $validator = new Validator($file, ',', [
             "name" => ["ascii_only"],
             "stars" => ["between:3,10"],
-            "uri" => ["url"]
+            "uri" => ["url"],
         ]);
 
         $this->assertFalse($validator->fails());
@@ -285,13 +284,13 @@ class CsvValidatorTest extends TestCase
                     'address' => 'Inga N. P.O. Box 567',
                     'stars' => '3',
                     'contact' => 'Kasper Zen',
-                    'uri' => 'http://well.org'
-                ]
-            ]
+                    'uri' => 'http://well.org',
+                ],
+            ],
         ];
 
         $validator = new Validator($file, ',', [
-            "stars" => ['']
+            "stars" => [''],
         ]);
 
         $this->assertSame($expectedArray, $validator->validate());
@@ -302,7 +301,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . "/valid_test.csv";
 
         $validator = new Validator($file, ',', [
-            "stars" => ["between:3,10"]
+            "stars" => ["between:3,10"],
         ]);
 
         $expectedArray = [
@@ -313,9 +312,9 @@ class CsvValidatorTest extends TestCase
                     'address' => 'Inga N. P.O. Box 567',
                     'stars' => '3',
                     'contact' => 'Kasper Zen',
-                    'uri' => 'http://well.org'
-                ]
-            ]
+                    'uri' => 'http://well.org',
+                ],
+            ],
         ];
 
         $this->assertSame($expectedArray, $validator->validate());
@@ -328,7 +327,7 @@ class CsvValidatorTest extends TestCase
         $validator = new Validator($file, ',', [
             "name" => ["ascii_only"],
             "stars" => ["between:3,10"],
-            "uri" => ["url"]
+            "uri" => ["url"],
         ]);
 
         $this->assertFalse($validator->fails());
@@ -345,5 +344,4 @@ class CsvValidatorTest extends TestCase
             $this->testAssets . "/valid_test.xml"
         );
     }
-
 }

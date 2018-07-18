@@ -2,15 +2,15 @@
 
 namespace Oshomo\CsvUtils\Validator;
 
-
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface as Converter;
+use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
+use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Helpers\FormatsMessages;
 
 class Validator
 {
     use FormatsMessages;
-
 
     const FILE_EXTENSION = ".csv";
     const ERROR_MESSAGE = "Validation fails.";
@@ -132,12 +132,12 @@ class Validator
 
         return [
             "message" => self::SUCCESS_MESSAGE,
-            "data" => $this->data
+            "data" => $this->data,
         ];
     }
 
     /**
-     * Return validation errors
+     * Return validation errors.
      */
     public function errors()
     {
@@ -151,7 +151,7 @@ class Validator
 
         return [
             "message" => $message,
-            "data" => $this->invalidRows
+            "data" => $this->invalidRows,
         ];
     }
 
@@ -173,8 +173,8 @@ class Validator
     protected function passes()
     {
         if ($this->doesFileExistAndReadable($this->filePath)) {
-            if (($handle = fopen($this->filePath, 'r')) !== FALSE) {
-                while (($row = fgetcsv($handle, 0, $this->delimiter)) !== FALSE) {
+            if (($handle = fopen($this->filePath, 'r')) !== false) {
+                while (($row = fgetcsv($handle, 0, $this->delimiter)) !== false) {
                     if (empty($this->headers)) {
                         $this->setHeaders($row);
                         continue;
@@ -198,9 +198,10 @@ class Validator
     }
 
     /**
-     * Write the output data into any supplied format
+     * Write the output data into any supplied format.
      *
-     * @param \Oshomo\CsvUtils\Contracts\ConverterHandlerInterface $format
+     * @param ConverterHandlerInterface $format
+     *
      * @return bool
      */
     public function write(Converter $format)
@@ -227,9 +228,10 @@ class Validator
     }
 
     /**
-     * Get the full path and name of the file to be written
+     * Get the full path and name of the file to be written.
      *
      * @param $extension
+     *
      * @return string
      */
     protected function getWriteFileName($extension)
@@ -266,11 +268,11 @@ class Validator
      *
      * @param string $attribute
      * @param string $rule
+     *
      * @return null|void
      */
     protected function validateAttribute($attribute, $rule)
     {
-
         list($rule, $parameters) = ValidationRuleParser::parse($rule);
 
         if ($rule == '') {
@@ -301,6 +303,7 @@ class Validator
 
     /**
      * @param $filePath
+     *
      * @return bool
      */
     protected function doesFileExistAndReadable($filePath)
@@ -321,6 +324,7 @@ class Validator
      *
      * @param object|string $rule
      * @param string $parameters
+     *
      * @return bool
      */
     protected function isValidateAble($rule, $parameters)
@@ -333,18 +337,20 @@ class Validator
      * Get the class of a rule.
      *
      * @param $rule
+     *
      * @return string
      */
     protected function getRuleClassName($rule)
     {
-        return "Oshomo\\CsvUtils\\Rules\\".$rule;
+        return "Oshomo\\CsvUtils\\Rules\\" . $rule;
     }
 
     /**
      * Get the class of a rule.
      *
      * @param $rule
-     * @return \Oshomo\CsvUtils\Contracts\ValidationRuleInterface
+     *
+     * @return ValidationRuleInterface
      */
     protected function getRuleClass($rule)
     {
@@ -357,6 +363,7 @@ class Validator
      * Determine if a given rule exists.
      *
      * @param object|string $rule
+     *
      * @return bool
      */
     protected function ruleExists($rule)
@@ -370,6 +377,7 @@ class Validator
      *
      * @param object|string $rule
      * @param $parameters
+     *
      * @return bool
      */
     protected function passesParameterCheck($rule, $parameters)
@@ -381,7 +389,6 @@ class Validator
         $ruleParameterCount = $rule->parameterCount();
         $parameterCount = count($parameters);
         return ($ruleParameterCount === 0) ? true : ($parameterCount === $ruleParameterCount);
-
     }
 
     /**
@@ -390,7 +397,8 @@ class Validator
      * @param string $attribute
      * @param mixed $value
      * @param $parameters
-     * @param \Oshomo\CsvUtils\Contracts\ValidationRuleInterface $rule
+     * @param ValidationRuleInterface $rule
+     *
      * @return void
      */
     protected function validateUsingCustomRule($attribute, $value, $parameters, $rule)
@@ -406,14 +414,19 @@ class Validator
      * @param $message
      * @param string $attribute
      * @param mixed $value
-     * @param \Oshomo\CsvUtils\Contracts\ValidationRuleInterface $rule
+     * @param ValidationRuleInterface $rule
      * @param array $parameters
+     *
      * @return void
      */
     protected function addFailure($message, $attribute, $value, $rule, $parameters = [])
     {
         $this->currentRowMessages[] = $this->makeReplacements(
-            $message, $attribute, $value, $rule, $parameters
+            $message,
+            $attribute,
+            $value,
+            $rule,
+            $parameters
         );
     }
 
@@ -421,6 +434,7 @@ class Validator
      * Get the value of a given attribute.
      *
      * @param string $attribute
+     *
      * @return mixed
      */
     protected function getValue($attribute)
