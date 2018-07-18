@@ -2,7 +2,6 @@
 
 namespace Oshomo\CsvUtils\Contracts;
 
-
 interface ValidationRuleInterface
 {
     /**
@@ -10,7 +9,7 @@ interface ValidationRuleInterface
      * If no parameter should be supplied return 0 else
      * return the number of parameters that should be returned
      *
-     * @return integer
+     * @return int
      */
     public function parameterCount();
 
@@ -20,6 +19,7 @@ interface ValidationRuleInterface
      *
      * @param  mixed $value
      * @param array $parameters
+     *
      * @return bool
      */
     public function passes($value, $parameters);
@@ -46,6 +46,7 @@ interface ValidationRuleInterface
      *
      * @param string $message
      * @param array $parameters
+     *
      * @return string
      */
     public function parameterReplacer($message, $parameters);

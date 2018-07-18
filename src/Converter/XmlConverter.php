@@ -2,14 +2,12 @@
 
 namespace Oshomo\CsvUtils\Converter;
 
-
 use DOMDocument;
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 use SimpleXMLElement;
 
 class XmlConverter implements ConverterHandlerInterface
 {
-
     const FILE_EXTENSION = "xml";
     const DEFAULT_ROOT_ELEMENT = "data";
     const DEFAULT_RECORD_ELEMENT = "item";
@@ -53,22 +51,24 @@ class XmlConverter implements ConverterHandlerInterface
      * @param $data
      * @param $xmlData
      */
-    protected function toXml($data, $xmlData) {
-        foreach( $data as $key => $value ) {
-            if( is_numeric($key) ){
+    protected function toXml($data, $xmlData)
+    {
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
                 $key = $this->recordElement;
             }
-            if( is_array($value) ) {
+            if (is_array($value)) {
                 $subNode = $xmlData->addChild($key);
                 $this->toXml($value, $subNode);
             } else {
-                $xmlData->addChild("$key",htmlspecialchars("$value"));
+                $xmlData->addChild("$key", htmlspecialchars("$value"));
             }
         }
     }
 
     /**
      * @param $data
+     *
      * @return $this|mixed
      */
     public function convert($data)
@@ -80,6 +80,7 @@ class XmlConverter implements ConverterHandlerInterface
 
     /**
      * @param $filename
+     *
      * @return bool
      */
     public function write($filename)

@@ -2,7 +2,6 @@
 
 namespace Oshomo\CsvUtils\Rules;
 
-
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class ClosureValidationRule implements ValidationRuleInterface
@@ -32,6 +31,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      * Create a new Closure based validation rule.
      *
      * @param  \Closure  $callback
+     *
      * @return void
      */
     public function __construct($callback)
@@ -40,9 +40,9 @@ class ClosureValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * Get the number of parameters that should be supplied
+     * Get the number of parameters that should be supplied.
      *
-     * @return integer
+     * @return int
      */
     public function parameterCount()
     {
@@ -54,6 +54,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      *
      * @param  mixed $value
      * @param $parameters
+     *
      * @return bool
      */
     public function passes($value, $parameters)
@@ -80,10 +81,11 @@ class ClosureValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * Replace error messages parameter with right values
+     * Replace error messages parameter with right values.
      *
      * @param string $message
      * @param array $parameters
+     *
      * @return string
      */
     public function parameterReplacer($message, $parameters)

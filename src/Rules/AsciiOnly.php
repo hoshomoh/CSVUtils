@@ -2,16 +2,14 @@
 
 namespace Oshomo\CsvUtils\Rules;
 
-
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class AsciiOnly implements ValidationRuleInterface
 {
-
     /**
      * Get the number of parameters that should be supplied
      *
-     * @return integer
+     * @return int
      */
     public function parameterCount()
     {
@@ -23,6 +21,7 @@ class AsciiOnly implements ValidationRuleInterface
      *
      * @param  mixed $value
      * @param $parameters
+     *
      * @return bool
      */
     public function passes($value, $parameters)
@@ -41,10 +40,11 @@ class AsciiOnly implements ValidationRuleInterface
     }
 
     /**
-     * Replace error messages parameter with right values
+     * Replace error messages parameter with right values.
      *
      * @param string $message
      * @param array $parameters
+     *
      * @return string
      */
     public function parameterReplacer($message, $parameters)

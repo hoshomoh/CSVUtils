@@ -2,7 +2,6 @@
 
 namespace Oshomo\CsvUtils\Validator;
 
-
 use Oshomo\CsvUtils\Tests\src\UppercaseRule;
 use PHPUnit\Framework\TestCase;
 
@@ -33,5 +32,4 @@ class CsvValidatorParserTest extends TestCase
             ValidationRuleParser::parse("between:1,3")
         );
     }
-
 }
