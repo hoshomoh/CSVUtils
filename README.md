@@ -14,12 +14,12 @@
 - [How to Run](#how-to-run)
 - [Implementation](#implementation)
 - [Documentation](#documentation)
-  - [Initializing a Validator](#initializing-a-validator.)
+  - [Initializing a Validator](#initializing-a-validator)
   - [Validating the CSV](#validating-the-csv)
   - [Available rules](#available-rules)
   - [Writing CSV Output Data](#writing-csv-output-data)
-  - [Passing Custom Rule's to Validator (Using Rule Object)](#passing-custom-rule's-to-validator-(using-rule-object))
-  - [Passing Custom Rule's to Validator (Using Closure)](#passing-custom-rule's-to-validator-(using-closure))
+  - [Passing Custom Rules to Validator (Using Rule Object)](#passing-custom-rules-to-validator-(using-rule-object))
+  - [Passing Custom Rules to Validator (Using Closure)](#passing-custom-rules-to-validator-(using-closure))
   - [Writing CSV Output Data to Other Formats](#writing-csv-output-data-to-other-formats)
 - [Running Tests](#running-tests)
 - [Contributing to this Repo](#contributing-to-this-repo)
@@ -34,7 +34,7 @@ The `Validator` expects a valid file path, the CSV delimiter, an array of valida
 
 ### Documentation
 
-##### Initializing a Validator. 
+##### Initializing a Validator
 
 Set a valid csv file path, pass the CSV delimiter and pass in your validation rules.
 
@@ -152,7 +152,7 @@ The `JsonConverter` simply writes the output data as JSON. The `XmlConverter` co
 
 **NOTE**: *Either validation passes or fails, you can always write the CSV output data to the available formats. In cases where validation fails there would be an extra error property in the written data.*
 
-##### Passing Custom Rule's to Validator (Using Rule Object)
+##### Passing Custom Rules to Validator (Using Rule Object)
 
 Passing a custom rule to the validator is easy. Create a CustomRule class the implements `Oshomo\CsvUtils\Contracts\ValidationRuleInterface` interface. And pass that class to the rule array, easy. E.g:
 
@@ -232,7 +232,7 @@ class UppercaseRule implements ValidationRuleInterface
 
 ```
 
-##### Passing Custom Rule's to Validator (Using Closure)
+##### Passing Custom Rules to Validator (Using Closure)
 
 If you only need the functionality of a custom rule once throughout your application, you may use a Closure instead of a rule object. The Closure receives the attribute's value, and a `$fail` callback that should be called if validation fails:
 
