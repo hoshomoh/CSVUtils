@@ -7,9 +7,24 @@
 
 # CSVUtils
 
-*Make sure you use a tagged version when requiring this package. The current version is [v2.0.0](https://packagist.org/packages/oshomo/csv-utils#v2.0.0)*
+*Make sure you use a tagged version when requiring this package. The current version is [v2.0.1](https://packagist.org/packages/oshomo/csv-utils#v2.0.1)*
 
-### How to run
+## Table of Content
+
+- [How to Run](#how-to-run)
+- [Implementation](#implementation)
+- [Documentation](#documentation)
+  - [Initializing a Validator](#initializing-a-validator.)
+  - [Validating the CSV](#validating-the-csv)
+  - [Available rules](#available-rules)
+  - [Writing CSV Output Data](#writing-csv-output-data)
+  - [Passing Custom Rule's to Validator (Using Rule Object)](#passing-custom-rule's-to-validator-(using-rule-object))
+  - [Passing Custom Rule's to Validator (Using Closure)](#passing-custom-rule's-to-validator-(using-closure))
+  - [Writing CSV Output Data to Other Formats](#writing-csv-output-data-to-other-formats)
+- [Running Tests](#running-tests)
+- [Contributing to this Repo](#contributing-to-this-repo)
+
+### How to Run
 
 I have added a sample `index.php` file for a quick test of how to use the package. To run the sample; from the package root, run `composer install` then using php built in server run `php -S localhost:8000`, this would start the server at `localhost:8000`. Visit the URL from your browser and you should see the generated files in the `sample` folder at the root of the package.
 
@@ -94,7 +109,7 @@ Validates that a cell value is a valid URL. By valid URL we mean
 
 ```
 
-##### Writing CSV output data
+##### Writing CSV Output Data
 
 The output of the CSV file can be written into any format. The currently suported format is `xml` and `json`. The validator exposes a `write` method to write the output data into the same folder as the CSV. Find example implementation below:
 
@@ -137,7 +152,7 @@ The `JsonConverter` simply writes the output data as JSON. The `XmlConverter` co
 
 **NOTE**: *Either validation passes or fails, you can always write the CSV output data to the available formats. In cases where validation fails there would be an extra error property in the written data.*
 
-##### Passing custom rule to validator (Using Rule Object)
+##### Passing Custom Rule's to Validator (Using Rule Object)
 
 Passing a custom rule to the validator is easy. Create a CustomRule class the implements `Oshomo\CsvUtils\Contracts\ValidationRuleInterface` interface. And pass that class to the rule array, easy. E.g:
 
@@ -217,7 +232,7 @@ class UppercaseRule implements ValidationRuleInterface
 
 ```
 
-##### Passing custom rule to validator (Using Closure)
+##### Passing Custom Rule's to Validator (Using Closure)
 
 If you only need the functionality of a custom rule once throughout your application, you may use a Closure instead of a rule object. The Closure receives the attribute's value, and a `$fail` callback that should be called if validation fails:
 
@@ -233,9 +248,9 @@ $validator = new Validator("some/valid/file_path", ",", [
 ]);
 ```
 
-##### Writing CSV output data to other formats
+##### Writing CSV Output Data to Other Formats
 
-Writing the CSV ouput data to other format is also very easy. Create a CustomConverter class the implements `Oshomo\CsvUtils\Contracts\ConverterHandlerInterface` interface. And pass that class to the `write` method of the validator, easy. Below is an sample implementation of a JSON converter
+Writing the CSV output data to other format is also very easy. Create a CustomConverter class the implements `Oshomo\CsvUtils\Contracts\ConverterHandlerInterface` interface. And pass that class to the `write` method of the validator, easy. Below is an sample implementation of a JSON converter
 
 ```php
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
@@ -293,11 +308,11 @@ $validator->write(new JsonConverter());
 
 ```
 
-### Running Test's
+### Running Tests
 
 Run `composer test` from the root of the Package.
 
-### Contributing to this repo
+### Contributing to this Repo
 
 Feel free to submit a pull request for a feature or bug fix. However, do note that before your pull request can be merged it must have test written or updated as the case maybe.
 The project run's automatic checks for PSR-1 and PSR-2 code standards using [php-cs-fixer](https://symfony.com/doc/current/contributing/code/standards.html). 
