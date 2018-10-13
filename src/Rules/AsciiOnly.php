@@ -7,7 +7,7 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 class AsciiOnly implements ValidationRuleInterface
 {
     /**
-     * Get the number of parameters that should be supplied
+     * Get the number of parameters that should be supplied.
      *
      * @return int
      */
@@ -19,7 +19,7 @@ class AsciiOnly implements ValidationRuleInterface
     /**
      * Determine if the validation rule passes.
      *
-     * @param  mixed $value
+     * @param mixed $value
      * @param $parameters
      *
      * @return bool
@@ -36,14 +36,14 @@ class AsciiOnly implements ValidationRuleInterface
      */
     public function message()
     {
-        return "The :attribute value :value contains a non-ascii character";
+        return 'The :attribute value :value contains a non-ascii character';
     }
 
     /**
      * Replace error messages parameter with right values.
      *
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

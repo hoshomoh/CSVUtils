@@ -315,7 +315,7 @@ Run `composer test` from the root of the Package.
 ### Contributing to this Repo
 
 Feel free to submit a pull request for a feature or bug fix. However, do note that before your pull request can be merged it must have test written or updated as the case maybe.
-The project run's automatic checks for PSR-1 and PSR-2 code standards using [php-cs-fixer](https://symfony.com/doc/current/contributing/code/standards.html). 
+The project run's automatic checks to make sure that the Symphony code standards are met using [php-cs-fixer](https://symfony.com/doc/current/contributing/code/standards.html). 
 
 So, before pushing or making any pull request run the below command:
 

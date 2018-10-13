@@ -7,7 +7,7 @@ interface ValidationRuleInterface
     /**
      * Get the number of parameters that should be supplied.
      * If no parameter should be supplied return 0 else
-     * return the number of parameters that should be returned
+     * return the number of parameters that should be returned.
      *
      * @return int
      */
@@ -15,9 +15,9 @@ interface ValidationRuleInterface
 
     /**
      * Determines if the validation rule passes. This is where we do the
-     * actual validation. If the validation passes return true else false
+     * actual validation. If the validation passes return true else false.
      *
-     * @param  mixed $value
+     * @param mixed $value
      * @param array $parameters
      *
      * @return bool
@@ -27,7 +27,7 @@ interface ValidationRuleInterface
     /**
      * Get the validation error message. Specify the message that should
      * be returned if the validation fails. You can make use of the
-     * :attribute and :value placeholders in the message string
+     * :attribute and :value placeholders in the message string.
      *
      * @return string
      */
@@ -42,10 +42,10 @@ interface ValidationRuleInterface
      *      [':custom_a', ':custom_b'],
      *      [$parameters[0], $parameters[1]],
      *      $message
-     * );
+     * );.
      *
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

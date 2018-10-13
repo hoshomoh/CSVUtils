@@ -57,14 +57,14 @@ class Url implements ValidationRuleInterface
      */
     public function message()
     {
-        return "The :attribute value :value is not a valid url";
+        return 'The :attribute value :value is not a valid url';
     }
 
     /**
      * Replace error messages parameter with right values.
      *
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

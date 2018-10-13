@@ -8,22 +8,21 @@ use SimpleXMLElement;
 
 class XmlConverter implements ConverterHandlerInterface
 {
-    const FILE_EXTENSION = "xml";
-    const DEFAULT_ROOT_ELEMENT = "data";
-    const DEFAULT_RECORD_ELEMENT = "item";
+    const FILE_EXTENSION = 'xml';
+    const DEFAULT_ROOT_ELEMENT = 'data';
+    const DEFAULT_RECORD_ELEMENT = 'item';
 
     /**
-     * XML node root element
+     * XML node root element.
      */
     protected $recordElement;
 
     /**
-     * The converted data
+     * The converted data.
      *
      * @var string
      */
     protected $data;
-
 
     /**
      * XmlConverter constructor.

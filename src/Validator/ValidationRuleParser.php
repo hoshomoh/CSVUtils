@@ -42,7 +42,7 @@ class ValidationRuleParser
         // The format for specifying validation rules and parameters follows an
         // easy {rule}:{parameters} formatting convention. For instance the
         // rule "Between:3,5" states that the value may only be between 3 - 5.
-        if (strpos($rule, ':') !== false) {
+        if (false !== strpos($rule, ':')) {
             list($rule, $parameter) = explode(':', $rule, 2);
 
             $parameters = static::parseParameters($parameter);
