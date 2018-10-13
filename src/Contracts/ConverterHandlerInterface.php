@@ -6,7 +6,7 @@ interface ConverterHandlerInterface
 {
     /**
      * Get the converter file extension. If the file extension
-     * for this converter is csv just return "csv"
+     * for this converter is csv just return "csv".
      *
      * @return string
      */
@@ -23,7 +23,7 @@ interface ConverterHandlerInterface
     public function convert($data);
 
     /**
-     * Writes the converted data to the path specified
+     * Writes the converted data to the path specified.
      *
      * @param string $filename
      *

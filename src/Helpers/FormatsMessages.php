@@ -9,9 +9,9 @@ trait FormatsMessages
     /**
      * Get the validation message for an attribute and rule.
      *
-     * @param string $attribute
+     * @param string                  $attribute
      * @param ValidationRuleInterface $rule
-     * @param string $actualRule
+     * @param string                  $actualRule
      *
      * @return string
      */
@@ -19,7 +19,7 @@ trait FormatsMessages
     {
         $inlineMessage = $this->getInlineMessage($attribute, $actualRule);
 
-        if (! is_null($inlineMessage)) {
+        if (!is_null($inlineMessage)) {
             return $inlineMessage;
         }
 
@@ -81,11 +81,11 @@ trait FormatsMessages
     /**
      * Replace all error message place-holders with actual values.
      *
-     * @param string $message
-     * @param string $attribute
-     * @param mixed $value
+     * @param string                  $message
+     * @param string                  $attribute
+     * @param mixed                   $value
      * @param ValidationRuleInterface $rule
-     * @param array $parameters
+     * @param array                   $parameters
      *
      * @return string
      */

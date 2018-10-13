@@ -30,9 +30,7 @@ class ClosureValidationRule implements ValidationRuleInterface
     /**
      * Create a new Closure based validation rule.
      *
-     * @param  \Closure  $callback
-     *
-     * @return void
+     * @param \Closure $callback
      */
     public function __construct($callback)
     {
@@ -52,7 +50,7 @@ class ClosureValidationRule implements ValidationRuleInterface
     /**
      * Determine if the validation rule passes.
      *
-     * @param  mixed $value
+     * @param mixed $value
      * @param $parameters
      *
      * @return bool
@@ -67,7 +65,7 @@ class ClosureValidationRule implements ValidationRuleInterface
             $this->message = $message;
         });
 
-        return ! $this->failed;
+        return !$this->failed;
     }
 
     /**
@@ -84,7 +82,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      * Replace error messages parameter with right values.
      *
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

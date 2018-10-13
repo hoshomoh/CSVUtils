@@ -20,16 +20,16 @@ class CsvValidatorParserTest extends TestCase
     public function testWhenOtherRulesArePassed()
     {
         $this->assertSame(
-            ["AsciiOnly", []],
-            ValidationRuleParser::parse("ascii_only")
+            ['AsciiOnly', []],
+            ValidationRuleParser::parse('ascii_only')
         );
     }
 
     public function testWhenRulesAcceptParameters()
     {
         $this->assertSame(
-            ["Between", ["1", "3"]],
-            ValidationRuleParser::parse("between:1,3")
+            ['Between', ['1', '3']],
+            ValidationRuleParser::parse('between:1,3')
         );
     }
 }

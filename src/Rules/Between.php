@@ -40,14 +40,14 @@ class Between implements ValidationRuleInterface
      */
     public function message()
     {
-        return "The :attribute value :value is not between :min - :max.";
+        return 'The :attribute value :value is not between :min - :max.';
     }
 
     /**
-     * Replace error messages parameter with right values
+     * Replace error messages parameter with right values.
      *
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

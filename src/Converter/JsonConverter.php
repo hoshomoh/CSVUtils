@@ -6,10 +6,10 @@ use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 
 class JsonConverter implements ConverterHandlerInterface
 {
-    const FILE_EXTENSION = "json";
+    const FILE_EXTENSION = 'json';
 
     /**
-     * The converted data
+     * The converted data.
      *
      * @var string
      */

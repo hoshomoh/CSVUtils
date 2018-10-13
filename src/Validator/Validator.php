@@ -2,21 +2,21 @@
 
 namespace Oshomo\CsvUtils\Validator;
 
-use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface as Converter;
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
-use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
+use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface as Converter;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
+use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
 use Oshomo\CsvUtils\Helpers\FormatsMessages;
 
 class Validator
 {
     use FormatsMessages;
 
-    const FILE_EXTENSION = ".csv";
-    const ERROR_MESSAGE = "Validation fails.";
-    const NO_ERROR_MESSAGE = "File is valid.";
-    const INVALID_FILE_PATH_ERROR = "Supplied file is not accessible.";
-    const SUCCESS_MESSAGE = "CSV is valid.";
+    const FILE_EXTENSION = '.csv';
+    const ERROR_MESSAGE = 'Validation fails.';
+    const NO_ERROR_MESSAGE = 'File is valid.';
+    const INVALID_FILE_PATH_ERROR = 'Supplied file is not accessible.';
+    const SUCCESS_MESSAGE = 'CSV is valid.';
 
     /**
      * The message bag instance.
@@ -33,7 +33,7 @@ class Validator
     protected $data = [];
 
     /**
-     * Initialisation errors
+     * Initialisation errors.
      *
      * @var string
      */
@@ -54,28 +54,28 @@ class Validator
     protected $invalidRows = [];
 
     /**
-     * Csv File Path;
+     * Csv File Path;.
      *
      * @var string
      */
     protected $filePath;
 
     /**
-     * Csv File Name;
+     * Csv File Name;.
      *
      * @var string
      */
     protected $fileName;
 
     /**
-     * Csv File Directory;
+     * Csv File Directory;.
      *
      * @var string
      */
     protected $directory;
 
     /**
-     * Csv delimiter;
+     * Csv delimiter;.
      *
      * @var string
      */
@@ -96,7 +96,7 @@ class Validator
     public $customMessages = [];
 
     /**
-     * The CSV header
+     * The CSV header.
      *
      * @var array
      */
@@ -107,10 +107,10 @@ class Validator
      *
      * @param string $filePath
      * @param string $delimiter
-     * @param array $rules
-     * @param array $messages
+     * @param array  $rules
+     * @param array  $messages
      */
-    public function __construct($filePath, $delimiter = ",", array $rules, array $messages = [])
+    public function __construct($filePath, $delimiter = ',', array $rules, array $messages = [])
     {
         $this->filePath = $filePath;
         $this->delimiter = $delimiter;
@@ -131,8 +131,8 @@ class Validator
         }
 
         return [
-            "message" => self::SUCCESS_MESSAGE,
-            "data" => $this->data,
+            'message' => self::SUCCESS_MESSAGE,
+            'data' => $this->data,
         ];
     }
 
@@ -150,8 +150,8 @@ class Validator
         }
 
         return [
-            "message" => $message,
-            "data" => $this->invalidRows,
+            'message' => $message,
+            'data' => $this->invalidRows,
         ];
     }
 
@@ -162,7 +162,7 @@ class Validator
      */
     public function fails()
     {
-        return ! $this->passes();
+        return !$this->passes();
     }
 
     /**
@@ -173,8 +173,8 @@ class Validator
     protected function passes()
     {
         if ($this->doesFileExistAndReadable($this->filePath)) {
-            if (($handle = fopen($this->filePath, 'r')) !== false) {
-                while (($row = fgetcsv($handle, 0, $this->delimiter)) !== false) {
+            if (false !== ($handle = fopen($this->filePath, 'r'))) {
+                while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
                     if (empty($this->headers)) {
                         $this->setHeaders($row);
                         continue;
@@ -236,7 +236,7 @@ class Validator
      */
     protected function getWriteFileName($extension)
     {
-        return $this->directory . $this->fileName . "." . $extension;
+        return $this->directory . $this->fileName . '.' . $extension;
     }
 
     /**
@@ -275,7 +275,7 @@ class Validator
     {
         list($rule, $parameters) = ValidationRuleParser::parse($rule);
 
-        if ($rule == '') {
+        if ('' == $rule) {
             return;
         }
 
@@ -323,7 +323,7 @@ class Validator
      * Determine if the attribute is validate-able.
      *
      * @param object|string $rule
-     * @param string $parameters
+     * @param string        $parameters
      *
      * @return bool
      */
@@ -342,7 +342,7 @@ class Validator
      */
     protected function getRuleClassName($rule)
     {
-        return "Oshomo\\CsvUtils\\Rules\\" . $rule;
+        return 'Oshomo\\CsvUtils\\Rules\\' . $rule;
     }
 
     /**
@@ -388,18 +388,17 @@ class Validator
 
         $ruleParameterCount = $rule->parameterCount();
         $parameterCount = count($parameters);
-        return ($ruleParameterCount === 0) ? true : ($parameterCount === $ruleParameterCount);
+
+        return (0 === $ruleParameterCount) ? true : ($parameterCount === $ruleParameterCount);
     }
 
     /**
      * Validate an attribute using a custom rule object.
      *
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
      * @param $parameters
      * @param ValidationRuleInterface $rule
-     *
-     * @return void
      */
     protected function validateUsingCustomRule($attribute, $value, $parameters, $rule)
     {
@@ -412,12 +411,10 @@ class Validator
      * Add a failed rule and error message to the collection.
      *
      * @param $message
-     * @param string $attribute
-     * @param mixed $value
+     * @param string                  $attribute
+     * @param mixed                   $value
      * @param ValidationRuleInterface $rule
-     * @param array $parameters
-     *
-     * @return void
+     * @param array                   $parameters
      */
     protected function addFailure($message, $attribute, $value, $rule, $parameters = [])
     {

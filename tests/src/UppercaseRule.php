@@ -6,7 +6,6 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class UppercaseRule implements ValidationRuleInterface
 {
-
     /**
      * @return int
      */
@@ -16,8 +15,9 @@ class UppercaseRule implements ValidationRuleInterface
     }
 
     /**
-     * @param  mixed $value
+     * @param mixed $value
      * @param $parameters
+     *
      * @return bool
      */
     public function passes($value, $parameters)
@@ -30,12 +30,13 @@ class UppercaseRule implements ValidationRuleInterface
      */
     public function message()
     {
-        return "The :attribute value :value must be uppercase.";
+        return 'The :attribute value :value must be uppercase.';
     }
 
     /**
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return string
      */
     public function parameterReplacer($message, $parameters)
