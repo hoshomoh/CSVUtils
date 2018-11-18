@@ -85,7 +85,13 @@ $validator = new Validator("some/valid/file_path", ",", [
 ]);
 ```
 
-In this above example, the `:attribute` place-holder will be replaced by the actual name of the field under validation. The `:value` place-holder will be replaced with value being validated. The `:line` place-holder will also be replaced with the row/line number in the CSV in which the error happened. You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
+In this above example: 
+
+The `:attribute` place-holder will be replaced by the actual name of the field under validation.  
+The `:value` place-holder will be replaced with value being validated.  
+The `:line` place-holder will also be replaced with the row/line number in the CSV in which the error happened. 
+
+You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
 
 ##### Available rules
 
