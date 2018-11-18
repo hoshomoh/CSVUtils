@@ -30,7 +30,7 @@ class UppercaseRule implements ValidationRuleInterface
      */
     public function message()
     {
-        return 'The :attribute value :value must be uppercase.';
+        return 'The :attribute value :value must be uppercase on line :line.';
     }
 
     /**

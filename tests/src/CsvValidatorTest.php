@@ -57,7 +57,7 @@ class CsvValidatorTest extends TestCase
         );
 
         $this->assertContains(
-            'The name value Well Health Hotels¡ contains a non-ascii character',
+            'The name value Well Health Hotels¡ contains a non-ascii character on line 2.',
             $validator->errors()['data'][0]['errors']
         );
     }
@@ -83,7 +83,7 @@ class CsvValidatorTest extends TestCase
         );
 
         $this->assertContains(
-            'The stars value 3 is not between 4 - 10.',
+            'The stars value 3 is not between 4 - 10 on line 2.',
             $validator->errors()['data'][0]['errors']
         );
     }
@@ -109,7 +109,7 @@ class CsvValidatorTest extends TestCase
         );
 
         $this->assertContains(
-            'The uri value http//:well.org is not a valid url',
+            'The uri value http//:well.org is not a valid url on line 2.',
             $validator->errors()['data'][0]['errors']
         );
     }
@@ -135,7 +135,7 @@ class CsvValidatorTest extends TestCase
         );
 
         $this->assertContains(
-            'The name value Well Health Hotels¡ must be uppercase.',
+            'The name value Well Health Hotels¡ must be uppercase on line 2.',
             $validator->errors()['data'][0]['errors']
         );
     }

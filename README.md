@@ -79,13 +79,13 @@ use Oshomo\CsvUtils\Validator\Validator;
 $validator = new Validator("some/valid/file_path", ",", [
     'title' => ["ascii_only", "url"]
 ], [
-    'ascii_only' => 'The :value supplied for :attribute attribute is invalid',
+    'ascii_only' => 'The :value supplied for :attribute attribute is invalid on line :line of the CSV.',
     // This specifies a custom message for a given attribute.
-    'hotel_link:url' => 'The :attribute must be a valid link',
+    'hotel_link:url' => 'The :attribute must be a valid link. This error occured on line :line of the CSV.',
 ]);
 ```
 
-In this above example, the `:attribute` place-holder will be replaced by the actual name of the field under validation. The `:value` place-holder will also be replaced with value being validated. You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
+In this above example, the `:attribute` place-holder will be replaced by the actual name of the field under validation. The `:value` place-holder will be replaced with value being validated. The `:line` place-holder will also be replaced with the row/line number in the CSV in which the error happened. You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
 
 ##### Available rules
 
@@ -206,7 +206,7 @@ class UppercaseRule implements ValidationRuleInterface
      */
     public function message()
     {
-        return "The :attribute value :value must be uppercase.";
+        return "The :attribute value :value must be uppercase on line :line.";
     }
 
     /**

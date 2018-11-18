@@ -57,7 +57,7 @@ class Url implements ValidationRuleInterface
      */
     public function message()
     {
-        return 'The :attribute value :value is not a valid url';
+        return 'The :attribute value :value is not a valid url on line :line.';
     }
 
     /**

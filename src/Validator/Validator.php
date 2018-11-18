@@ -40,6 +40,13 @@ class Validator
     protected $message;
 
     /**
+     * The line number of the row under validation.
+     *
+     * @var int
+     */
+    protected $currentRowLineNumber = 0;
+
+    /**
      * The row under validation.
      *
      * @var array
@@ -79,7 +86,7 @@ class Validator
      *
      * @var string
      */
-    protected $delimiter;
+    protected $delimiter = ',';
 
     /**
      * The rules to be applied to the data.
@@ -110,7 +117,7 @@ class Validator
      * @param array  $rules
      * @param array  $messages
      */
-    public function __construct($filePath, $delimiter = ',', array $rules, array $messages = [])
+    public function __construct($filePath, $delimiter, array $rules, array $messages = [])
     {
         $this->filePath = $filePath;
         $this->delimiter = $delimiter;
@@ -175,6 +182,7 @@ class Validator
         if ($this->doesFileExistAndReadable($this->filePath)) {
             if (false !== ($handle = fopen($this->filePath, 'r'))) {
                 while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
+                    ++$this->currentRowLineNumber;
                     if (empty($this->headers)) {
                         $this->setHeaders($row);
                         continue;
@@ -269,7 +277,7 @@ class Validator
      * @param string $attribute
      * @param string $rule
      *
-     * @return null|void
+     * @return void|null
      */
     protected function validateAttribute($attribute, $rule)
     {
@@ -423,7 +431,8 @@ class Validator
             $attribute,
             $value,
             $rule,
-            $parameters
+            $parameters,
+            $this->currentRowLineNumber
         );
     }
 
