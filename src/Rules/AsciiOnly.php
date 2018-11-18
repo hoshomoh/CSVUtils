@@ -36,7 +36,7 @@ class AsciiOnly implements ValidationRuleInterface
      */
     public function message()
     {
-        return 'The :attribute value :value contains a non-ascii character';
+        return 'The :attribute value :value contains a non-ascii character on line :line.';
     }
 
     /**

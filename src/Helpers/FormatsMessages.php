@@ -65,7 +65,7 @@ trait FormatsMessages
     /**
      * @param $rule
      *
-     * @return null|string|string[]
+     * @return string|string[]|null
      */
     protected function ruleToLower($rule)
     {
@@ -86,14 +86,17 @@ trait FormatsMessages
      * @param mixed                   $value
      * @param ValidationRuleInterface $rule
      * @param array                   $parameters
+     * @param $lineNumber
      *
      * @return string
      */
-    protected function makeReplacements($message, $attribute, $value, $rule, $parameters)
+    protected function makeReplacements($message, $attribute, $value, $rule, $parameters, $lineNumber)
     {
         $message = $this->replaceAttributePlaceholder($message, $attribute);
 
         $message = $this->replaceValuePlaceholder($message, $value);
+
+        $message = $this->replaceErrorLinePlaceholder($message, $lineNumber);
 
         $message = $rule->parameterReplacer($message, $parameters);
 
@@ -124,5 +127,18 @@ trait FormatsMessages
     protected function replaceValuePlaceholder($message, $value)
     {
         return str_replace([':value'], [$value], $message);
+    }
+
+    /**
+     * Replace the :line placeholder in the given message.
+     *
+     * @param $message
+     * @param $lineNUmber
+     *
+     * @return mixed
+     */
+    protected function replaceErrorLinePlaceholder($message, $lineNUmber)
+    {
+        return str_replace([':line'], [$lineNUmber], $message);
     }
 }

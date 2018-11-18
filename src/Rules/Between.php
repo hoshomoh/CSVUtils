@@ -40,7 +40,7 @@ class Between implements ValidationRuleInterface
      */
     public function message()
     {
-        return 'The :attribute value :value is not between :min - :max.';
+        return 'The :attribute value :value is not between :min - :max on line :line.';
     }
 
     /**
