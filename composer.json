@@ -1,6 +1,8 @@
 {
   "name": "oshomo/csv-utils",
   "description": "A CSV utility to read, validate and write data to multiple format including JSON, XML etc.",
+  "keywords": ["library", "csv-validator", "php", "php-csv-validator", "csv-converter", "csv-reading", "csv-json-converter", "csv-xml-converter"],
+  "license": "Apache-2.0",
   "type": "library",
   "authors": [
     {
