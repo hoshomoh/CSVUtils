@@ -49,10 +49,8 @@ class XmlConverter implements ConverterHandlerInterface
     }
 
     /**
-     * @param array $data
+     * @param array            $data
      * @param SimpleXMLElement $xmlData
-     *
-     * @return void
      */
     protected function toXml(array $data, SimpleXMLElement $xmlData): void
     {

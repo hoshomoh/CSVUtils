@@ -84,7 +84,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      * Replace error messages parameter with right values.
      *
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

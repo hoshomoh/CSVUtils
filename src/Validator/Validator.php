@@ -115,8 +115,8 @@ class Validator
      *
      * @param string $filePath
      * @param string $delimiter
-     * @param array $rules
-     * @param array $messages
+     * @param array  $rules
+     * @param array  $messages
      */
     public function __construct(string $filePath, string $delimiter = ',', array $rules, array $messages = [])
     {
@@ -226,8 +226,6 @@ class Validator
 
     /**
      * Set CSV filename.
-     *
-     * @return void
      */
     protected function setFileName(): void
     {
@@ -236,8 +234,6 @@ class Validator
 
     /**
      * Set CSV file directory.
-     *
-     * @return void
      */
     protected function setFileDirectory(): void
     {
@@ -283,10 +279,8 @@ class Validator
     /**
      * Validate a given attribute against a rule.
      *
-     * @param string $attribute
+     * @param string        $attribute
      * @param string|object $rule
-     *
-     * @return void
      */
     protected function validateAttribute(string $attribute, $rule): void
     {
@@ -332,8 +326,6 @@ class Validator
 
     /**
      * @param array $headers
-     *
-     * @return void
      */
     protected function setHeaders(array $headers): void
     {
@@ -344,7 +336,7 @@ class Validator
      * Determine if the attribute is validate-able.
      *
      * @param object|string $rule
-     * @param array $parameters
+     * @param array         $parameters
      *
      * @return bool
      */
@@ -395,7 +387,7 @@ class Validator
      * Determine if a given rule expect parameters and that the parameters where sent.
      *
      * @param object|string $rule
-     * @param array $parameters
+     * @param array         $parameters
      *
      * @return bool
      */
@@ -414,12 +406,10 @@ class Validator
     /**
      * Validate an attribute using a custom rule object.
      *
-     * @param string $attribute
-     * @param mixed $value
-     * @param array $parameters
+     * @param string                  $attribute
+     * @param mixed                   $value
+     * @param array                   $parameters
      * @param ValidationRuleInterface $rule
-     *
-     * @return void
      */
     protected function validateUsingCustomRule(string $attribute, $value, array $parameters, ValidationRuleInterface $rule): void
     {
@@ -431,13 +421,11 @@ class Validator
     /**
      * Add a failed rule and error message to the collection.
      *
-     * @param string $message
-     * @param string $attribute
-     * @param mixed $value
+     * @param string                  $message
+     * @param string                  $attribute
+     * @param mixed                   $value
      * @param ValidationRuleInterface $rule
-     * @param array $parameters
-     *
-     * @return void
+     * @param array                   $parameters
      */
     protected function addFailure(string $message, string $attribute, $value, ValidationRuleInterface $rule, array $parameters = []): void
     {

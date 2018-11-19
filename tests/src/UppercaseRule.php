@@ -35,7 +35,7 @@ class UppercaseRule implements ValidationRuleInterface
 
     /**
      * @param string $message
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

@@ -11,9 +11,9 @@ trait FormatsMessages
     /**
      * Get the validation message for an attribute and rule.
      *
-     * @param string $attribute
+     * @param string                  $attribute
      * @param ValidationRuleInterface $rule
-     * @param string $actualRule
+     * @param string                  $actualRule
      *
      * @return string
      */
@@ -85,12 +85,12 @@ trait FormatsMessages
     /**
      * Replace all error message place-holders with actual values.
      *
-     * @param string $message
-     * @param string $attribute
-     * @param mixed $value
+     * @param string                  $message
+     * @param string                  $attribute
+     * @param mixed                   $value
      * @param ValidationRuleInterface $rule
-     * @param array $parameters
-     * @param int $lineNumber
+     * @param array                   $parameters
+     * @param int                     $lineNumber
      *
      * @return string
      */
@@ -137,7 +137,7 @@ trait FormatsMessages
      * Replace the :line placeholder in the given message.
      *
      * @param string $message
-     * @param int $lineNumber
+     * @param int    $lineNumber
      *
      * @return mixed
      */
