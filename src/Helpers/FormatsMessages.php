@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Helpers;
 
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
@@ -9,13 +11,13 @@ trait FormatsMessages
     /**
      * Get the validation message for an attribute and rule.
      *
-     * @param string                  $attribute
+     * @param string $attribute
      * @param ValidationRuleInterface $rule
-     * @param string                  $actualRule
+     * @param string $actualRule
      *
      * @return string
      */
-    protected function getMessage($attribute, $rule, $actualRule)
+    protected function getMessage(string $attribute, ValidationRuleInterface $rule, string $actualRule): string
     {
         $inlineMessage = $this->getInlineMessage($attribute, $actualRule);
 
@@ -34,7 +36,7 @@ trait FormatsMessages
      *
      * @return string|null
      */
-    protected function getInlineMessage($attribute, $rule)
+    protected function getInlineMessage(string $attribute, string $rule): ?string
     {
         return $this->getFromLocalArray($attribute, $this->ruleToLower($rule));
     }
@@ -47,7 +49,7 @@ trait FormatsMessages
      *
      * @return string|null
      */
-    protected function getFromLocalArray($attribute, $lowerRule)
+    protected function getFromLocalArray(string $attribute, string $lowerRule): ?string
     {
         $source = $this->customMessages;
 
@@ -60,14 +62,16 @@ trait FormatsMessages
                 }
             }
         }
+
+        return null;
     }
 
     /**
-     * @param $rule
+     * @param string $rule
      *
      * @return string|string[]|null
      */
-    protected function ruleToLower($rule)
+    protected function ruleToLower(string $rule): ?string
     {
         $lowerRule = preg_replace('/[A-Z]/', '_$0', $rule);
 
@@ -81,16 +85,16 @@ trait FormatsMessages
     /**
      * Replace all error message place-holders with actual values.
      *
-     * @param string                  $message
-     * @param string                  $attribute
-     * @param mixed                   $value
+     * @param string $message
+     * @param string $attribute
+     * @param mixed $value
      * @param ValidationRuleInterface $rule
-     * @param array                   $parameters
-     * @param $lineNumber
+     * @param array $parameters
+     * @param int $lineNumber
      *
      * @return string
      */
-    protected function makeReplacements($message, $attribute, $value, $rule, $parameters, $lineNumber)
+    protected function makeReplacements(string $message, string $attribute, $value, ValidationRuleInterface $rule, array $parameters, int $lineNumber): string
     {
         $message = $this->replaceAttributePlaceholder($message, $attribute);
 
@@ -111,7 +115,7 @@ trait FormatsMessages
      *
      * @return string
      */
-    protected function replaceAttributePlaceholder($message, $attribute)
+    protected function replaceAttributePlaceholder(string $message, string $attribute): string
     {
         return str_replace([':attribute'], [$attribute], $message);
     }
@@ -124,7 +128,7 @@ trait FormatsMessages
      *
      * @return string
      */
-    protected function replaceValuePlaceholder($message, $value)
+    protected function replaceValuePlaceholder(string $message, string $value): string
     {
         return str_replace([':value'], [$value], $message);
     }
@@ -132,13 +136,13 @@ trait FormatsMessages
     /**
      * Replace the :line placeholder in the given message.
      *
-     * @param $message
-     * @param $lineNUmber
+     * @param string $message
+     * @param int $lineNumber
      *
      * @return mixed
      */
-    protected function replaceErrorLinePlaceholder($message, $lineNUmber)
+    protected function replaceErrorLinePlaceholder(string $message, int $lineNumber)
     {
-        return str_replace([':line'], [$lineNUmber], $message);
+        return str_replace([':line'], [$lineNumber], $message);
     }
 }

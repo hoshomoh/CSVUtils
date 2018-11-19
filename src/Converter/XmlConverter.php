@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Converter;
 
 use DOMDocument;
@@ -29,28 +31,30 @@ class XmlConverter implements ConverterHandlerInterface
      *
      * @param string $recordElement
      */
-    public function __construct($recordElement = self::DEFAULT_RECORD_ELEMENT)
+    public function __construct(string $recordElement = self::DEFAULT_RECORD_ELEMENT)
     {
         if (!empty($recordElement)) {
             $this->recordElement = $recordElement;
         }
 
-        $this->data = new SimpleXMLElement('<?xml version="1.0"?><data></data>');
+        $this->data = new SimpleXMLElement('<?xml version="1.0"?><data value=""></data>');
     }
 
     /**
      * @return string
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return self::FILE_EXTENSION;
     }
 
     /**
-     * @param $data
-     * @param $xmlData
+     * @param array $data
+     * @param SimpleXMLElement $xmlData
+     *
+     * @return void
      */
-    protected function toXml($data, $xmlData)
+    protected function toXml(array $data, SimpleXMLElement $xmlData): void
     {
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {
@@ -66,11 +70,11 @@ class XmlConverter implements ConverterHandlerInterface
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
-     * @return $this|mixed
+     * @return ConverterHandlerInterface
      */
-    public function convert($data)
+    public function convert(array $data): ConverterHandlerInterface
     {
         $this->toXml($data, $this->data);
 
@@ -78,11 +82,11 @@ class XmlConverter implements ConverterHandlerInterface
     }
 
     /**
-     * @param $filename
+     * @param string $filename
      *
      * @return bool
      */
-    public function write($filename)
+    public function write(string $filename): bool
     {
         $dom = new DOMDocument('1.0');
 

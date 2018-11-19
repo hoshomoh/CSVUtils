@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Converter;
 
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
@@ -18,7 +20,7 @@ class JsonConverter implements ConverterHandlerInterface
     /**
      * @return string
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return self::FILE_EXTENSION;
     }
@@ -26,9 +28,9 @@ class JsonConverter implements ConverterHandlerInterface
     /**
      * @param array $data
      *
-     * @return $this|mixed
+     * @return ConverterHandlerInterface
      */
-    public function convert($data)
+    public function convert(array $data): ConverterHandlerInterface
     {
         $this->data = json_encode(
             $data,
@@ -46,7 +48,7 @@ class JsonConverter implements ConverterHandlerInterface
      *
      * @return bool
      */
-    public function write($filename)
+    public function write(string $filename): bool
     {
         return (file_put_contents($filename, $this->data)) ? true : false;
     }

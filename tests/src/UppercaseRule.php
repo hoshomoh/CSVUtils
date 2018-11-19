@@ -9,7 +9,7 @@ class UppercaseRule implements ValidationRuleInterface
     /**
      * @return int
      */
-    public function parameterCount()
+    public function parameterCount(): int
     {
         return 0;
     }
@@ -20,7 +20,7 @@ class UppercaseRule implements ValidationRuleInterface
      *
      * @return bool
      */
-    public function passes($value, $parameters)
+    public function passes($value, array $parameters): bool
     {
         return strtoupper($value) === $value;
     }
@@ -28,18 +28,18 @@ class UppercaseRule implements ValidationRuleInterface
     /**
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The :attribute value :value must be uppercase on line :line.';
     }
 
     /**
      * @param string $message
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return string
      */
-    public function parameterReplacer($message, $parameters)
+    public function parameterReplacer(string $message, array $parameters): string
     {
         return $message;
     }

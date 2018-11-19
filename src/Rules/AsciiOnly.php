@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
@@ -11,7 +13,7 @@ class AsciiOnly implements ValidationRuleInterface
      *
      * @return int
      */
-    public function parameterCount()
+    public function parameterCount(): int
     {
         return 0;
     }
@@ -20,11 +22,11 @@ class AsciiOnly implements ValidationRuleInterface
      * Determine if the validation rule passes.
      *
      * @param mixed $value
-     * @param $parameters
+     * @param array $parameters
      *
      * @return bool
      */
-    public function passes($value, $parameters)
+    public function passes($value, array $parameters): bool
     {
         return (mb_detect_encoding($value, 'ASCII', true)) ? true : false;
     }
@@ -34,7 +36,7 @@ class AsciiOnly implements ValidationRuleInterface
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The :attribute value :value contains a non-ascii character on line :line.';
     }
@@ -43,11 +45,11 @@ class AsciiOnly implements ValidationRuleInterface
      * Replace error messages parameter with right values.
      *
      * @param string $message
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return string
      */
-    public function parameterReplacer($message, $parameters)
+    public function parameterReplacer(string $message, array $parameters): string
     {
         return $message;
     }
