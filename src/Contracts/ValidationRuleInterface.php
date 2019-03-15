@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Contracts;
 
 interface ValidationRuleInterface
@@ -11,7 +13,7 @@ interface ValidationRuleInterface
      *
      * @return int
      */
-    public function parameterCount();
+    public function parameterCount(): int;
 
     /**
      * Determines if the validation rule passes. This is where we do the
@@ -22,7 +24,7 @@ interface ValidationRuleInterface
      *
      * @return bool
      */
-    public function passes($value, $parameters);
+    public function passes($value, array $parameters): bool;
 
     /**
      * Get the validation error message. Specify the message that should
@@ -31,7 +33,7 @@ interface ValidationRuleInterface
      *
      * @return string
      */
-    public function message();
+    public function message(): string;
 
     /**
      * Replace error messages parameter with right values. If you want
@@ -49,5 +51,5 @@ interface ValidationRuleInterface
      *
      * @return string
      */
-    public function parameterReplacer($message, $parameters);
+    public function parameterReplacer(string $message, array $parameters): string;
 }

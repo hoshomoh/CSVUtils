@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
@@ -11,7 +13,7 @@ class Url implements ValidationRuleInterface
      *
      * @return int
      */
-    public function parameterCount()
+    public function parameterCount(): int
     {
         return 0;
     }
@@ -20,11 +22,11 @@ class Url implements ValidationRuleInterface
      * Determine if the validation rule passes.
      *
      * @param mixed $value
-     * @param $parameters
+     * @param array $parameters
      *
      * @return bool
      */
-    public function passes($value, $parameters)
+    public function passes($value, array $parameters): bool
     {
         /*
         * This pattern is derived from Symfony\Component\Validator\Constraints\UrlValidator (2.7.4).
@@ -55,7 +57,7 @@ class Url implements ValidationRuleInterface
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The :attribute value :value is not a valid url on line :line.';
     }
@@ -68,7 +70,7 @@ class Url implements ValidationRuleInterface
      *
      * @return string
      */
-    public function parameterReplacer($message, $parameters)
+    public function parameterReplacer(string $message, array $parameters): string
     {
         return $message;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
@@ -32,7 +34,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      *
      * @param \Closure $callback
      */
-    public function __construct($callback)
+    public function __construct(\Closure $callback)
     {
         $this->callback = $callback;
     }
@@ -42,7 +44,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      *
      * @return int
      */
-    public function parameterCount()
+    public function parameterCount(): int
     {
         return 0;
     }
@@ -51,11 +53,11 @@ class ClosureValidationRule implements ValidationRuleInterface
      * Determine if the validation rule passes.
      *
      * @param mixed $value
-     * @param $parameters
+     * @param array $parameters
      *
      * @return bool
      */
-    public function passes($value, $parameters)
+    public function passes($value, array $parameters): bool
     {
         $this->failed = false;
 
@@ -73,7 +75,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return $this->message;
     }
@@ -86,7 +88,7 @@ class ClosureValidationRule implements ValidationRuleInterface
      *
      * @return string
      */
-    public function parameterReplacer($message, $parameters)
+    public function parameterReplacer(string $message, array $parameters): string
     {
         return $message;
     }

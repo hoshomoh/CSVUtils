@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Contracts;
 
 interface ConverterHandlerInterface
@@ -10,7 +12,7 @@ interface ConverterHandlerInterface
      *
      * @return string
      */
-    public function getExtension();
+    public function getExtension(): string;
 
     /**
      * Does the actual conversion. This is where the actual conversion
@@ -18,9 +20,9 @@ interface ConverterHandlerInterface
      *
      * @param array $data
      *
-     * @return $this
+     * @return self
      */
-    public function convert($data);
+    public function convert(array $data): self;
 
     /**
      * Writes the converted data to the path specified.
@@ -29,5 +31,5 @@ interface ConverterHandlerInterface
      *
      * @return bool
      */
-    public function write($filename);
+    public function write(string $filename): bool;
 }

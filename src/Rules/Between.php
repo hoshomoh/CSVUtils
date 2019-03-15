@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
@@ -13,7 +15,7 @@ class Between implements ValidationRuleInterface
      *
      * @return int
      */
-    public function parameterCount()
+    public function parameterCount(): int
     {
         return self::PARAMETER_COUNT;
     }
@@ -22,11 +24,11 @@ class Between implements ValidationRuleInterface
      * Determine if the validation rule passes.
      *
      * @param mixed $value
-     * @param $parameters
+     * @param array $parameters
      *
      * @return bool
      */
-    public function passes($value, $parameters)
+    public function passes($value, array $parameters): bool
     {
         $size = (int) $value;
 
@@ -38,7 +40,7 @@ class Between implements ValidationRuleInterface
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The :attribute value :value is not between :min - :max on line :line.';
     }
@@ -51,7 +53,7 @@ class Between implements ValidationRuleInterface
      *
      * @return string
      */
-    public function parameterReplacer($message, $parameters)
+    public function parameterReplacer(string $message, array $parameters): string
     {
         return str_replace([':min', ':max'], [$parameters[0], $parameters[1]], $message);
     }

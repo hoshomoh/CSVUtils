@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Validator;
 
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
-use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface as Converter;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
 use Oshomo\CsvUtils\Helpers\FormatsMessages;
@@ -117,7 +118,7 @@ class Validator
      * @param array  $rules
      * @param array  $messages
      */
-    public function __construct($filePath, $delimiter, array $rules, array $messages = [])
+    public function __construct(string $filePath, string $delimiter = ',', array $rules, array $messages = [])
     {
         $this->filePath = $filePath;
         $this->delimiter = $delimiter;
@@ -130,8 +131,10 @@ class Validator
 
     /**
      * Run the validator's rules against the supplied data.
+     *
+     * @return array
      */
-    public function validate()
+    public function validate(): array
     {
         if ($this->fails()) {
             return $this->errors();
@@ -145,8 +148,10 @@ class Validator
 
     /**
      * Return validation errors.
+     *
+     * @return array
      */
-    public function errors()
+    public function errors(): array
     {
         if (empty($this->message) && empty($this->invalidRows)) {
             $message = self::NO_ERROR_MESSAGE;
@@ -167,7 +172,7 @@ class Validator
      *
      * @return bool
      */
-    public function fails()
+    public function fails(): bool
     {
         return !$this->passes();
     }
@@ -177,7 +182,7 @@ class Validator
      *
      * @return bool
      */
-    protected function passes()
+    protected function passes(): bool
     {
         if ($this->doesFileExistAndReadable($this->filePath)) {
             if (false !== ($handle = fopen($this->filePath, 'r'))) {
@@ -212,7 +217,7 @@ class Validator
      *
      * @return bool
      */
-    public function write(Converter $format)
+    public function write(ConverterHandlerInterface $format): bool
     {
         return $format
             ->convert($this->data)
@@ -222,7 +227,7 @@ class Validator
     /**
      * Set CSV filename.
      */
-    protected function setFileName()
+    protected function setFileName(): void
     {
         $this->fileName = basename($this->filePath, self::FILE_EXTENSION);
     }
@@ -230,7 +235,7 @@ class Validator
     /**
      * Set CSV file directory.
      */
-    protected function setFileDirectory()
+    protected function setFileDirectory(): void
     {
         $this->directory = dirname($this->filePath) . DIRECTORY_SEPARATOR;
     }
@@ -238,11 +243,11 @@ class Validator
     /**
      * Get the full path and name of the file to be written.
      *
-     * @param $extension
+     * @param string $extension
      *
      * @return string
      */
-    protected function getWriteFileName($extension)
+    protected function getWriteFileName(string $extension): string
     {
         return $this->directory . $this->fileName . '.' . $extension;
     }
@@ -250,9 +255,9 @@ class Validator
     /**
      * Validate a given row with the supplied  rules.
      *
-     * @param $row
+     * @param array $row
      */
-    protected function validateRow($row)
+    protected function validateRow(array $row): void
     {
         $this->currentRowMessages = [];
         $this->currentRow = $row;
@@ -274,16 +279,14 @@ class Validator
     /**
      * Validate a given attribute against a rule.
      *
-     * @param string $attribute
-     * @param string $rule
-     *
-     * @return void|null
+     * @param string        $attribute
+     * @param string|object $rule
      */
-    protected function validateAttribute($attribute, $rule)
+    protected function validateAttribute(string $attribute, $rule): void
     {
         list($rule, $parameters) = ValidationRuleParser::parse($rule);
 
-        if ('' == $rule) {
+        if ('' === $rule) {
             return;
         }
 
@@ -306,15 +309,17 @@ class Validator
                     $parameters
                 );
             }
+
+            return;
         }
     }
 
     /**
-     * @param $filePath
+     * @param string $filePath
      *
      * @return bool
      */
-    protected function doesFileExistAndReadable($filePath)
+    protected function doesFileExistAndReadable(string $filePath): bool
     {
         return file_exists($filePath) && is_readable($filePath);
     }
@@ -322,7 +327,7 @@ class Validator
     /**
      * @param array $headers
      */
-    protected function setHeaders($headers)
+    protected function setHeaders(array $headers): void
     {
         $this->headers = $headers;
     }
@@ -331,24 +336,23 @@ class Validator
      * Determine if the attribute is validate-able.
      *
      * @param object|string $rule
-     * @param string        $parameters
+     * @param array         $parameters
      *
      * @return bool
      */
-    protected function isValidateAble($rule, $parameters)
+    protected function isValidateAble($rule, array $parameters): bool
     {
-        return $this->ruleExists($rule) &&
-            $this->passesParameterCheck($rule, $parameters);
+        return $this->ruleExists($rule) && $this->passesParameterCheck($rule, $parameters);
     }
 
     /**
      * Get the class of a rule.
      *
-     * @param $rule
+     * @param string $rule
      *
      * @return string
      */
-    protected function getRuleClassName($rule)
+    protected function getRuleClassName(string $rule): string
     {
         return 'Oshomo\\CsvUtils\\Rules\\' . $rule;
     }
@@ -356,11 +360,11 @@ class Validator
     /**
      * Get the class of a rule.
      *
-     * @param $rule
+     * @param string $rule
      *
      * @return ValidationRuleInterface
      */
-    protected function getRuleClass($rule)
+    protected function getRuleClass(string $rule): ValidationRuleInterface
     {
         $ruleClassName = $this->getRuleClassName($rule);
 
@@ -374,21 +378,20 @@ class Validator
      *
      * @return bool
      */
-    protected function ruleExists($rule)
+    protected function ruleExists($rule): bool
     {
-        return $rule instanceof ValidationRule ||
-            class_exists($this->getRuleClassName($rule));
+        return $rule instanceof ValidationRule || class_exists($this->getRuleClassName($rule));
     }
 
     /**
      * Determine if a given rule expect parameters and that the parameters where sent.
      *
      * @param object|string $rule
-     * @param $parameters
+     * @param array         $parameters
      *
      * @return bool
      */
-    protected function passesParameterCheck($rule, $parameters)
+    protected function passesParameterCheck($rule, array $parameters): bool
     {
         if (!$rule instanceof ValidationRule) {
             $rule = $this->getRuleClass($rule);
@@ -403,12 +406,12 @@ class Validator
     /**
      * Validate an attribute using a custom rule object.
      *
-     * @param string $attribute
-     * @param mixed  $value
-     * @param $parameters
+     * @param string                  $attribute
+     * @param mixed                   $value
+     * @param array                   $parameters
      * @param ValidationRuleInterface $rule
      */
-    protected function validateUsingCustomRule($attribute, $value, $parameters, $rule)
+    protected function validateUsingCustomRule(string $attribute, $value, array $parameters, ValidationRuleInterface $rule): void
     {
         if (!$rule->passes($value, $parameters)) {
             $this->addFailure($rule->message(), $attribute, $value, $rule, $parameters);
@@ -418,13 +421,13 @@ class Validator
     /**
      * Add a failed rule and error message to the collection.
      *
-     * @param $message
+     * @param string                  $message
      * @param string                  $attribute
      * @param mixed                   $value
      * @param ValidationRuleInterface $rule
      * @param array                   $parameters
      */
-    protected function addFailure($message, $attribute, $value, $rule, $parameters = [])
+    protected function addFailure(string $message, string $attribute, $value, ValidationRuleInterface $rule, array $parameters = []): void
     {
         $this->currentRowMessages[] = $this->makeReplacements(
             $message,
@@ -443,7 +446,7 @@ class Validator
      *
      * @return mixed
      */
-    protected function getValue($attribute)
+    protected function getValue(string $attribute)
     {
         return $this->currentRow[$attribute];
     }

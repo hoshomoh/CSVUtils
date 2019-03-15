@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Validator;
 
 use Closure;
@@ -15,7 +17,7 @@ class ValidationRuleParser
      *
      * @return array
      */
-    public static function parse($rule)
+    public static function parse($rule): array
     {
         if ($rule instanceof Closure) {
             return [new ClosureValidationRule($rule), []];
@@ -35,7 +37,7 @@ class ValidationRuleParser
      *
      * @return array
      */
-    protected static function parseStringRule($rule)
+    protected static function parseStringRule(string $rule): array
     {
         $parameters = [];
 
@@ -58,7 +60,7 @@ class ValidationRuleParser
      *
      * @return array
      */
-    protected static function parseParameters($parameter)
+    protected static function parseParameters(string $parameter): array
     {
         return str_getcsv($parameter);
     }
@@ -70,7 +72,7 @@ class ValidationRuleParser
      *
      * @return string
      */
-    protected static function normalizeRule($rule)
+    protected static function normalizeRule(string $rule): string
     {
         $rule = ucwords(str_replace(['-', '_'], ' ', $rule));
 
