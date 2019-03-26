@@ -7,10 +7,11 @@
 
 # CSVUtils
 
-*Make sure you use a tagged version when requiring this package. The current version is [v2.0.1](https://packagist.org/packages/oshomo/csv-utils#v2.0.1)*
+*Make sure you use a tagged version when requiring this package.*
 
 ## Table of Content
 
+- [Current Stable Versions](#current-stable-versions)
 - [How to Run](#how-to-run)
 - [Implementation](#implementation)
 - [Documentation](#documentation)
@@ -23,6 +24,10 @@
   - [Writing CSV Output Data to Other Formats](#writing-csv-output-data-to-other-formats)
 - [Running Tests](#running-tests)
 - [Contributing to this Repo](#contributing-to-this-repo)
+
+### Current Stable Versions
+- PHP 5 [v2.0.1](https://packagist.org/packages/oshomo/csv-utils#v2.0.1)
+- PHP 7 [v5.0.0](https://packagist.org/packages/oshomo/csv-utils#v5.0.0)
 
 ### How to Run
 
