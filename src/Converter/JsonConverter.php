@@ -17,19 +17,11 @@ class JsonConverter implements ConverterHandlerInterface
      */
     protected $data;
 
-    /**
-     * @return string
-     */
     public function getExtension(): string
     {
         return self::FILE_EXTENSION;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return ConverterHandlerInterface
-     */
     public function convert(array $data): ConverterHandlerInterface
     {
         $this->data = json_encode(
@@ -43,11 +35,6 @@ class JsonConverter implements ConverterHandlerInterface
         return $this;
     }
 
-    /**
-     * @param string $filename
-     *
-     * @return bool
-     */
     public function write(string $filename): bool
     {
         return (file_put_contents($filename, $this->data)) ? true : false;

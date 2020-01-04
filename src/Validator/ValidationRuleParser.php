@@ -14,8 +14,6 @@ class ValidationRuleParser
      * Extract the rule name and parameters from a rule.
      *
      * @param string $rule|ValidationRuleInterface
-     *
-     * @return array
      */
     public static function parse($rule): array
     {
@@ -32,10 +30,6 @@ class ValidationRuleParser
 
     /**
      * Parse a string based rule.
-     *
-     * @param string $rule
-     *
-     * @return array
      */
     protected static function parseStringRule(string $rule): array
     {
@@ -55,10 +49,6 @@ class ValidationRuleParser
 
     /**
      * Parse a parameter list.
-     *
-     * @param string $parameter
-     *
-     * @return array
      */
     protected static function parseParameters(string $parameter): array
     {
@@ -67,10 +57,6 @@ class ValidationRuleParser
 
     /**
      * Normalizes a rule.
-     *
-     * @param string $rule
-     *
-     * @return string
      */
     protected static function normalizeRule(string $rule): string
     {

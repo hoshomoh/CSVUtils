@@ -28,8 +28,6 @@ class XmlConverter implements ConverterHandlerInterface
 
     /**
      * XmlConverter constructor.
-     *
-     * @param string $recordElement
      */
     public function __construct(string $recordElement = self::DEFAULT_RECORD_ELEMENT)
     {
@@ -40,18 +38,11 @@ class XmlConverter implements ConverterHandlerInterface
         $this->data = new SimpleXMLElement('<?xml version="1.0"?><data value=""></data>');
     }
 
-    /**
-     * @return string
-     */
     public function getExtension(): string
     {
         return self::FILE_EXTENSION;
     }
 
-    /**
-     * @param array            $data
-     * @param SimpleXMLElement $xmlData
-     */
     protected function toXml(array $data, SimpleXMLElement $xmlData): void
     {
         foreach ($data as $key => $value) {
@@ -67,11 +58,6 @@ class XmlConverter implements ConverterHandlerInterface
         }
     }
 
-    /**
-     * @param array $data
-     *
-     * @return ConverterHandlerInterface
-     */
     public function convert(array $data): ConverterHandlerInterface
     {
         $this->toXml($data, $this->data);
@@ -79,11 +65,6 @@ class XmlConverter implements ConverterHandlerInterface
         return $this;
     }
 
-    /**
-     * @param string $filename
-     *
-     * @return bool
-     */
     public function write(string $filename): bool
     {
         $dom = new DOMDocument('1.0');

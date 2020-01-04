@@ -10,8 +10,6 @@ class Url implements ValidationRuleInterface
 {
     /**
      * Get the number of parameters that should be supplied.
-     *
-     * @return int
      */
     public function parameterCount(): int
     {
@@ -22,9 +20,6 @@ class Url implements ValidationRuleInterface
      * Determine if the validation rule passes.
      *
      * @param mixed $value
-     * @param array $parameters
-     *
-     * @return bool
      */
     public function passes($value, array $parameters): bool
     {
@@ -54,8 +49,6 @@ class Url implements ValidationRuleInterface
 
     /**
      * Get the validation error message.
-     *
-     * @return string
      */
     public function message(): string
     {
@@ -64,11 +57,6 @@ class Url implements ValidationRuleInterface
 
     /**
      * Replace error messages parameter with right values.
-     *
-     * @param string $message
-     * @param array  $parameters
-     *
-     * @return string
      */
     public function parameterReplacer(string $message, array $parameters): string
     {

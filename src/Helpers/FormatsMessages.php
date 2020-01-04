@@ -10,12 +10,6 @@ trait FormatsMessages
 {
     /**
      * Get the validation message for an attribute and rule.
-     *
-     * @param string                  $attribute
-     * @param ValidationRuleInterface $rule
-     * @param string                  $actualRule
-     *
-     * @return string
      */
     protected function getMessage(string $attribute, ValidationRuleInterface $rule, string $actualRule): string
     {
@@ -30,11 +24,6 @@ trait FormatsMessages
 
     /**
      * Get the proper inline error message passed to the validator.
-     *
-     * @param string $attribute
-     * @param string $rule
-     *
-     * @return string|null
      */
     protected function getInlineMessage(string $attribute, string $rule): ?string
     {
@@ -43,11 +32,6 @@ trait FormatsMessages
 
     /**
      * Get the inline message for a rule if it exists.
-     *
-     * @param string $attribute
-     * @param string $lowerRule
-     *
-     * @return string|null
      */
     protected function getFromLocalArray(string $attribute, string $lowerRule): ?string
     {
@@ -67,8 +51,6 @@ trait FormatsMessages
     }
 
     /**
-     * @param string $rule
-     *
      * @return string|string[]|null
      */
     protected function ruleToLower(string $rule): ?string
@@ -85,14 +67,7 @@ trait FormatsMessages
     /**
      * Replace all error message place-holders with actual values.
      *
-     * @param string                  $message
-     * @param string                  $attribute
-     * @param mixed                   $value
-     * @param ValidationRuleInterface $rule
-     * @param array                   $parameters
-     * @param int                     $lineNumber
-     *
-     * @return string
+     * @param mixed $value
      */
     protected function makeReplacements(string $message, string $attribute, $value, ValidationRuleInterface $rule, array $parameters, int $lineNumber): string
     {
@@ -109,11 +84,6 @@ trait FormatsMessages
 
     /**
      * Replace the :attribute placeholder in the given message.
-     *
-     * @param string $message
-     * @param string $attribute
-     *
-     * @return string
      */
     protected function replaceAttributePlaceholder(string $message, string $attribute): string
     {
@@ -122,11 +92,6 @@ trait FormatsMessages
 
     /**
      * Replace the :value placeholder in the given message.
-     *
-     * @param string $message
-     * @param string $value
-     *
-     * @return string
      */
     protected function replaceValuePlaceholder(string $message, string $value): string
     {
@@ -135,9 +100,6 @@ trait FormatsMessages
 
     /**
      * Replace the :line placeholder in the given message.
-     *
-     * @param string $message
-     * @param int    $lineNumber
      *
      * @return mixed
      */
