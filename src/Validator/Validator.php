@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Oshomo\CsvUtils\Validator;
 
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
+use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
 use Oshomo\CsvUtils\Helpers\FormatsMessages;
@@ -349,10 +350,14 @@ class Validator
             $rule = $this->getRuleClass($rule);
         }
 
-        $ruleParameterCount = $rule->parameterCount();
-        $parameterCount = count($parameters);
+        if ($rule instanceof ParameterizedRuleInterface) {
+            $ruleParameterCount = count($rule->allowedParameters());
+            $parameterCount = count($parameters);
 
-        return (0 === $ruleParameterCount) ? true : ($parameterCount === $ruleParameterCount);
+            return $parameterCount === $ruleParameterCount;
+        }
+
+        return true;
     }
 
     /**

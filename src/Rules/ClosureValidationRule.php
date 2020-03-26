@@ -38,14 +38,6 @@ class ClosureValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * Get the number of parameters that should be supplied.
-     */
-    public function parameterCount(): int
-    {
-        return 0;
-    }
-
-    /**
      * Determine if the validation rule passes.
      *
      * @param mixed $value
@@ -69,13 +61,5 @@ class ClosureValidationRule implements ValidationRuleInterface
     public function message(): string
     {
         return $this->message;
-    }
-
-    /**
-     * Replace error messages parameter with right values.
-     */
-    public function parameterReplacer(string $message, array $parameters): string
-    {
-        return $message;
     }
 }
