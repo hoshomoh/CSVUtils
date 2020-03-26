@@ -105,7 +105,7 @@ class CsvValidatorTest extends TestCase
 
         $validationErrors = $validator->errors();
 
-        for ($csvRow = 0; $csvRow < 3; $csvRow++) {
+        for ($csvRow = 0; $csvRow < 3; ++$csvRow) {
             $this->assertArrayHasKey(
                 'errors',
                 $validationErrors['data'][$csvRow]
