@@ -7,13 +7,6 @@ namespace Oshomo\CsvUtils\Contracts;
 interface ValidationRuleInterface
 {
     /**
-     * Get the number of parameters that should be supplied.
-     * If no parameter should be supplied return 0 else
-     * return the number of parameters that should be returned.
-     */
-    public function parameterCount(): int;
-
-    /**
      * Determines if the validation rule passes. This is where we do the
      * actual validation. If the validation passes return true else false.
      *
@@ -27,17 +20,4 @@ interface ValidationRuleInterface
      * :attribute and :value placeholders in the message string.
      */
     public function message(): string;
-
-    /**
-     * Replace error messages parameter with right values. If you want
-     * to allow user pass custom placeholders in the inline message
-     * specify and replace them here. If not just return $message
-     * i.e return $message. But if you want to allow custom placeholder
-     * return str_replace(
-     *      [':custom_a', ':custom_b'],
-     *      [$parameters[0], $parameters[1]],
-     *      $message
-     * );.
-     */
-    public function parameterReplacer(string $message, array $parameters): string;
 }

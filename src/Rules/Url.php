@@ -27,14 +27,6 @@ class Url implements ValidationRuleInterface
         $~ixu';
 
     /**
-     * Get the number of parameters that should be supplied.
-     */
-    public function parameterCount(): int
-    {
-        return 0;
-    }
-
-    /**
      * Determine if the validation rule passes.
      *
      * @param mixed $value
@@ -63,13 +55,5 @@ class Url implements ValidationRuleInterface
     public function message(): string
     {
         return 'The :attribute value :value is not a valid url on line :line.';
-    }
-
-    /**
-     * Replace error messages parameter with right values.
-     */
-    public function parameterReplacer(string $message, array $parameters): string
-    {
-        return $message;
     }
 }

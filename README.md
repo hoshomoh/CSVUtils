@@ -68,7 +68,7 @@ $validator = new Validator("some/valid/file_path", ",", [
 
 if ($validator->fails()) {
     // Do something when validation fails
-    $errors = $validator->errors()
+    $errors = $validator->errors();
 }
 ```
 
@@ -182,19 +182,6 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class UppercaseRule implements ValidationRuleInterface
 {
-
-    /**
-     * Get the number of parameters that should be supplied. 
-     * If no parameter should be supplied return 0 else 
-     * return the number of parameters that should be returned
-     *
-     * @return integer
-     */
-    public function parameterCount()
-    {
-        return 0;
-    }
-
     /**
      * Determines if the validation rule passes. This is where we do the
      * actual validation. If the validation passes return true else false
@@ -203,7 +190,7 @@ class UppercaseRule implements ValidationRuleInterface
      * @param $parameters
      * @return bool
      */
-    public function passes($value, $parameters)
+    public function passes($value, array $parameters): bool
     {
         return strtoupper($value) === $value;
     }
@@ -215,33 +202,15 @@ class UppercaseRule implements ValidationRuleInterface
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return "The :attribute value :value must be uppercase on line :line.";
-    }
-
-    /**
-     * Replace error messages parameter with right values. If you want 
-     * to allow user pass custom placeholders in the inline message
-     * specify and replace them here. If not just return $message
-     * i.e return $message. But if you want to allow custom placeholder 
-     * return str_replace(
-     *      [':custom_a', ':custom_b'], 
-     *      [$parameters[0], $parameters[1]], 
-     *      $message
-     * );
-     *
-     * @param string $message
-     * @param array $parameters
-     * @return string
-     */
-    public function parameterReplacer($message, $parameters)
-    {
-        return $message;
     }
 }
 
 ```
+
+If the CustomRule accepts parameters like the `between` rule, then your CustomRule class must implement both `Oshomo\CsvUtils\Contracts\ValidationRuleInterface` and `Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface`. See `Oshomo\CsvUtils\Rules\Between` as an example.
 
 ##### Passing Custom Rules to Validator Using Closure
 
@@ -280,16 +249,16 @@ class JsonConverter implements ConverterHandlerInterface
     /**
      * @return string
      */
-    public function getExtension()
+    public function getExtension(): string
     {
-        return self::FILE_EXTENSION;
+        return JsonConverter::FILE_EXTENSION;
     }
 
     /**
      * @param array $data
      * @return $this|mixed
      */
-    public function convert($data)
+    public function convert(array $data): ConverterHandlerInterface
     {
         $this->data = json_encode($data,
             JSON_PRETTY_PRINT |
@@ -305,7 +274,7 @@ class JsonConverter implements ConverterHandlerInterface
      * @param string $filename
      * @return bool
      */
-    public function write($filename)
+    public function write(string $filename): bool
     {
         return (file_put_contents($filename, $this->data)) ? true : false;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Helpers;
 
+use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 trait FormatsMessages
@@ -79,13 +80,30 @@ trait FormatsMessages
     ): string {
         $message = $this->replaceAttributePlaceholder($message, $attribute);
 
+        if ($rule instanceof ParameterizedRuleInterface) {
+            $message = $this->replaceParameterPlaceholder(
+                $message,
+                $rule->allowedParameters(),
+                $parameters
+            );
+        }
+
         $message = $this->replaceValuePlaceholder($message, $value);
 
         $message = $this->replaceErrorLinePlaceholder($message, $lineNumber);
 
-        $message = $rule->parameterReplacer($message, $parameters);
-
         return $message;
+    }
+
+    /**
+     * Replace the rule parameters placeholder in the given message.
+     */
+    protected function replaceParameterPlaceholder(
+        string $message,
+        array $allowedParameters,
+        array $parameters
+    ): string {
+        return str_replace($allowedParameters, $parameters, $message);
     }
 
     /**
