@@ -360,8 +360,12 @@ class Validator
      *
      * @param mixed $value
      */
-    protected function validateUsingCustomRule(string $attribute, $value, array $parameters, ValidationRuleInterface $rule): void
-    {
+    protected function validateUsingCustomRule(
+        string $attribute,
+        $value,
+        array $parameters,
+        ValidationRuleInterface $rule
+    ): void {
         if (!$rule->passes($value, $parameters)) {
             $this->addFailure($rule->message(), $attribute, $value, $rule, $parameters);
         }
@@ -372,8 +376,12 @@ class Validator
      *
      * @param mixed $value
      */
-    protected function addFailure(string $message, string $attribute, $value, ValidationRuleInterface $rule, array $parameters = []): void
-    {
+    protected function addFailure(
+        string $message,
+        string $attribute,
+        $value, ValidationRuleInterface $rule,
+        array $parameters = []
+    ): void {
         $this->currentRowMessages[] = $this->makeReplacements(
             $message,
             $attribute,
