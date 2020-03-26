@@ -69,8 +69,14 @@ trait FormatsMessages
      *
      * @param mixed $value
      */
-    protected function makeReplacements(string $message, string $attribute, $value, ValidationRuleInterface $rule, array $parameters, int $lineNumber): string
-    {
+    protected function makeReplacements(
+        string $message,
+        string $attribute,
+        $value,
+        ValidationRuleInterface $rule,
+        array $parameters,
+        int $lineNumber
+    ): string {
         $message = $this->replaceAttributePlaceholder($message, $attribute);
 
         $message = $this->replaceValuePlaceholder($message, $value);
@@ -92,8 +98,10 @@ trait FormatsMessages
 
     /**
      * Replace the :value placeholder in the given message.
+     *
+     * @param mixed $value
      */
-    protected function replaceValuePlaceholder(string $message, string $value): string
+    protected function replaceValuePlaceholder(string $message, $value): string
     {
         return str_replace([':value'], [$value], $message);
     }
