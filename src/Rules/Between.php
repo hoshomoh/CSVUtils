@@ -23,7 +23,9 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
     {
         $size = (int) $value;
 
-        return $size >= (int) $parameters[0] && $size <= (int) $parameters[1];
+        list($min, $max) = $parameters;
+
+        return $size >= (int) $min && $size <= (int) $max;
     }
 
     /**

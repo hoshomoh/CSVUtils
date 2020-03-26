@@ -210,6 +210,8 @@ class UppercaseRule implements ValidationRuleInterface
 
 ```
 
+If the CustomRule accepts parameters like the `between` rule, then your CustomRule class must implement both `Oshomo\CsvUtils\Contracts\ValidationRuleInterface` and `Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface`. See `Oshomo\CsvUtils\Rules\Between` as an example.
+
 ##### Passing Custom Rules to Validator Using Closure
 
 If you only need the functionality of a custom rule once throughout your application, you may use a Closure instead of a rule object. The Closure receives the attribute's value, and a `$fail` callback that should be called if validation fails:

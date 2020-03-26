@@ -384,7 +384,8 @@ class Validator
     protected function addFailure(
         string $message,
         string $attribute,
-        $value, ValidationRuleInterface $rule,
+        $value,
+        ValidationRuleInterface $rule,
         array $parameters = []
     ): void {
         $this->currentRowMessages[] = $this->makeReplacements(
