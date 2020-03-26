@@ -103,14 +103,28 @@ class CsvValidatorTest extends TestCase
             $validator->errors()['message']
         );
 
-        $this->assertArrayHasKey(
-            'errors',
-            $validator->errors()['data'][0]
-        );
+        $validationErrors = $validator->errors();
+
+        for ($csvRow = 0; $csvRow < 3; $csvRow++) {
+            $this->assertArrayHasKey(
+                'errors',
+                $validationErrors['data'][$csvRow]
+            );
+        }
 
         $this->assertContains(
             'The uri value http//:well.org is not a valid url on line 2.',
-            $validator->errors()['data'][0]['errors']
+            $validationErrors['data'][0]['errors']
+        );
+
+        $this->assertContains(
+            'The uri value  is not a valid url on line 3.',
+            $validationErrors['data'][1]['errors']
+        );
+
+        $this->assertContains(
+            'The uri value  is not a valid url on line 4.',
+            $validationErrors['data'][2]['errors']
         );
     }
 
