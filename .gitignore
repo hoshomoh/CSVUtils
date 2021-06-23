@@ -6,3 +6,4 @@ sample.json
 sample.xml
 valid_test.json
 valid_test.xml
+.phpunit.result.cache
