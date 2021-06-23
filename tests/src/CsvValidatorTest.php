@@ -17,7 +17,7 @@ class CsvValidatorTest extends TestCase
     /**
      * Init Class.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->testAssets = realpath(dirname(__FILE__) . '/../data');
     }

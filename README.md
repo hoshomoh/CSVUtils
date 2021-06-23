@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hoshomoh/CSVUtils.svg?branch=master)](https://travis-ci.org/hoshomoh/CSVUtils)
+[![Build Status](https://travis-ci.com/hoshomoh/CSVUtils.svg?branch=master)](https://travis-ci.org/hoshomoh/CSVUtils)
 [![codecov](https://codecov.io/gh/hoshomoh/CSVUtils/branch/master/graph/badge.svg)](https://codecov.io/gh/hoshomoh/CSVUtils)
 
 # CSVUtils

@@ -14,7 +14,6 @@ install:
   - composer install --no-interaction
 
 script:
-  - composer lint
   - composer test
 
 after_success:
