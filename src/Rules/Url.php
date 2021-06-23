@@ -8,7 +8,7 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class Url implements ValidationRuleInterface
 {
-    const PATTERN = '~^
+    public const PATTERN = '~^
             (%s)://                                 # protocol
             (([\.\pL\pN-]+:)?([\.\pL\pN-]+)@)?      # basic auth
             (

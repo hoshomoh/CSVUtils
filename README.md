@@ -296,4 +296,4 @@ The project run's automatic checks to make sure that the Symfony code standards 
 So, before pushing or making any pull request run the below command:
 
 * `composer test`: For running test
-* `composer lint`: For running php-cs-fixer to check that the code meet the set standard
+* `composer fixlint`: For running php-cs-fixer to fix linting errors

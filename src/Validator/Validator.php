@@ -14,11 +14,11 @@ class Validator
 {
     use FormatsMessages;
 
-    const FILE_EXTENSION = '.csv';
-    const ERROR_MESSAGE = 'Validation fails.';
-    const NO_ERROR_MESSAGE = 'File is valid.';
-    const INVALID_FILE_PATH_ERROR = 'Supplied file is not accessible.';
-    const SUCCESS_MESSAGE = 'CSV is valid.';
+    public const FILE_EXTENSION = '.csv';
+    public const ERROR_MESSAGE = 'Validation fails.';
+    public const NO_ERROR_MESSAGE = 'File is valid.';
+    public const INVALID_FILE_PATH_ERROR = 'Supplied file is not accessible.';
+    public const SUCCESS_MESSAGE = 'CSV is valid.';
 
     /**
      * The message bag instance.

@@ -8,7 +8,7 @@ use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 
 class JsonConverter implements ConverterHandlerInterface
 {
-    const FILE_EXTENSION = 'json';
+    public const FILE_EXTENSION = 'json';
 
     /**
      * The converted data.
@@ -37,6 +37,6 @@ class JsonConverter implements ConverterHandlerInterface
 
     public function write(string $filename): bool
     {
-        return (file_put_contents($filename, $this->data)) ? true : false;
+        return (bool) file_put_contents($filename, $this->data);
     }
 }
