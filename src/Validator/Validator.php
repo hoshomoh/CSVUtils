@@ -278,7 +278,7 @@ class Validator
 
         if ($this->isValidateAble($rule, $parameters)) {
             $ruleClass = $this->getRuleClass($rule);
-            if (!$ruleClass->passes($value, $parameters)) {
+            if (!$ruleClass->passes($value, $parameters, $this->currentRow)) {
                 $this->addFailure(
                     $this->getMessage($attribute, $ruleClass, $rule),
                     $attribute,
@@ -379,7 +379,7 @@ class Validator
         array $parameters,
         ValidationRuleInterface $rule
     ): void {
-        if (!$rule->passes($value, $parameters)) {
+        if (!$rule->passes($value, $parameters, $this->currentRow)) {
             $this->addFailure($rule->message(), $attribute, $value, $rule, $parameters);
         }
     }

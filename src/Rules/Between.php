@@ -18,8 +18,11 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
      * Determine if the validation rule passes.
      *
      * @param mixed $value
+     * @param array $parameters
+     * @param array $row
+     * @return bool
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         $size = (int) $value;
 
