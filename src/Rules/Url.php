@@ -44,7 +44,7 @@ class Url implements ValidationRuleInterface
         $pattern = sprintf(static::PATTERN, implode('|', ['http', 'https']));
 
         if (null === $value || '' === $value) {
-            return false;
+            return true;
         }
 
         $value = (string) $value;
