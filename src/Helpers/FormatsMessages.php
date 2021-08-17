@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Helpers;
 
+use Oshomo\CsvUtils\Contracts\ArrayParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
@@ -85,6 +86,14 @@ trait FormatsMessages
                 $message,
                 $rule->allowedParameters(),
                 $parameters
+            );
+        }
+
+        if ($rule instanceof ArrayParameterizedRuleInterface) {
+            $message = $this->replaceParameterPlaceholder(
+                $message,
+                $rule->allowedParameters(),
+                $rule->parseParameterValues($parameters)
             );
         }
 
