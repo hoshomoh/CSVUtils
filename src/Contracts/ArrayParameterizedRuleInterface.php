@@ -10,13 +10,14 @@ namespace Oshomo\CsvUtils\Contracts;
  *
  * Supports validation rules which need multiple parameters
  * that behave like an array.
+ * See the in rule for example.
  */
 interface ArrayParameterizedRuleInterface
 {
     /**
      * Should return an array of the allowed parameters.
-     * Tha allowed parameters should be
-     * tokenized string e.g :min, :max, :first, :last etc.
+     * The allowed parameters should be tokenized string
+     * e.g :min, :max, :first, :last etc.
      */
     public function allowedParameters(): array;
 
