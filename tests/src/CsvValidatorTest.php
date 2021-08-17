@@ -36,6 +36,32 @@ class CsvValidatorTest extends TestCase
         );
     }
 
+    public function testAlphaNumValidationRule()
+    {
+        $file = $this->testAssets . '/alpha_num_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'address' => ['alpha_num'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The address value Inga N. P.O. Box 567 may only contain letters and numbers on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
     public function testAsciiOnlyValidationRule()
     {
         $file = $this->testAssets . '/ascii_test.csv';
@@ -88,6 +114,136 @@ class CsvValidatorTest extends TestCase
         );
     }
 
+    public function testInValidationRule()
+    {
+        $file = $this->testAssets . '/in_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'stars' => ['in:3,5,8,10'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The stars value 2 does not exist in 3,5,8,10 on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
+    public function testIntegerValidationRule()
+    {
+        $file = $this->testAssets . '/integer_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'stars' => ['integer'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The stars value 5.5 must be an integer on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
+    public function testNumericValidationRule()
+    {
+        $file = $this->testAssets . '/numeric_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'stars' => ['numeric'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The stars value A must be a number on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
+    public function testRequiredIfValidationRule()
+    {
+        $file = $this->testAssets . '/required_if_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'contact' => ['required_if:address,Inga N. P.O. Box 567'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The contact field is required when address is Inga N. P.O. Box 567 on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
+    public function testRequiredValidationRule()
+    {
+        $file = $this->testAssets . '/required_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'address' => ['required'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The address value is required on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
     public function testUrlValidationRule()
     {
         $file = $this->testAssets . '/url_test.csv';
@@ -105,26 +261,14 @@ class CsvValidatorTest extends TestCase
 
         $validationErrors = $validator->errors();
 
-        for ($csvRow = 0; $csvRow < 3; ++$csvRow) {
-            $this->assertArrayHasKey(
-                'errors',
-                $validationErrors['data'][$csvRow]
-            );
-        }
+        $this->assertArrayHasKey(
+            'errors',
+            $validationErrors['data'][0]
+        );
 
         $this->assertContains(
             'The uri value http//:well.org is not a valid url on line 2.',
             $validationErrors['data'][0]['errors']
-        );
-
-        $this->assertContains(
-            'The uri value  is not a valid url on line 3.',
-            $validationErrors['data'][1]['errors']
-        );
-
-        $this->assertContains(
-            'The uri value  is not a valid url on line 4.',
-            $validationErrors['data'][2]['errors']
         );
     }
 
@@ -159,7 +303,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/url_test.csv';
 
         $validator = new Validator($file, ',', [
-            'uri' => [function ($value, $fail) {
+            'uri' => [function ($value, $row, $fail) {
                 if (0 !== strpos($value, 'https://')) {
                     return $fail('The URL passed must be https i.e it must start with https://');
                 }

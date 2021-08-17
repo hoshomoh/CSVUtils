@@ -8,9 +8,11 @@ class UppercaseRule implements ValidationRuleInterface
 {
     /**
      * @param mixed $value
-     * @param $parameters
+     * @param array $parameters
+     * @param array $row
+     * @return bool
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         return strtoupper($value) === $value;
     }
