@@ -13,9 +13,6 @@ class Alpha implements ValidationRuleInterface
      * actual validation. If the validation passes return true else false.
      *
      * @param mixed $value
-     * @param array $parameters
-     * @param array $row
-     * @return bool
      */
     public function passes($value, array $parameters, array $row): bool
     {

@@ -14,9 +14,6 @@ class In implements ValidationRuleInterface, ArrayParameterizedRuleInterface
      * actual validation. If the validation passes return true else false.
      *
      * @param mixed $value
-     * @param array $parameters
-     * @param array $row
-     * @return bool
      */
     public function passes($value, array $parameters, array $row): bool
     {
@@ -50,22 +47,19 @@ class In implements ValidationRuleInterface, ArrayParameterizedRuleInterface
         // the values [1, 2, 3, 4] will get mapped to :allowed_values
         // while checking for passes() and while writing message
         // using parseParameterValues()
-        return [ ':allowed_values' ];
+        return [':allowed_values'];
     }
 
     /**
      * Should return an array of parameter values as strings
      * parsed in the same order and format as allowedParameters().
      * This will aid in mapping our parameters to their placeholders.
-     *
-     * @param array $parameters
-     * @return array
      */
     public function parseParameterValues(array $parameters): array
     {
         // make sure to convert the values to an imploded string
         // this will then get mapped to array index 0 which has
         // the placeholder for :allowed_values
-        return [ implode(',', $parameters) ];
+        return [implode(',', $parameters)];
     }
 }

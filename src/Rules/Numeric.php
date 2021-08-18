@@ -13,9 +13,6 @@ class Numeric implements ValidationRuleInterface
      * actual validation. If the validation passes return true else false.
      *
      * @param mixed $value
-     * @param array $parameters
-     * @param array $row
-     * @return bool
      */
     public function passes($value, array $parameters, array $row): bool
     {
@@ -23,7 +20,7 @@ class Numeric implements ValidationRuleInterface
             return true;
         }
 
-        return is_numeric((string)$value);
+        return is_numeric((string) $value);
     }
 
     /**

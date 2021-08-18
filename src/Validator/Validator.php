@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Validator;
 
-use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 use Oshomo\CsvUtils\Contracts\ArrayParameterizedRuleInterface;
+use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;

@@ -20,20 +20,17 @@ class RequiredIf implements ValidationRuleInterface, ArrayParameterizedRuleInter
         // marked as :other_field and an array of values
         // which are allowed for the dependent field marked
         // as :other_values
-        return [ ':other_field', ':other_values' ];
+        return [':other_field', ':other_values'];
     }
 
     /**
      * Should return an array of parameter values as strings
      * parsed in the same order and format as allowedParameters().
      * This will aid in mapping our parameters to their placeholders.
-     *
-     * @param array $parameters
-     * @return array
      */
     public function parseParameterValues(array $parameters): array
     {
-        return [ array_shift($parameters), implode(',', $parameters) ];
+        return [array_shift($parameters), implode(',', $parameters)];
     }
 
     /**
@@ -41,9 +38,6 @@ class RequiredIf implements ValidationRuleInterface, ArrayParameterizedRuleInter
      * actual validation. If the validation passes return true else false.
      *
      * @param mixed $value
-     * @param array $parameters
-     * @param array $row
-     * @return bool
      */
     public function passes($value, array $parameters, array $row): bool
     {
@@ -51,9 +45,7 @@ class RequiredIf implements ValidationRuleInterface, ArrayParameterizedRuleInter
         $otherValues = $parameters;
 
         if (in_array($row[$otherField], $otherValues)) {
-
             return null !== $value && '' !== $value;
-
         }
 
         return true;
