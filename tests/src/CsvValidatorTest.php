@@ -36,6 +36,32 @@ class CsvValidatorTest extends TestCase
         );
     }
 
+    public function testAlphaValidationRule()
+    {
+        $file = $this->testAssets . '/alpha_num_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'name' => ['alpha'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The name value Well Health Hotels may only contain letters on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
     public function testAlphaNumValidationRule()
     {
         $file = $this->testAssets . '/alpha_num_test.csv';
