@@ -42,6 +42,7 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator($file, ',', [
             'name' => ['alpha'],
+            'contact' => ['alpha'],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -68,6 +69,7 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator($file, ',', [
             'address' => ['alpha_num'],
+            'contact' => ['alpha_num'],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -146,6 +148,7 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator($file, ',', [
             'stars' => ['in:3,5,8,10'],
+            'contact' => ['in:Kasper Zen'],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -172,6 +175,7 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator($file, ',', [
             'stars' => ['integer'],
+            'id' => ['integer'],
         ]);
 
         $this->assertTrue($validator->fails());
@@ -198,6 +202,7 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator($file, ',', [
             'stars' => ['numeric'],
+            'id' => ['numeric'],
         ]);
 
         $this->assertTrue($validator->fails());
