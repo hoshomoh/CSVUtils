@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Helpers\ExtractsAttributeSizeAndType;
 
-class Between implements ValidationRuleInterface, ParameterizedRuleInterface
+class Min implements ValidationRuleInterface, ParameterizedRuleInterface
 {
     use ExtractsAttributeSizeAndType;
 
@@ -16,7 +14,7 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
 
     public function allowedParameters(): array
     {
-        return [':min', ':max'];
+        return [':min'];
     }
 
     /**
@@ -26,13 +24,11 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
      */
     public function passes($value, array $parameters, array $row): bool
     {
-        $size = $this->getSize($value);
-
-        list($min, $max) = $parameters;
+        list($min) = $parameters;
 
         $this->type = $this->getType($value);
 
-        return $size >= $min && $size <= $max;
+        return $this->getSize($value) >= $min;
     }
 
     /**
@@ -41,7 +37,7 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
     public function message(): string
     {
         return 'numeric' === $this->type ?
-            'The :attribute value :value must be between :min and :max on line :line.' :
-            'The :attribute value :value must be between :min and :max characters on line :line.';
+            'The :attribute value :value may not be less than :min on line :line.' :
+            'The :attribute value :value may not be less than :min characters on line :line.';
     }
 }
