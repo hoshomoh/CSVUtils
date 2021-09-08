@@ -96,25 +96,20 @@ You may also utilize other place-holders in validation messages. For example the
 
 ##### Available rules
 
-`between:min,max`:
-```
-Validates that a cell value is between a :min and :max. The rule exposes the :min and :max placeholder for inline messages
-```
-`ascii_only`:  
-```
-Validates that a cell value does not contain a non-ascii character
-```
-`url`:    
-```
-Validates that a cell value is a valid URL. By valid URL we mean 
-
-(#protocol) 
-(#basic auth) 
-(#a domain name or #an IP address or #an IPv6 address) 
-(#a port(optional)) then 
-(#a /, nothing, a / with something, a query or a fragment)
-
-```
+| Rule | Description |
+| --- | --- |
+| `alpha` | Validates that a cell value contains only lower and upper case alphabets |
+| `alpha_num` | Validates that a cell value contains only numbers, lower and upper case alphabets |
+| `ascii_only` | Validates that a cell value does not contain a non-ascii character |
+| `between:min,max` | Validates that a cell value is between a :min and :max. The rule exposes the :min and :max placeholder for inline messages |
+| `in:foo,bar,baz...` | Validates that a cell value is one of the values specified by the rule |
+| `integer` | Validates that a cell has an integer value |
+| `max:max_val` | Validates that a cell value must be less than or equal to max_val. In case of strings the length of cell value must be less than or equal or max_val |
+| `min:min_val` | Validates that a cell value must be greater than or equal to min_val. In case of strings the length of cell value must be greater than or equal or min_val |
+| `numeric` | Validates that a cell has a numeric value |
+| `required` | Validates that a cell cannot be empty |
+| `required_if:other_column,other_column_val` | Validates that a cell value must be present if a column specified by other_column has the value as other_column_val |
+| `url` | Validates that a cell value is a valid URL. By valid URL we mean<br>(#protocol)<br>(#basic auth)<br>(#a domain name or #an IP address or #an IPv6 address)<br>(#a port(optional)) then<br>(#a /, nothing, a / with something, a query or a fragment) |
 
 ##### Writing CSV Output Data
 
