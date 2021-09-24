@@ -125,7 +125,6 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/between_test.csv';
 
         $validator = new Validator($file, ',', [
-            'name' => ['between:5,15'],
             'stars' => ['between:4,10'],
         ]);
 
@@ -139,11 +138,6 @@ class CsvValidatorTest extends TestCase
         $this->assertArrayHasKey(
             'errors',
             $validator->errors()['data'][0]
-        );
-
-        $this->assertContains(
-            'The name value Well Health Hotels must be between 5 and 15 characters on line 2.',
-            $validator->errors()['data'][0]['errors']
         );
 
         $this->assertContains(
@@ -211,7 +205,6 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/min_max_test.csv';
 
         $validator = new Validator($file, ',', [
-            'name' => ['max:10'],
             'stars' => ['max:1'],
         ]);
 
@@ -228,11 +221,6 @@ class CsvValidatorTest extends TestCase
         );
 
         $this->assertContains(
-            'The name value Well Health Hotels may not be greater than 10 characters on line 2.',
-            $validator->errors()['data'][0]['errors']
-        );
-
-        $this->assertContains(
             'The stars value 3 may not be greater than 1 on line 2.',
             $validator->errors()['data'][0]['errors']
         );
@@ -243,7 +231,6 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/min_max_test.csv';
 
         $validator = new Validator($file, ',', [
-            'name' => ['min:30'],
             'stars' => ['min:4'],
         ]);
 
@@ -257,11 +244,6 @@ class CsvValidatorTest extends TestCase
         $this->assertArrayHasKey(
             'errors',
             $validator->errors()['data'][0]
-        );
-
-        $this->assertContains(
-            'The name value Well Health Hotels may not be less than 30 characters on line 2.',
-            $validator->errors()['data'][0]['errors']
         );
 
         $this->assertContains(

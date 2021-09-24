@@ -1,17 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Oshomo\CsvUtils\Rules;
 
 use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
-use Oshomo\CsvUtils\Helpers\ExtractsAttributeSizeAndType;
 
 class Min implements ValidationRuleInterface, ParameterizedRuleInterface
 {
-    use ExtractsAttributeSizeAndType;
-
-    private $type = 'numeric';
-
     public function allowedParameters(): array
     {
         return [':min'];
@@ -26,9 +23,7 @@ class Min implements ValidationRuleInterface, ParameterizedRuleInterface
     {
         list($min) = $parameters;
 
-        $this->type = $this->getType($value);
-
-        return $this->getSize($value) >= $min;
+        return $value >= $min;
     }
 
     /**
@@ -36,8 +31,6 @@ class Min implements ValidationRuleInterface, ParameterizedRuleInterface
      */
     public function message(): string
     {
-        return 'numeric' === $this->type ?
-            'The :attribute value :value may not be less than :min on line :line.' :
-            'The :attribute value :value may not be less than :min characters on line :line.';
+        return 'The :attribute value :value may not be less than :min on line :line.';
     }
 }
