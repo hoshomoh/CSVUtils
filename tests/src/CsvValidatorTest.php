@@ -45,6 +45,8 @@ class CsvValidatorTest extends TestCase
             'contact' => ['alpha'],
         ]);
 
+        $validator->enableCellValueTrim(true);
+
         $this->assertTrue($validator->fails());
 
         $this->assertSame(
@@ -71,6 +73,8 @@ class CsvValidatorTest extends TestCase
             'address' => ['alpha_num'],
             'contact' => ['alpha_num'],
         ]);
+
+        $validator->enableCellValueTrim(true);
 
         $this->assertTrue($validator->fails());
 

@@ -99,6 +99,13 @@ class Validator
     protected $rules;
 
     /**
+     * Enable csv row value trimming.
+     *
+     * @var bool
+     */
+    protected $trimCells = false;
+
+    /**
      * The array of custom error messages.
      *
      * @var array
@@ -177,6 +184,11 @@ class Validator
             if (false !== ($handle = fopen($this->filePath, 'r'))) {
                 while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
                     ++$this->currentRowLineNumber;
+
+                    if ($this->trimCells) {
+                        $row = array_map('trim', $row);
+                    }
+
                     if (empty($this->headers)) {
                         $this->setHeaders($row);
                         continue;
@@ -414,5 +426,16 @@ class Validator
     protected function getValue(string $attribute)
     {
         return $this->currentRow[$attribute];
+    }
+
+    /**
+     * Set if cell values should be trimmed
+     * before validation.
+     *
+     * @return void
+     */
+    public function enableCellValueTrim(bool $trimValues = false)
+    {
+        $this->trimCells = $trimValues;
     }
 }
