@@ -104,8 +104,10 @@ You may also utilize other place-holders in validation messages. For example the
 | `between:min,max` | Validates that a cell value is between a :min and :max. The rule exposes the :min and :max placeholder for inline messages |
 | `in:foo,bar,baz...` | Validates that a cell value is one of the values specified by the rule |
 | `integer` | Validates that a cell has an integer value |
-| `max:max_val` | Validates that a cell value must be less than or equal to max_val. In case of strings the length of cell value must be less than or equal or max_val |
-| `min:min_val` | Validates that a cell value must be greater than or equal to min_val. In case of strings the length of cell value must be greater than or equal or min_val |
+| `max:max_val` | Validates that a cell value must be less than or equal to max_val. |
+| `max_length:length` | Validates that a cell value must contain less than or equal to length characters. |
+| `min:min_val` | Validates that a cell value must be greater than or equal to min_val. |
+| `min_length:length` | Validates that a cell value must contain greater than or equal to length characters. |
 | `numeric` | Validates that a cell has a numeric value |
 | `required` | Validates that a cell cannot be empty |
 | `required_if:other_column,other_column_val` | Validates that a cell value must be present if a column specified by other_column has the value as other_column_val |
