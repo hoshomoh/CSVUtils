@@ -23,7 +23,7 @@ class Max implements ValidationRuleInterface, ParameterizedRuleInterface
     {
         list($max) = $parameters;
 
-        return $value <= $max;
+        return +$value <= +$max;
     }
 
     /**

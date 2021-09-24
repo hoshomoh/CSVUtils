@@ -23,7 +23,7 @@ class Min implements ValidationRuleInterface, ParameterizedRuleInterface
     {
         list($min) = $parameters;
 
-        return $value >= $min;
+        return +$value >= +$min;
     }
 
     /**
