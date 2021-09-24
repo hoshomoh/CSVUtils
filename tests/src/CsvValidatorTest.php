@@ -226,6 +226,32 @@ class CsvValidatorTest extends TestCase
         );
     }
 
+    public function testMaxLengthValidationRule()
+    {
+        $file = $this->testAssets . '/min_max_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'name' => ['max_length:15'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The name value Well Health Hotels may not have more than 15 characters on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
     public function testMinValidationRule()
     {
         $file = $this->testAssets . '/min_max_test.csv';
@@ -248,6 +274,32 @@ class CsvValidatorTest extends TestCase
 
         $this->assertContains(
             'The stars value 3 may not be less than 4 on line 2.',
+            $validator->errors()['data'][0]['errors']
+        );
+    }
+
+    public function testMinLengthValidationRule()
+    {
+        $file = $this->testAssets . '/min_max_test.csv';
+
+        $validator = new Validator($file, ',', [
+            'name' => ['min_length:20'],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame(
+            $validator::ERROR_MESSAGE,
+            $validator->errors()['message']
+        );
+
+        $this->assertArrayHasKey(
+            'errors',
+            $validator->errors()['data'][0]
+        );
+
+        $this->assertContains(
+            'The name value Well Health Hotels may not have less than 20 characters on line 2.',
             $validator->errors()['data'][0]['errors']
         );
     }
