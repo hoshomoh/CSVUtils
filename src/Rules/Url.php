@@ -31,7 +31,7 @@ class Url implements ValidationRuleInterface
      *
      * @param mixed $value
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         /*
         * This pattern is derived from Symfony\Component\Validator\Constraints\UrlValidator (4.0).
@@ -41,7 +41,7 @@ class Url implements ValidationRuleInterface
         $pattern = sprintf(static::PATTERN, implode('|', ['http', 'https']));
 
         if (null === $value || '' === $value) {
-            return false;
+            return true;
         }
 
         $value = (string) $value;

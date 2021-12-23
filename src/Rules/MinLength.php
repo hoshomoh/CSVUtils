@@ -7,11 +7,11 @@ namespace Oshomo\CsvUtils\Rules;
 use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
-class Between implements ValidationRuleInterface, ParameterizedRuleInterface
+class MinLength implements ValidationRuleInterface, ParameterizedRuleInterface
 {
     public function allowedParameters(): array
     {
-        return [':min', ':max'];
+        return [':length'];
     }
 
     /**
@@ -21,9 +21,9 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
      */
     public function passes($value, array $parameters, array $row): bool
     {
-        list($min, $max) = $parameters;
+        list($length) = $parameters;
 
-        return +$value >= +$min && +$value <= +$max;
+        return strlen($value) >= $length;
     }
 
     /**
@@ -31,6 +31,6 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
      */
     public function message(): string
     {
-        return 'The :attribute value :value must be between :min and :max on line :line.';
+        return 'The :attribute value :value may not have less than :length characters on line :line.';
     }
 }

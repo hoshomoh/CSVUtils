@@ -13,7 +13,7 @@ class AsciiOnly implements ValidationRuleInterface
      *
      * @param mixed $value
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         return (mb_detect_encoding($value, 'ASCII', true)) ? true : false;
     }

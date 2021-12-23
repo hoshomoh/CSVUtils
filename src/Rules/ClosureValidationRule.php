@@ -42,11 +42,11 @@ class ClosureValidationRule implements ValidationRuleInterface
      *
      * @param mixed $value
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         $this->failed = false;
 
-        $this->callback->__invoke($value, function ($message) {
+        $this->callback->__invoke($value, $row, function ($message) {
             $this->failed = true;
 
             $this->message = $message;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Validator;
 
+use Oshomo\CsvUtils\Contracts\ArrayParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
 use Oshomo\CsvUtils\Contracts\ParameterizedRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
@@ -98,6 +99,13 @@ class Validator
     protected $rules;
 
     /**
+     * Enable csv row value trimming.
+     *
+     * @var bool
+     */
+    protected $shouldTrim = false;
+
+    /**
      * The array of custom error messages.
      *
      * @var array
@@ -176,6 +184,11 @@ class Validator
             if (false !== ($handle = fopen($this->filePath, 'r'))) {
                 while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
                     ++$this->currentRowLineNumber;
+
+                    if ($this->shouldTrim) {
+                        $row = array_map('trim', $row);
+                    }
+
                     if (empty($this->headers)) {
                         $this->setHeaders($row);
                         continue;
@@ -277,7 +290,7 @@ class Validator
 
         if ($this->isValidateAble($rule, $parameters)) {
             $ruleClass = $this->getRuleClass($rule);
-            if (!$ruleClass->passes($value, $parameters)) {
+            if (!$ruleClass->passes($value, $parameters, $this->currentRow)) {
                 $this->addFailure(
                     $this->getMessage($attribute, $ruleClass, $rule),
                     $attribute,
@@ -357,6 +370,13 @@ class Validator
             return $parameterCount === $ruleParameterCount;
         }
 
+        if ($rule instanceof ArrayParameterizedRuleInterface) {
+            $ruleParameterCount = count($rule->allowedParameters());
+            $parameterCount = count($parameters);
+
+            return $parameterCount >= $ruleParameterCount;
+        }
+
         return true;
     }
 
@@ -371,7 +391,7 @@ class Validator
         array $parameters,
         ValidationRuleInterface $rule
     ): void {
-        if (!$rule->passes($value, $parameters)) {
+        if (!$rule->passes($value, $parameters, $this->currentRow)) {
             $this->addFailure($rule->message(), $attribute, $value, $rule, $parameters);
         }
     }
@@ -406,5 +426,16 @@ class Validator
     protected function getValue(string $attribute)
     {
         return $this->currentRow[$attribute];
+    }
+
+    /**
+     * Set if cell values should be trimmed
+     * before validation.
+     *
+     * @return void
+     */
+    public function setShouldTrim(bool $shouldTrim = false)
+    {
+        $this->shouldTrim = $shouldTrim;
     }
 }
