@@ -103,7 +103,7 @@ class Validator
      *
      * @var bool
      */
-    protected $trimCells = false;
+    protected $shouldTrim = false;
 
     /**
      * The array of custom error messages.
@@ -185,7 +185,7 @@ class Validator
                 while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
                     ++$this->currentRowLineNumber;
 
-                    if ($this->trimCells) {
+                    if ($this->shouldTrim) {
                         $row = array_map('trim', $row);
                     }
 
@@ -434,8 +434,8 @@ class Validator
      *
      * @return void
      */
-    public function enableCellValueTrim(bool $trimValues = false)
+    public function setShouldTrim(bool $shouldTrim = false)
     {
-        $this->trimCells = $trimValues;
+        $this->shouldTrim = $shouldTrim;
     }
 }
