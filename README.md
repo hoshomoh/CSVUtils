@@ -42,11 +42,14 @@ Set a valid csv file path, pass the CSV delimiter and pass in your validation ru
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
 
-$validator = new Validator("some/valid/file_path", ",", [
-    "name" => ["ascii_only"],
-    "uri"   => ["url"],
-    "stars" => ["between:0,5"]
-]);
+$validator = new Validator(
+    "some/valid/file_path",
+    [
+        "name" => ["ascii_only"],
+        "uri"   => ["url"],
+        "stars" => ["between:0,5"]
+    ]
+);
 ```
 
 ##### Validating the CSV
@@ -58,9 +61,12 @@ A better implementation:
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
 
-$validator = new Validator("some/valid/file_path", ",", [
-    'title' => ["ascii_only", "url"]
-]);
+$validator = new Validator(
+    "some/valid/file_path",
+    [
+        'title' => ["ascii_only", "url"]
+    ]
+);
 
 if ($validator->fails()) {
     // Do something when validation fails
@@ -77,20 +83,22 @@ You can also customize the error messages for different validation rules and dif
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
 
-$validator = new Validator("some/valid/file_path", ",", [
-    'title' => ["ascii_only", "url"]
-], [
-    'ascii_only' => 'The :value supplied for :attribute attribute is invalid on line :line of the CSV.',
-    // This specifies a custom message for a given attribute.
-    'hotel_link:url' => 'The :attribute must be a valid link. This error occured on line :line of the CSV.',
-]);
+$validator = new Validator(
+    "some/valid/file_path",
+    ['title' => ["ascii_only", "url"]],
+    [
+        'ascii_only' => 'The :value supplied for :attribute attribute is invalid on line :line of the CSV.',
+        // This specifies a custom message for a given attribute.
+        'hotel_link:url' => 'The :attribute must be a valid link. This error occured on line :line of the CSV.',
+    ]
+);
 ```
 
-In this above example: 
+In this above example:
 
-The `:attribute` place-holder will be replaced by the actual name of the field under validation.  
-The `:value` place-holder will be replaced with value being validated.  
-The `:line` place-holder will also be replaced with the row/line number in the CSV in which the error happened. 
+The `:attribute` place-holder will be replaced by the actual name of the field under validation.
+The `:value` place-holder will be replaced with value being validated.
+The `:line` place-holder will also be replaced with the row/line number in the CSV in which the error happened.
 
 You may also utilize other place-holders in validation messages. For example the `between` rule exposes two other placeholder `min` and `max`. Find more about this in the available rules section
 
@@ -100,18 +108,18 @@ You may also utilize other place-holders in validation messages. For example the
 ```
 Validates that a cell value is between a :min and :max. The rule exposes the :min and :max placeholder for inline messages
 ```
-`ascii_only`:  
+`ascii_only`:
 ```
 Validates that a cell value does not contain a non-ascii character
 ```
-`url`:    
+`url`:
 ```
-Validates that a cell value is a valid URL. By valid URL we mean 
+Validates that a cell value is a valid URL. By valid URL we mean
 
-(#protocol) 
-(#basic auth) 
-(#a domain name or #an IP address or #an IPv6 address) 
-(#a port(optional)) then 
+(#protocol)
+(#basic auth)
+(#a domain name or #an IP address or #an IPv6 address)
+(#a port(optional)) then
 (#a /, nothing, a / with something, a query or a fragment)
 
 ```
@@ -125,11 +133,14 @@ use Oshomo\CsvUtils\Validator\Validator;
 use Oshomo\CsvUtils\Converter\JsonConverter;
 use Oshomo\CsvUtils\Converter\XmlConverter;
 
-$validator = new Validator('some/valid/file_path', ',', [
-    "stars" => ["between:0,5"],
-    "name" => ["ascii_only"],
-    "uri"   => ["url"],
-]);
+$validator = new Validator(
+    'some/valid/file_path',
+    [
+        "stars" => ["between:0,5"],
+        "name" => ["ascii_only"],
+        "uri"   => ["url"],
+    ]
+);
 
 if(!$validator->fails()) {
     $validator->write(new JsonConverter());
@@ -166,9 +177,10 @@ Passing a custom rule to the validator is easy. Create a CustomRule class the im
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
 
-$validator = new Validator('some/valid/file_path', ',', [
-    "name" => ["ascii_only", new UppercaseRule]
-]);
+$validator = new Validator(
+    'some/valid/file_path',
+    ["name" => ["ascii_only", new UppercaseRule]]
+);
 ```
 
 The class definition for `UppercaseRule`. Follow the same approach if you want to create your own rule.
@@ -193,7 +205,7 @@ class UppercaseRule implements ValidationRuleInterface
 
     /**
      * Get the validation error message. Specify the message that should
-     * be returned if the validation fails. You can make use of the 
+     * be returned if the validation fails. You can make use of the
      * :attribute and :value placeholders in the message string
      *
      * @return string
@@ -215,13 +227,15 @@ If you only need the functionality of a custom rule once throughout your applica
 ```php
 use Oshomo\CsvUtils\Validator\Validator;
 
-$validator = new Validator("some/valid/file_path", ",", [
-    "uri"   => ["url", function($value, $fail) {
-        if (strpos($value, "https://") !== 0) {
-            return $fail('The URL passed must be https i.e it must start with https://');
-        }
-    }]
-]);
+$validator = new Validator(
+    "some/valid/file_path",
+    [
+        "uri" => ["url", function($value, $fail) {
+            if (strpos($value, "https://") !== 0) {
+                return $fail('The URL passed must be https i.e it must start with https://');
+            }
+        }]
+    ]);
 ```
 
 ##### Writing CSV Output Data to Other Formats
@@ -291,7 +305,7 @@ Run `composer test` from the root of the Package.
 ### Contributing to this Repo
 
 Feel free to submit a pull request for a feature or bug fix. However, do note that before your pull request can be merged it must have test written or updated as the case maybe.
-The project run's automatic checks to make sure that the Symfony code standards are met using [php-cs-fixer](https://symfony.com/doc/current/contributing/code/standards.html). 
+The project run's automatic checks to make sure that the Symfony code standards are met using [php-cs-fixer](https://symfony.com/doc/current/contributing/code/standards.html).
 
 So, before pushing or making any pull request run the below command:
 
