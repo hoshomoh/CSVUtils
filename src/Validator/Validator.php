@@ -114,7 +114,7 @@ class Validator
     /**
      * Create a new Validator instance.
      */
-    public function __construct(string $filePath, string $delimiter = ',', array $rules, array $messages = [])
+    public function __construct(string $filePath, string $delimiter = ',', array $rules = [], array $messages = [])
     {
         $this->filePath = $filePath;
         $this->delimiter = $delimiter;
