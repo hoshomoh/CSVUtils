@@ -60,9 +60,7 @@ trait FormatsMessages
 
         $lowerRule = strtolower($lowerRule);
 
-        $lowerRule = ltrim($lowerRule, '_');
-
-        return $lowerRule;
+        return ltrim($lowerRule, '_');
     }
 
     /**
@@ -90,9 +88,7 @@ trait FormatsMessages
 
         $message = $this->replaceValuePlaceholder($message, $value);
 
-        $message = $this->replaceErrorLinePlaceholder($message, $lineNumber);
-
-        return $message;
+        return $this->replaceErrorLinePlaceholder($message, $lineNumber);
     }
 
     /**
@@ -103,7 +99,11 @@ trait FormatsMessages
         array $allowedParameters,
         array $parameters
     ): string {
-        return str_replace($allowedParameters, $parameters, $message);
+        $hasMultipleAllowedParameter = count($allowedParameters) > 1;
+        $search = $hasMultipleAllowedParameter ? $allowedParameters : $allowedParameters[0];
+        $replace = $hasMultipleAllowedParameter ? $parameters : implode(',', $parameters);
+
+        return str_replace($search, $replace, $message);
     }
 
     /**

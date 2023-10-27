@@ -13,44 +13,31 @@ class ValidationRuleParser
     /**
      * Extract the rule name and parameters from a rule.
      *
-     * @param string $rule|ValidationRuleInterface
+     * @param int|string $ruleKey
+     * @param string|Closure|ValidationRule $ruleValue
      */
-    public static function parse($rule): array
+    public function parse($ruleKey, $ruleValue): array
     {
-        if ($rule instanceof Closure) {
-            return [new ClosureValidationRule($rule), []];
+        if ($ruleValue instanceof Closure) {
+            return [new ClosureValidationRule($ruleValue), []];
         }
 
-        if ($rule instanceof ValidationRule) {
-            return [$rule, []];
+        if ($ruleValue instanceof ValidationRule) {
+            return [$ruleValue, []];
         }
 
-        return static::parseStringRule($rule);
+        return $this->parseRule($ruleKey, $ruleValue);
     }
 
-    /**
-     * Parse a string based rule.
-     */
-    protected static function parseStringRule(string $rule): array
+    protected function stringRuleHasParameter(string $rule): bool
     {
-        $parameters = [];
-
-        // The format for specifying validation rules and parameters follows an
-        // easy {rule}:{parameters} formatting convention. For instance the
-        // rule "Between:3,5" states that the value may only be between 3 - 5.
-        if (false !== strpos($rule, ':')) {
-            list($rule, $parameter) = explode(':', $rule, 2);
-
-            $parameters = static::parseParameters($parameter);
-        }
-
-        return [static::normalizeRule($rule), $parameters];
+        return false !== strpos($rule, ':');
     }
 
     /**
      * Parse a parameter list.
      */
-    protected static function parseParameters(string $parameter): array
+    protected function parseParameters(string $parameter): array
     {
         return str_getcsv($parameter);
     }
@@ -58,10 +45,38 @@ class ValidationRuleParser
     /**
      * Normalizes a rule.
      */
-    protected static function normalizeRule(string $rule): string
+    protected function normalizeRule(string $rule): string
     {
         $rule = ucwords(str_replace(['-', '_'], ' ', $rule));
 
         return preg_replace('/\s/', '', $rule);
+    }
+
+    /**
+     * Parse lib defined rule.
+     *
+     * @param int|string $ruleKey
+     * @param string|Closure|ValidationRule $ruleValue
+     */
+    protected function parseRule($ruleKey, $ruleValue): array
+    {
+        $parameters = [];
+        $rule = '';
+
+        if (is_int($ruleKey) && is_string($ruleValue)) {
+            // This will match ["rule"], ["rule:value"], ["rule:value1, value2"]
+            $rule = $ruleValue;
+
+            if ($this->stringRuleHasParameter($rule)) {
+                list($rule, $ruleParameters) = explode(':', $ruleValue);
+
+                $parameters = static::parseParameters($ruleParameters);
+            }
+        } elseif (is_string($ruleKey) && !static::stringRuleHasParameter($ruleKey)) {
+
+        }
+
+
+        return [$this->normalizeRule($rule), $parameters];
     }
 }
