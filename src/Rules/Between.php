@@ -21,11 +21,19 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
      */
     public function passes($value, array $parameters): bool
     {
-        $size = (int) $value;
-
         list($min, $max) = $parameters;
 
-        return $size >= (int) $min && $size <= (int) $max;
+        if (is_numeric($value)) {
+            $convertedValue = +$value;
+            return $convertedValue >= +$min && $convertedValue <= +$max;
+        }
+
+        if (is_string($value)) {
+            $valueLength = strlen($value);
+            return $valueLength >= +$min && $valueLength <= +$max;
+        }
+
+        return false;
     }
 
     /**

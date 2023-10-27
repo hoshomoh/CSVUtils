@@ -44,8 +44,6 @@ class ClosureValidationRule implements ValidationRuleInterface
      */
     public function passes($value, array $parameters): bool
     {
-        $this->failed = false;
-
         $this->callback->__invoke($value, function ($message) {
             $this->failed = true;
 

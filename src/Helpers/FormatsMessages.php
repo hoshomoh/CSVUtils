@@ -60,9 +60,7 @@ trait FormatsMessages
 
         $lowerRule = strtolower($lowerRule);
 
-        $lowerRule = ltrim($lowerRule, '_');
-
-        return $lowerRule;
+        return ltrim($lowerRule, '_');
     }
 
     /**
@@ -90,9 +88,7 @@ trait FormatsMessages
 
         $message = $this->replaceValuePlaceholder($message, $value);
 
-        $message = $this->replaceErrorLinePlaceholder($message, $lineNumber);
-
-        return $message;
+        return $this->replaceErrorLinePlaceholder($message, $lineNumber);
     }
 
     /**

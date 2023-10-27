@@ -1,10 +1,10 @@
 <?php
 
-namespace Oshomo\CsvUtils\Validator;
+namespace Oshomo\CsvUtils\Tests\src;
 
 use Oshomo\CsvUtils\Converter\JsonConverter;
 use Oshomo\CsvUtils\Converter\XmlConverter;
-use Oshomo\CsvUtils\Tests\src\UppercaseRule;
+use Oshomo\CsvUtils\Validator\Validator;
 use PHPUnit\Framework\TestCase;
 
 class CsvValidatorTest extends TestCase

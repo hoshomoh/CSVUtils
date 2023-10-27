@@ -1,8 +1,8 @@
 <?php
 
-namespace Oshomo\CsvUtils\Validator;
+namespace Oshomo\CsvUtils\Tests\src;
 
-use Oshomo\CsvUtils\Tests\src\UppercaseRule;
+use Oshomo\CsvUtils\Validator\ValidationRuleParser;
 use PHPUnit\Framework\TestCase;
 
 class CsvValidatorParserTest extends TestCase

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Oshomo\CsvUtils\Validator;
 
 use Closure;
+use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
 use Oshomo\CsvUtils\Rules\ClosureValidationRule;
 
@@ -13,7 +14,7 @@ class ValidationRuleParser
     /**
      * Extract the rule name and parameters from a rule.
      *
-     * @param string $rule|ValidationRuleInterface
+     * @param string|ValidationRuleInterface $rule
      */
     public static function parse($rule): array
     {
