@@ -25,11 +25,13 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
 
         if (is_numeric($value)) {
             $convertedValue = +$value;
+
             return $convertedValue >= +$min && $convertedValue <= +$max;
         }
 
         if (is_string($value)) {
             $valueLength = strlen($value);
+
             return $valueLength >= +$min && $valueLength <= +$max;
         }
 

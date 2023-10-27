@@ -15,7 +15,7 @@ class AsciiOnly implements ValidationRuleInterface
      */
     public function passes($value, array $parameters): bool
     {
-        return (bool)mb_detect_encoding($value, 'ASCII', true);
+        return (bool) mb_detect_encoding($value, 'ASCII', true);
     }
 
     /**
