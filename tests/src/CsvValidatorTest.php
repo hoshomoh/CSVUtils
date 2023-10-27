@@ -26,7 +26,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/tests.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'stars' => ['between:0,5'],
         ]);
 
@@ -40,7 +40,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/ascii_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'name' => ['ascii_only'],
         ]);
 
@@ -66,7 +66,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/between_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'stars' => ['between:4,10'],
         ]);
 
@@ -92,7 +92,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/url_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'uri' => ['url'],
         ]);
 
@@ -132,7 +132,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/ascii_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'name' => [new UppercaseRule()],
         ]);
 
@@ -158,7 +158,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/url_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'uri' => [function ($value, $fail) {
                 if (0 !== strpos($value, 'https://')) {
                     return $fail('The URL passed must be https i.e it must start with https://');
@@ -184,11 +184,12 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/ascii_test.csv';
         $customErrorMessage = 'The value supplied for the name attribute must only contain ascii characters';
 
-        $validator = new Validator($file, ',', [
-            'name' => ['ascii_only'],
-        ], [
-            'ascii_only' => $customErrorMessage,
-        ]);
+        $validator = new Validator(
+            $file,
+            ['name' => ['ascii_only']],
+            ',',
+            ['ascii_only' => $customErrorMessage]
+        );
 
         $this->assertTrue($validator->fails());
 
@@ -212,11 +213,12 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/between_test.csv';
 
-        $validator = new Validator($file, ',', [
-            'stars' => ['between:4,10'],
-        ], [
-            'between' => 'The value supplied for :attribute must be between :min and :max',
-        ]);
+        $validator = new Validator(
+            $file,
+            ['stars' => ['between:4,10']],
+            ',',
+            ['between' => 'The value supplied for :attribute must be between :min and :max']
+        );
 
         $this->assertTrue($validator->fails());
 
@@ -240,7 +242,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/valid_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'name' => ['ascii_only'],
             'stars' => ['between:3,10'],
             'uri' => ['url'],
@@ -265,7 +267,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/valid_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'name' => ['ascii_only'],
             'stars' => ['between:3,10'],
             'uri' => ['url'],
@@ -303,7 +305,7 @@ class CsvValidatorTest extends TestCase
             ],
         ];
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'stars' => [''],
         ]);
 
@@ -314,7 +316,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/valid_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'stars' => ['between:3,10'],
         ]);
 
@@ -338,7 +340,7 @@ class CsvValidatorTest extends TestCase
     {
         $file = $this->testAssets . '/valid_test.csv';
 
-        $validator = new Validator($file, ',', [
+        $validator = new Validator($file, [
             'name' => ['ascii_only'],
             'stars' => ['between:3,10'],
             'uri' => ['url'],
