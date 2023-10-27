@@ -1,8 +1,8 @@
 <?php
 
-namespace Oshomo\CsvUtils\Validator;
+namespace Oshomo\CsvUtils\Tests\src;
 
-use Oshomo\CsvUtils\Tests\src\UppercaseRule;
+use Oshomo\CsvUtils\Validator\ValidationRuleParser;
 use PHPUnit\Framework\TestCase;
 
 class CsvValidatorParserTest extends TestCase
@@ -13,7 +13,7 @@ class CsvValidatorParserTest extends TestCase
 
         $this->assertSame(
             [$customRule, []],
-            ValidationRuleParser::parse($customRule)
+            ValidationRuleParser::parse(0, $customRule)
         );
     }
 
@@ -21,7 +21,7 @@ class CsvValidatorParserTest extends TestCase
     {
         $this->assertSame(
             ['AsciiOnly', []],
-            ValidationRuleParser::parse('ascii_only')
+            ValidationRuleParser::parse(0, 'ascii_only')
         );
     }
 
@@ -29,7 +29,7 @@ class CsvValidatorParserTest extends TestCase
     {
         $this->assertSame(
             ['Between', ['1', '3']],
-            ValidationRuleParser::parse('between:1,3')
+            ValidationRuleParser::parse(0, 'between:1,3')
         );
     }
 }

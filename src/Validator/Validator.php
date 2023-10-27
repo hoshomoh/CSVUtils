@@ -123,13 +123,16 @@ class Validator
 
         $this->setFileDirectory();
         $this->setFileName();
-
         $this->validateFile();
     }
 
+    /**
+     *
+     * @return void
+     */
     protected function validateFile()
     {
-        if ($this->doesFileExistAndReadable()) {
+        if (!$this->doesFileExistAndReadable()) {
             $this->message = self::INVALID_FILE_PATH_ERROR;
         }
     }

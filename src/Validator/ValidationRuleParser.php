@@ -16,7 +16,7 @@ class ValidationRuleParser
      * @param int|string $ruleKey
      * @param string|Closure|ValidationRule $ruleValue
      */
-    public function parse($ruleKey, $ruleValue): array
+    public static function parse($ruleKey, $ruleValue): array
     {
         if ($ruleValue instanceof Closure) {
             return [new ClosureValidationRule($ruleValue), []];
@@ -26,10 +26,10 @@ class ValidationRuleParser
             return [$ruleValue, []];
         }
 
-        return $this->parseRule($ruleKey, $ruleValue);
+        return ValidationRuleParser::parseRule($ruleKey, $ruleValue);
     }
 
-    protected function stringRuleHasParameter(string $rule): bool
+    protected static function stringRuleHasParameter(string $rule): bool
     {
         return false !== strpos($rule, ':');
     }
@@ -37,7 +37,7 @@ class ValidationRuleParser
     /**
      * Parse a parameter list.
      */
-    protected function parseParameters(string $parameter): array
+    protected static function parseParameters(string $parameter): array
     {
         return str_getcsv($parameter);
     }
@@ -45,7 +45,7 @@ class ValidationRuleParser
     /**
      * Normalizes a rule.
      */
-    protected function normalizeRule(string $rule): string
+    protected static function normalizeRule(string $rule): string
     {
         $rule = ucwords(str_replace(['-', '_'], ' ', $rule));
 
@@ -58,16 +58,16 @@ class ValidationRuleParser
      * @param int|string $ruleKey
      * @param string|Closure|ValidationRule $ruleValue
      */
-    protected function parseRule($ruleKey, $ruleValue): array
+    protected static function parseRule($ruleKey, $ruleValue): array
     {
-        $parameters = [];
         $rule = '';
+        $parameters = [];
 
         if (is_int($ruleKey) && is_string($ruleValue)) {
-            // This will match ["rule"], ["rule:value"], ["rule:value1, value2"]
+            // This will match "rule", "rule:value", "rule:value1,value2"
             $rule = $ruleValue;
 
-            if ($this->stringRuleHasParameter($rule)) {
+            if (ValidationRuleParser::stringRuleHasParameter($rule)) {
                 list($rule, $ruleParameters) = explode(':', $ruleValue);
 
                 $parameters = static::parseParameters($ruleParameters);
@@ -77,6 +77,6 @@ class ValidationRuleParser
         }
 
 
-        return [$this->normalizeRule($rule), $parameters];
+        return [ValidationRuleParser::normalizeRule($rule), $parameters];
     }
 }
