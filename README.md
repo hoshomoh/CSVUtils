@@ -76,7 +76,7 @@ if ($validator->fails()) {
 
 ##### Error messages
 
-To get the rows with validation errors and there errors. The validator expose `errors` method that can be used like so `$validator->errors()`.
+To get the rows with validation errors and their errors. The validator expose `errors` method that can be used like so `$validator->errors()`.
 
 You can also customize the error messages for different validation rules and different attributes by passing a message array to the validator like so:
 
@@ -310,4 +310,4 @@ The project run's automatic checks to make sure that the Symfony code standards 
 So, before pushing or making any pull request run the below command:
 
 * `composer test`: For running test
-* `composer fixlint`: For running php-cs-fixer to fix linting errors
+* `composer fix-lint`: For running php-cs-fixer to fix linting errors

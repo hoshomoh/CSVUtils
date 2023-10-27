@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip
 
-RUN pecl install xdebug \
+RUN pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug
 
 # Get latest Composer
