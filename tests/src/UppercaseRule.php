@@ -6,10 +6,6 @@ use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 
 class UppercaseRule implements ValidationRuleInterface
 {
-    /**
-     * @param mixed $value
-     * @param $parameters
-     */
     public function passes($value, array $parameters): bool
     {
         return strtoupper($value) === $value;

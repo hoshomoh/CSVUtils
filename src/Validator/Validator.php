@@ -362,14 +362,12 @@ class Validator
 
     /**
      * Validate an attribute using a custom rule object.
-     *
-     * @param mixed $value
      */
     protected function validateUsingCustomRule(
         string $attribute,
         $value,
         array $parameters,
-        ValidationRuleInterface $rule
+        ValidationRuleInterface $rule,
     ): void {
         if (!$rule->passes($value, $parameters)) {
             $this->addFailure($rule->message(), $attribute, $value, $rule, $parameters);
@@ -378,15 +376,13 @@ class Validator
 
     /**
      * Add a failed rule and error message to the collection.
-     *
-     * @param mixed $value
      */
     protected function addFailure(
         string $message,
         string $attribute,
         $value,
         ValidationRuleInterface $rule,
-        array $parameters = []
+        array $parameters = [],
     ): void {
         $this->currentRowMessages[] = $this->makeReplacements(
             $message,
@@ -400,8 +396,6 @@ class Validator
 
     /**
      * Get the value of a given attribute.
-     *
-     * @return mixed
      */
     protected function getValue(string $attribute)
     {

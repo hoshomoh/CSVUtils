@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Converter;
 
-use DOMDocument;
 use Oshomo\CsvUtils\Contracts\ConverterHandlerInterface;
-use SimpleXMLElement;
 
 class XmlConverter implements ConverterHandlerInterface
 {
@@ -35,7 +33,7 @@ class XmlConverter implements ConverterHandlerInterface
             $this->recordElement = $recordElement;
         }
 
-        $this->data = new SimpleXMLElement('<?xml version="1.0"?><data value=""></data>');
+        $this->data = new \SimpleXMLElement('<?xml version="1.0"?><data value=""></data>');
     }
 
     public function getExtension(): string
@@ -43,7 +41,7 @@ class XmlConverter implements ConverterHandlerInterface
         return self::FILE_EXTENSION;
     }
 
-    protected function toXml(array $data, SimpleXMLElement $xmlData): void
+    protected function toXml(array $data, \SimpleXMLElement $xmlData): void
     {
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {
@@ -67,7 +65,7 @@ class XmlConverter implements ConverterHandlerInterface
 
     public function write(string $filename): bool
     {
-        $dom = new DOMDocument('1.0');
+        $dom = new \DOMDocument('1.0');
 
         $dom->preserveWhiteSpace = false;
 

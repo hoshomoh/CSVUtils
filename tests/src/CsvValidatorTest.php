@@ -67,24 +67,33 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/between_test.csv';
 
         $validator = new Validator($file, [
+            'name' => ['between:50,90'],
             'stars' => ['between:4,10'],
         ]);
 
         $this->assertTrue($validator->fails());
 
+        $result = $validator->errors();
+        $data = $result['data'][0];
+
         $this->assertSame(
             $validator::ERROR_MESSAGE,
-            $validator->errors()['message']
+            $result['message']
         );
 
         $this->assertArrayHasKey(
             'errors',
-            $validator->errors()['data'][0]
+            $data
+        );
+
+        $this->assertContains(
+            'The name value Well Health Hotels is not between 50 - 90 on line 2.',
+            $data['errors']
         );
 
         $this->assertContains(
             'The stars value 3 is not between 4 - 10 on line 2.',
-            $validator->errors()['data'][0]['errors']
+            $data['errors']
         );
     }
 
@@ -126,6 +135,30 @@ class CsvValidatorTest extends TestCase
             'The uri value  is not a valid url on line 4.',
             $validationErrors['data'][2]['errors']
         );
+    }
+
+    public function testValidatorCsvOnEmptyRule()
+    {
+        $file = $this->testAssets . '/valid_test.csv';
+
+        $expectedArray = [
+            'message' => 'CSV is valid.',
+            'data' => [
+                [
+                    'name' => 'Well Health Hotels',
+                    'address' => 'Inga N. P.O. Box 567',
+                    'stars' => '3',
+                    'contact' => 'Kasper Zen',
+                    'uri' => 'http://well.org',
+                ],
+            ],
+        ];
+
+        $validator = new Validator($file, [
+            'stars' => [''],
+        ]);
+
+        $this->assertSame($expectedArray, $validator->validate());
     }
 
     public function testValidatorWithCustomRuleObject()
@@ -286,54 +319,6 @@ class CsvValidatorTest extends TestCase
             $this->testAssets . '/valid_test_expected.xml',
             $this->testAssets . '/valid_test.xml'
         );
-    }
-
-    public function testValidatorCsvOnEmptyRule()
-    {
-        $file = $this->testAssets . '/valid_test.csv';
-
-        $expectedArray = [
-            'message' => 'CSV is valid.',
-            'data' => [
-                [
-                    'name' => 'Well Health Hotels',
-                    'address' => 'Inga N. P.O. Box 567',
-                    'stars' => '3',
-                    'contact' => 'Kasper Zen',
-                    'uri' => 'http://well.org',
-                ],
-            ],
-        ];
-
-        $validator = new Validator($file, [
-            'stars' => [''],
-        ]);
-
-        $this->assertSame($expectedArray, $validator->validate());
-    }
-
-    public function testValidatorCsvIsValid()
-    {
-        $file = $this->testAssets . '/valid_test.csv';
-
-        $validator = new Validator($file, [
-            'stars' => ['between:3,10'],
-        ]);
-
-        $expectedArray = [
-            'message' => 'CSV is valid.',
-            'data' => [
-                [
-                    'name' => 'Well Health Hotels',
-                    'address' => 'Inga N. P.O. Box 567',
-                    'stars' => '3',
-                    'contact' => 'Kasper Zen',
-                    'uri' => 'http://well.org',
-                ],
-            ],
-        ];
-
-        $this->assertSame($expectedArray, $validator->validate());
     }
 
     public function testValidatorXmlWriterWithRecordElementParameter()
