@@ -10,8 +10,6 @@ class AsciiOnly implements ValidationRuleInterface
 {
     /**
      * Determine if the validation rule passes.
-     *
-     * @param mixed $value
      */
     public function passes($value, array $parameters): bool
     {

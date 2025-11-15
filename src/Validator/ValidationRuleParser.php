@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Validator;
 
-use Closure;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
 use Oshomo\CsvUtils\Rules\ClosureValidationRule;
@@ -18,7 +17,7 @@ class ValidationRuleParser
      */
     public static function parse($rule): array
     {
-        if ($rule instanceof Closure) {
+        if ($rule instanceof \Closure) {
             return [new ClosureValidationRule($rule), []];
         }
 

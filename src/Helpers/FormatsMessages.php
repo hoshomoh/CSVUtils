@@ -65,8 +65,6 @@ trait FormatsMessages
 
     /**
      * Replace all error message place-holders with actual values.
-     *
-     * @param mixed $value
      */
     protected function makeReplacements(
         string $message,
@@ -74,7 +72,7 @@ trait FormatsMessages
         $value,
         ValidationRuleInterface $rule,
         array $parameters,
-        int $lineNumber
+        int $lineNumber,
     ): string {
         $message = $this->replaceAttributePlaceholder($message, $attribute);
 
@@ -97,7 +95,7 @@ trait FormatsMessages
     protected function replaceParameterPlaceholder(
         string $message,
         array $allowedParameters,
-        array $parameters
+        array $parameters,
     ): string {
         return str_replace($allowedParameters, $parameters, $message);
     }
@@ -112,8 +110,6 @@ trait FormatsMessages
 
     /**
      * Replace the :value placeholder in the given message.
-     *
-     * @param mixed $value
      */
     protected function replaceValuePlaceholder(string $message, $value): string
     {
@@ -122,8 +118,6 @@ trait FormatsMessages
 
     /**
      * Replace the :line placeholder in the given message.
-     *
-     * @return mixed
      */
     protected function replaceErrorLinePlaceholder(string $message, int $lineNumber)
     {

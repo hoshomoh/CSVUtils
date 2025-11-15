@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.1-fpm
 
 ENV APP_DIR /var/www/html
 
@@ -8,9 +8,11 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     zip \
-    unzip
+    unzip \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install xdebug-3.1.5 \
+# Install and enable Xdebug (compatible version will be chosen automatically)
+RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 # Get latest Composer
@@ -23,4 +25,4 @@ WORKDIR $APP_DIR
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
-CMD /docker-entrypoint.sh
+CMD ["/docker-entrypoint.sh"]
