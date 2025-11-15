@@ -12,10 +12,8 @@ class JsonConverter implements ConverterHandlerInterface
 
     /**
      * The converted data.
-     *
-     * @var string
      */
-    protected $data;
+    protected string $data;
 
     public function getExtension(): string
     {

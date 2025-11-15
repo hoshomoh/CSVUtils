@@ -32,4 +32,20 @@ class CsvValidatorParserTest extends TestCase
             ValidationRuleParser::parse('between:1,3')
         );
     }
+
+    public function testWhenTupleRuleWithStringParametersIsPassed()
+    {
+        $this->assertSame(
+            ['Between', ['1', '3']],
+            ValidationRuleParser::parse(['between', '1,   3'])
+        );
+    }
+
+    public function testWhenTupleRuleWithArrayParametersIsPassed()
+    {
+        $this->assertSame(
+            ['Between', ['1', '3']],
+            ValidationRuleParser::parse(['between', ['1', '3']])
+        );
+    }
 }

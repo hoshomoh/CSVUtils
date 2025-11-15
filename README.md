@@ -193,12 +193,8 @@ class UppercaseRule implements ValidationRuleInterface
     /**
      * Determines if the validation rule passes. This is where we do the
      * actual validation. If the validation passes return true else false
-     *
-     * @param  mixed $value
-     * @param $parameters
-     * @return bool
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         return strtoupper($value) === $value;
     }

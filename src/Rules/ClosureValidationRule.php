@@ -10,24 +10,18 @@ class ClosureValidationRule implements ValidationRuleInterface
 {
     /**
      * The callback that validates the attribute.
-     *
-     * @var \Closure
      */
-    public $callback;
+    public \Closure $callback;
 
     /**
      * Indicates if the validation callback failed.
-     *
-     * @var bool
      */
-    public $failed = false;
+    public bool $failed = false;
 
     /**
      * The validation error message.
-     *
-     * @var string|null
      */
-    public $message;
+    public ?string $message;
 
     /**
      * Create a new Closure based validation rule.
@@ -40,7 +34,7 @@ class ClosureValidationRule implements ValidationRuleInterface
     /**
      * Determine if the validation rule passes.
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         $this->callback->__invoke($value, function ($message) {
             $this->failed = true;
