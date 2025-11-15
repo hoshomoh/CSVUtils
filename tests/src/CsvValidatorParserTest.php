@@ -13,7 +13,7 @@ class CsvValidatorParserTest extends TestCase
 
         $this->assertSame(
             [$customRule, []],
-            ValidationRuleParser::parse(0, $customRule)
+            ValidationRuleParser::parse($customRule)
         );
     }
 
@@ -21,7 +21,7 @@ class CsvValidatorParserTest extends TestCase
     {
         $this->assertSame(
             ['AsciiOnly', []],
-            ValidationRuleParser::parse(0, 'ascii_only')
+            ValidationRuleParser::parse('ascii_only')
         );
     }
 
@@ -29,7 +29,7 @@ class CsvValidatorParserTest extends TestCase
     {
         $this->assertSame(
             ['Between', ['1', '3']],
-            ValidationRuleParser::parse(0, 'between:1,3')
+            ValidationRuleParser::parse('between:1,3')
         );
     }
 }

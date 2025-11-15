@@ -123,17 +123,6 @@ class Validator
 
         $this->setFileDirectory();
         $this->setFileName();
-        $this->validateFile();
-    }
-
-    /**
-     * @return void
-     */
-    protected function validateFile()
-    {
-        if (!$this->doesFileExistAndReadable()) {
-            $this->message = self::INVALID_FILE_PATH_ERROR;
-        }
     }
 
     /**
@@ -183,27 +172,27 @@ class Validator
      */
     protected function passes(): bool
     {
-        if (!empty($this->message)) {
-            return false;
-        }
+        if ($this->doesFileExistAndReadable($this->filePath)) {
+            if (false !== ($handle = fopen($this->filePath, 'r'))) {
+                while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
+                    ++$this->currentRowLineNumber;
+                    if (empty($this->headers)) {
+                        $this->setHeaders($row);
+                        continue;
+                    }
 
-        if (false !== ($handle = fopen($this->filePath, 'r'))) {
-            while (false !== ($row = fgetcsv($handle, 0, $this->delimiter))) {
-                ++$this->currentRowLineNumber;
-                if (empty($this->headers)) {
-                    $this->setHeaders($row);
-                    continue;
+                    $rowWithAttribute = [];
+
+                    foreach ($row as $key => $value) {
+                        $attribute = $this->headers[$key];
+                        $rowWithAttribute[$attribute] = $value;
+                    }
+
+                    $this->validateRow($rowWithAttribute);
                 }
-
-                $rowWithAttribute = [];
-
-                foreach ($row as $key => $value) {
-                    $attribute = $this->headers[$key];
-                    $rowWithAttribute[$attribute] = $value;
-                }
-
-                $this->validateRow($rowWithAttribute);
             }
+        } else {
+            $this->message = self::INVALID_FILE_PATH_ERROR;
         }
 
         return empty($this->invalidRows) && empty($this->message);
@@ -252,8 +241,8 @@ class Validator
         $this->currentRow = $row;
 
         foreach ($this->rules as $attribute => $rules) {
-            foreach ($rules as $ruleKey => $ruleValue) {
-                $this->validateAttribute($attribute, $ruleKey, $ruleValue);
+            foreach ($rules as $rule) {
+                $this->validateAttribute($attribute, $rule);
             }
         }
 
@@ -268,12 +257,11 @@ class Validator
     /**
      * Validate a given attribute against a rule.
      *
-     * @param int|string                    $ruleKey
-     * @param string|Closure|ValidationRule $ruleValue
+     * @param string|object $rule
      */
-    protected function validateAttribute(string $attribute, $ruleKey, $ruleValue): void
+    protected function validateAttribute(string $attribute, $rule): void
     {
-        list($rule, $parameters) = ValidationRuleParser::parse($ruleKey, $ruleValue);
+        list($rule, $parameters) = ValidationRuleParser::parse($rule);
 
         if ('' === $rule) {
             return;
@@ -289,25 +277,22 @@ class Validator
 
         if ($this->isValidateAble($rule, $parameters)) {
             $ruleClass = $this->getRuleClass($rule);
-
-            if ($ruleClass->passes($value, $parameters)) {
-                return;
+            if (!$ruleClass->passes($value, $parameters)) {
+                $this->addFailure(
+                    $this->getMessage($attribute, $ruleClass, $rule),
+                    $attribute,
+                    $value,
+                    $ruleClass,
+                    $parameters
+                );
             }
 
-            $this->addFailure(
-                $this->getMessage($attribute, $ruleClass, $rule),
-                $attribute,
-                $value,
-                $ruleClass,
-                $parameters
-            );
+            return;
         }
     }
 
-    protected function doesFileExistAndReadable(): bool
+    protected function doesFileExistAndReadable(string $filePath): bool
     {
-        $filePath = $this->filePath;
-
         return file_exists($filePath) && is_readable($filePath);
     }
 

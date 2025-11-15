@@ -99,11 +99,7 @@ trait FormatsMessages
         array $allowedParameters,
         array $parameters
     ): string {
-        $hasMultipleAllowedParameter = count($allowedParameters) > 1;
-        $search = $hasMultipleAllowedParameter ? $allowedParameters : $allowedParameters[0];
-        $replace = $hasMultipleAllowedParameter ? $parameters : implode(',', $parameters);
-
-        return str_replace($search, $replace, $message);
+        return str_replace($allowedParameters, $parameters, $message);
     }
 
     /**
