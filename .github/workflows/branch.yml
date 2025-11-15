@@ -36,3 +36,11 @@ jobs:
       env:
         PHP_CS_FIXER_IGNORE_ENV: 1
       run: composer run-script php-cs-fixer-check && composer run-script test
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        files: build/logs/clover.xml
+        fail_ci_if_error: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
