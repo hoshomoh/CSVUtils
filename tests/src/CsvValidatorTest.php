@@ -12,7 +12,7 @@ class CsvValidatorTest extends TestCase
     /**
      * Test Assets Folder Path.
      */
-    protected $testAssets;
+    protected string|false $testAssets;
 
     /**
      * Init Class.
@@ -67,7 +67,7 @@ class CsvValidatorTest extends TestCase
         $file = $this->testAssets . '/between_test.csv';
 
         $validator = new Validator($file, [
-            'name' => ['between:50,90'],
+            'name' => ['between' => '50,90'],
             'stars' => ['between:4,10'],
         ]);
 
@@ -193,9 +193,11 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator($file, [
             'uri' => [function ($value, $fail) {
-                if (0 !== strpos($value, 'https://')) {
+                if (!str_starts_with($value, 'https://')) {
                     return $fail('The URL passed must be https i.e it must start with https://');
                 }
+
+                return true;
             }],
         ]);
 
@@ -248,7 +250,7 @@ class CsvValidatorTest extends TestCase
 
         $validator = new Validator(
             $file,
-            ['stars' => ['between:4,10']],
+            ['stars' => ['between' => [4, 10]]],
             ',',
             ['between' => 'The value supplied for :attribute must be between :min and :max']
         );

@@ -17,7 +17,7 @@ class Between implements ValidationRuleInterface, ParameterizedRuleInterface
     /**
      * Determine if the validation rule passes.
      */
-    public function passes($value, array $parameters): bool
+    public function passes($value, array $parameters, array $row): bool
     {
         list($min, $max) = $parameters;
 

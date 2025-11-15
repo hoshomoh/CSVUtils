@@ -22,94 +22,68 @@ class Validator
 
     /**
      * The message bag instance.
-     *
-     * @var array
      */
-    protected $currentRowMessages = [];
+    protected array $currentRowMessages = [];
 
     /**
      * The CSV data.
-     *
-     * @var array
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * Initialisation errors.
-     *
-     * @var string
      */
-    protected $message;
+    protected string $message;
 
     /**
      * The line number of the row under validation.
-     *
-     * @var int
      */
-    protected $currentRowLineNumber = 0;
+    protected int $currentRowLineNumber = 0;
 
     /**
      * The row under validation.
-     *
-     * @var array
      */
-    protected $currentRow;
+    protected array $currentRow;
 
     /**
      * The invalid rows.
-     *
-     * @var array
      */
-    protected $invalidRows = [];
+    protected array $invalidRows = [];
 
     /**
      * Csv File Path;.
-     *
-     * @var string
      */
-    protected $filePath;
+    protected string $filePath;
 
     /**
      * Csv File Name;.
-     *
-     * @var string
      */
-    protected $fileName;
+    protected string $fileName;
 
     /**
      * Csv File Directory;.
-     *
-     * @var string
      */
-    protected $directory;
+    protected string $directory;
 
     /**
      * Csv delimiter;.
-     *
-     * @var string
      */
-    protected $delimiter = ',';
+    protected string $delimiter = ',';
 
     /**
      * The rules to be applied to the data.
-     *
-     * @var array
      */
-    protected $rules;
+    protected array $rules;
 
     /**
      * The array of custom error messages.
-     *
-     * @var array
      */
-    public $customMessages = [];
+    public array $customMessages = [];
 
     /**
      * The CSV header.
-     *
-     * @var array
      */
-    public $headers = [];
+    public array $headers = [];
 
     /**
      * Create a new Validator instance.
@@ -240,9 +214,15 @@ class Validator
         $this->currentRowMessages = [];
         $this->currentRow = $row;
 
-        foreach ($this->rules as $attribute => $rules) {
-            foreach ($rules as $rule) {
-                $this->validateAttribute($attribute, $rule);
+        foreach ($this->rules as $attribute => $attributeRules) {
+            foreach ($attributeRules as $key => $value) {
+                if (is_int($key)) {
+                    $rulePayload = $value;
+                } else {
+                    $rulePayload = [$key, $value];
+                }
+
+                $this->validateAttribute($attribute, $rulePayload, $row);
             }
         }
 
@@ -256,10 +236,8 @@ class Validator
 
     /**
      * Validate a given attribute against a rule.
-     *
-     * @param string|object $rule
      */
-    protected function validateAttribute(string $attribute, $rule): void
+    protected function validateAttribute(string $attribute, object|array|string $rule): void
     {
         list($rule, $parameters) = ValidationRuleParser::parse($rule);
 
@@ -267,7 +245,7 @@ class Validator
             return;
         }
 
-        $value = $this->getValue($attribute);
+        $value = $this->getAttributeValueFromCurrentRow($attribute);
 
         if ($rule instanceof ValidationRule) {
             $this->validateUsingCustomRule($attribute, $value, $parameters, $rule);
@@ -277,7 +255,7 @@ class Validator
 
         if ($this->isValidateAble($rule, $parameters)) {
             $ruleClass = $this->getRuleClass($rule);
-            if (!$ruleClass->passes($value, $parameters)) {
+            if (!$ruleClass->passes($value, $parameters, $this->currentRow)) {
                 $this->addFailure(
                     $this->getMessage($attribute, $ruleClass, $rule),
                     $attribute,
@@ -286,8 +264,6 @@ class Validator
                     $parameters
                 );
             }
-
-            return;
         }
     }
 
@@ -303,10 +279,8 @@ class Validator
 
     /**
      * Determine if the attribute is validate-able.
-     *
-     * @param object|string $rule
      */
-    protected function isValidateAble($rule, array $parameters): bool
+    protected function isValidateAble(object|string $rule, array $parameters): bool
     {
         return $this->ruleExists($rule) && $this->passesParameterCheck($rule, $parameters);
     }
@@ -331,20 +305,16 @@ class Validator
 
     /**
      * Determine if a given rule exists.
-     *
-     * @param object|string $rule
      */
-    protected function ruleExists($rule): bool
+    protected function ruleExists(object|string $rule): bool
     {
         return $rule instanceof ValidationRule || class_exists($this->getRuleClassName($rule));
     }
 
     /**
      * Determine if a given rule expect parameters and that the parameters where sent.
-     *
-     * @param object|string $rule
      */
-    protected function passesParameterCheck($rule, array $parameters): bool
+    protected function passesParameterCheck(object|string $rule, array $parameters): bool
     {
         if (!$rule instanceof ValidationRule) {
             $rule = $this->getRuleClass($rule);
@@ -369,7 +339,7 @@ class Validator
         array $parameters,
         ValidationRuleInterface $rule,
     ): void {
-        if (!$rule->passes($value, $parameters)) {
+        if (!$rule->passes($value, $parameters, $this->currentRow)) {
             $this->addFailure($rule->message(), $attribute, $value, $rule, $parameters);
         }
     }
@@ -397,7 +367,7 @@ class Validator
     /**
      * Get the value of a given attribute.
      */
-    protected function getValue(string $attribute)
+    protected function getAttributeValueFromCurrentRow(string $attribute)
     {
         return $this->currentRow[$attribute];
     }

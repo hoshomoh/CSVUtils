@@ -51,9 +51,6 @@ trait FormatsMessages
         return null;
     }
 
-    /**
-     * @return string|string[]|null
-     */
     protected function ruleToLower(string $rule): ?string
     {
         $lowerRule = preg_replace('/[A-Z]/', '_$0', $rule);
@@ -119,7 +116,7 @@ trait FormatsMessages
     /**
      * Replace the :line placeholder in the given message.
      */
-    protected function replaceErrorLinePlaceholder(string $message, int $lineNumber)
+    protected function replaceErrorLinePlaceholder(string $message, int $lineNumber): array|string
     {
         return str_replace([':line'], [$lineNumber], $message);
     }

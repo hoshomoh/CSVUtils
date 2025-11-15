@@ -15,14 +15,12 @@ class XmlConverter implements ConverterHandlerInterface
     /**
      * XML node root element.
      */
-    protected $recordElement;
+    protected string $recordElement;
 
     /**
      * The converted data.
-     *
-     * @var string
      */
-    protected $data;
+    protected string|\SimpleXMLElement $data;
 
     /**
      * XmlConverter constructor.

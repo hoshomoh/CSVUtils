@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Oshomo\CsvUtils\Validator;
 
-use Oshomo\CsvUtils\Contracts\ValidationRuleInterface;
 use Oshomo\CsvUtils\Contracts\ValidationRuleInterface as ValidationRule;
 use Oshomo\CsvUtils\Rules\ClosureValidationRule;
 
@@ -12,10 +11,8 @@ class ValidationRuleParser
 {
     /**
      * Extract the rule name and parameters from a rule.
-     *
-     * @param string|ValidationRuleInterface $rule
      */
-    public static function parse($rule): array
+    public static function parse(\Closure|ValidationRule|array|string $rule): array
     {
         if ($rule instanceof \Closure) {
             return [new ClosureValidationRule($rule), []];
@@ -25,7 +22,32 @@ class ValidationRuleParser
             return [$rule, []];
         }
 
+        if (is_array($rule)) {
+            return static::parseTupleRule($rule);
+        }
+
         return static::parseStringRule($rule);
+    }
+
+    /**
+     * Parse a tuple-based rule: ['between', '50,90'] or ['between', ['50', '90']].
+     */
+    protected static function parseTupleRule(array $ruleTuple): array
+    {
+        $rule = (string) ($ruleTuple[0] ?? '');
+        $parameters = [];
+
+        if (array_key_exists(1, $ruleTuple)) {
+            $raw = $ruleTuple[1];
+
+            if (is_string($raw)) {
+                $parameters = static::parseParameters($raw);
+            } elseif (is_array($raw)) {
+                $parameters = $raw;
+            }
+        }
+
+        return [static::normalizeRule($rule), $parameters];
     }
 
     /**
@@ -38,7 +60,7 @@ class ValidationRuleParser
         // The format for specifying validation rules and parameters follows an
         // easy {rule}:{parameters} formatting convention. For instance the
         // rule "Between:3,5" states that the value may only be between 3 - 5.
-        if (false !== strpos($rule, ':')) {
+        if (str_contains($rule, ':')) {
             list($rule, $parameter) = explode(':', $rule, 2);
 
             $parameters = static::parseParameters($parameter);
@@ -52,7 +74,11 @@ class ValidationRuleParser
      */
     protected static function parseParameters(string $parameter): array
     {
-        return str_getcsv($parameter);
+        // Parse CSV first
+        $values = str_getcsv($parameter);
+
+        // Then trim each value
+        return array_map('trim', $values);
     }
 
     /**

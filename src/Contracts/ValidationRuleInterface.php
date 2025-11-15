@@ -10,7 +10,7 @@ interface ValidationRuleInterface
      * Determines if the validation rule passes. This is where we do the
      * actual validation. If the validation passes return true else false.
      */
-    public function passes($value, array $parameters): bool;
+    public function passes($value, array $parameters, array $row): bool;
 
     /**
      * Get the validation error message. Specify the message that should
