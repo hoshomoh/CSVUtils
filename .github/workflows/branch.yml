@@ -33,4 +33,6 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run test suite
+      env:
+        PHP_CS_FIXER_IGNORE_ENV: 1
       run: composer run-script php-cs-fixer-check && composer run-script test
