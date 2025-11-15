@@ -8,8 +8,6 @@ class UppercaseRule implements ValidationRuleInterface
 {
     /**
      * @param mixed $value
-     * @param array $parameters
-     * @return bool
      */
     public function passes($value, array $parameters): bool
     {

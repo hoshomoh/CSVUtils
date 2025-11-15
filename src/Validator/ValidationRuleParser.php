@@ -13,7 +13,7 @@ class ValidationRuleParser
     /**
      * Extract the rule name and parameters from a rule.
      *
-     * @param int|string $ruleKey
+     * @param int|string                    $ruleKey
      * @param string|Closure|ValidationRule $ruleValue
      */
     public static function parse($ruleKey, $ruleValue): array
@@ -55,7 +55,7 @@ class ValidationRuleParser
     /**
      * Parse lib defined rule.
      *
-     * @param int|string $ruleKey
+     * @param int|string                    $ruleKey
      * @param string|Closure|ValidationRule $ruleValue
      */
     protected static function parseRule($ruleKey, $ruleValue): array
@@ -73,9 +73,7 @@ class ValidationRuleParser
                 $parameters = static::parseParameters($ruleParameters);
             }
         } elseif (is_string($ruleKey) && !static::stringRuleHasParameter($ruleKey)) {
-
         }
-
 
         return [ValidationRuleParser::normalizeRule($rule), $parameters];
     }

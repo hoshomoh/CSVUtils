@@ -127,7 +127,6 @@ class Validator
     }
 
     /**
-     *
      * @return void
      */
     protected function validateFile()
@@ -269,7 +268,7 @@ class Validator
     /**
      * Validate a given attribute against a rule.
      *
-     * @param int|string $ruleKey
+     * @param int|string                    $ruleKey
      * @param string|Closure|ValidationRule $ruleValue
      */
     protected function validateAttribute(string $attribute, $ruleKey, $ruleValue): void
@@ -308,6 +307,7 @@ class Validator
     protected function doesFileExistAndReadable(): bool
     {
         $filePath = $this->filePath;
+
         return file_exists($filePath) && is_readable($filePath);
     }
 
